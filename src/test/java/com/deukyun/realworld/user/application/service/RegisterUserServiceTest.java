@@ -1,7 +1,7 @@
 package com.deukyun.realworld.user.application.service;
 
-import com.deukyun.realworld.profile.application.port.in.InsertProfileCommand;
-import com.deukyun.realworld.profile.application.port.in.InsertProfileInPort;
+import com.deukyun.realworld.profile.application.port.in.RegisterProfileCommand;
+import com.deukyun.realworld.profile.application.port.in.RegisterProfileUseCase;
 import com.deukyun.realworld.user.application.port.in.RegisterUserCommand;
 import com.deukyun.realworld.user.application.port.out.InsertUserCommand;
 import com.deukyun.realworld.user.application.port.out.InsertUserPort;
@@ -18,7 +18,7 @@ class RegisterUserServiceTest {
 
     PasswordEncoder passwordEncoder = mock(PasswordEncoder.class);
     InsertUserPort insertUserPort = mock(InsertUserPort.class);
-    InsertProfileInPort insertProfileInPort = mock(InsertProfileInPort.class);
+    RegisterProfileUseCase insertProfileInPort = mock(RegisterProfileUseCase.class);
 
     @BeforeEach
     void setUp() {
@@ -52,8 +52,8 @@ class RegisterUserServiceTest {
                 )
         );
 
-        verify(insertProfileInPort).insertProfile(
-                new InsertProfileCommand(
+        verify(insertProfileInPort).registerProfile(
+                new RegisterProfileCommand(
                         userId,
                         "Jacob")
         );

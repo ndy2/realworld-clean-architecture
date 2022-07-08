@@ -1,6 +1,6 @@
 package com.deukyun.realworld.profile.application.port.out;
 
-public interface InsertProfileOutPort {
+public interface InsertProfilePort {
 
     void insertProfile(InsertProfileOutCommand insertProfileCommand);
 }

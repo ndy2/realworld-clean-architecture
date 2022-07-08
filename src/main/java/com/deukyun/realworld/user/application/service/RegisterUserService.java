@@ -1,8 +1,8 @@
 package com.deukyun.realworld.user.application.service;
 
 import com.deukyun.realworld.common.component.UseCase;
-import com.deukyun.realworld.profile.application.port.in.InsertProfileCommand;
-import com.deukyun.realworld.profile.application.port.in.InsertProfileInPort;
+import com.deukyun.realworld.profile.application.port.in.RegisterProfileCommand;
+import com.deukyun.realworld.profile.application.port.in.RegisterProfileUseCase;
 import com.deukyun.realworld.user.application.port.in.RegisterUserCommand;
 import com.deukyun.realworld.user.application.port.in.RegisterUserUseCase;
 import com.deukyun.realworld.user.application.port.out.InsertUserCommand;
@@ -13,11 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @UseCase
-public class RegisterUserService implements RegisterUserUseCase {
+class RegisterUserService implements RegisterUserUseCase {
 
     private final PasswordEncoder passwordEncoder;
     private final InsertUserPort insertUserPort;
-    private final InsertProfileInPort insertProfileInPort;
+    private final RegisterProfileUseCase insertProfileInPort;
 
     @Override
     @Transactional
@@ -33,8 +33,8 @@ public class RegisterUserService implements RegisterUserUseCase {
                 )
         );
 
-        insertProfileInPort.insertProfile(
-                new InsertProfileCommand(
+        insertProfileInPort.registerProfile(
+                new RegisterProfileCommand(
                         userId,
                         registerUserCommand.getUsername()
                 )

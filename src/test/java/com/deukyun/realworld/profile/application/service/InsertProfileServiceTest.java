@@ -1,8 +1,8 @@
 package com.deukyun.realworld.profile.application.service;
 
-import com.deukyun.realworld.profile.application.port.in.InsertProfileCommand;
+import com.deukyun.realworld.profile.application.port.in.RegisterProfileCommand;
 import com.deukyun.realworld.profile.application.port.out.InsertProfileOutCommand;
-import com.deukyun.realworld.profile.application.port.out.InsertProfileOutPort;
+import com.deukyun.realworld.profile.application.port.out.InsertProfilePort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,13 +12,13 @@ import static org.mockito.Mockito.verify;
 class InsertProfileServiceTest {
 
 
-    InsertProfileService insertProfileService;
+    RegisterProfileService insertProfileService;
 
-    InsertProfileOutPort insertProfileOutPort = mock(InsertProfileOutPort.class);
+    InsertProfilePort insertProfilePort = mock(InsertProfilePort.class);
 
     @BeforeEach
     void setUp() {
-        insertProfileService = new InsertProfileService(insertProfileOutPort);
+        insertProfileService = new RegisterProfileService(insertProfilePort);
     }
 
     /**
@@ -27,13 +27,13 @@ class InsertProfileServiceTest {
     @Test
     void 프로필_삽입() {
         //given
-        InsertProfileCommand insertProfileCommand = new InsertProfileCommand(1L, "Jakob");
+        RegisterProfileCommand registerProfileCommand = new RegisterProfileCommand(1L, "Jakob");
 
         //when
-        insertProfileService.insertProfile(insertProfileCommand);
+        insertProfileService.registerProfile(registerProfileCommand);
 
         //then
-        verify(insertProfileOutPort)
+        verify(insertProfilePort)
                 .insertProfile(new InsertProfileOutCommand(1L, "Jakob"));
     }
 }

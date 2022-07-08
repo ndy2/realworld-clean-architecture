@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
  */
 @RequiredArgsConstructor
 @Query
-public class GetProfileService implements GetProfileQuery {
+class GetProfileService implements GetProfileQuery {
 
     private final FindProfilePort findProfilePort;
 

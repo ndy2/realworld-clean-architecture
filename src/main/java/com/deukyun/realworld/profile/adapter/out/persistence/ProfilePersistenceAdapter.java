@@ -4,14 +4,14 @@ import com.deukyun.realworld.common.component.PersistenceAdapter;
 import com.deukyun.realworld.common.exception.RealworldRuntimeException;
 import com.deukyun.realworld.profile.application.port.out.FindProfilePort;
 import com.deukyun.realworld.profile.application.port.out.InsertProfileOutCommand;
-import com.deukyun.realworld.profile.application.port.out.InsertProfileOutPort;
+import com.deukyun.realworld.profile.application.port.out.InsertProfilePort;
 import com.deukyun.realworld.profile.application.port.out.ProfileOutResponse;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @PersistenceAdapter
 class ProfilePersistenceAdapter implements
-        InsertProfileOutPort,
+        InsertProfilePort,
         FindProfilePort {
 
     private final ProfileRepository profileRepository;

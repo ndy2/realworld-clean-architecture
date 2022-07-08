@@ -11,7 +11,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 @RequiredArgsConstructor
 @UseCase
-public class AuthenticationService implements JwtAuthenticationUseCase {
+class AuthenticationService implements JwtAuthenticationUseCase {
 
     private final FindPasswordPort findUserPort;
     private final PasswordEncoder passwordEncoder;
