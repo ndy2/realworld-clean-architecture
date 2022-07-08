@@ -4,6 +4,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Value;
 
+import static com.google.common.base.Preconditions.checkState;
+
 @EqualsAndHashCode(of = "id")
 public class User {
 
@@ -23,6 +25,13 @@ public class User {
 
     @Getter
     private Long profileId;
+
+
+    public void assignProfileId(Long profileId){
+        checkState(this.profileId == null, "profile id is already assigned");
+
+        this.profileId = profileId;
+    }
 
     @Value
     public static class UserId {
