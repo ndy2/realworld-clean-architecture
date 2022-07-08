@@ -29,11 +29,9 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
     }
 
     /**
-     * 인증된 토큰
-     * <p>
-     * TODO @param principal - 인증 객체, 지금은 그냥 email, boolean 만 체크함
+     * @param principal - id
      */
-    public JwtAuthenticationToken(Object principal) {
+    public JwtAuthenticationToken(JwtAuthentication principal) {
         super(Collections.emptySet());
         super.setAuthenticated(true);
 
@@ -60,7 +58,7 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
     }
 
     @Value
-    class JwtAuthentication {
+    public static class JwtAuthentication {
 
         Long id;
         String token;

@@ -7,5 +7,5 @@ public interface JwtAuthenticationUseCase {
      *
      * @throws com.deukyun.realworld.common.exception.RealworldRuntimeException
      */
-    void authenticate(Object principal, Object credentials);
+    long authenticate(Object principal, Object credentials);
 }
