@@ -1,4 +1,4 @@
-package com.deukyun.realworld.common;
+package com.deukyun.realworld.common.component;
 
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.stereotype.Component;
