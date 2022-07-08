@@ -1,10 +1,10 @@
 package com.deukyun.realworld.user.application.service;
 
+import com.deukyun.realworld.common.UseCase;
 import com.deukyun.realworld.profile.application.port.in.InsertProfileInPort;
 import com.deukyun.realworld.user.application.port.in.RegisterUserCommand;
 import com.deukyun.realworld.user.application.port.in.RegisterUserUseCase;
 import com.deukyun.realworld.user.application.port.out.InsertUserPort;
-import com.deukyun.realworld.user.common.UseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 

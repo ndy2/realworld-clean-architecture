@@ -1,4 +1,4 @@
-package com.deukyun.realworld.user.common;
+package com.deukyun.realworld.common;
 
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.stereotype.Component;
@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Component
-public @interface UseCase {
+public @interface PersistenceAdapter {
 
   /**
    * The value may indicate a suggestion for a logical component name,
