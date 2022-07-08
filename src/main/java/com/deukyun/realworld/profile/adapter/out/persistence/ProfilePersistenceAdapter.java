@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @PersistenceAdapter
-class ProfilePersistenceAdapterOut implements
+class ProfilePersistenceAdapter implements
         InsertProfileOutPort,
         FindProfilePort {
 
