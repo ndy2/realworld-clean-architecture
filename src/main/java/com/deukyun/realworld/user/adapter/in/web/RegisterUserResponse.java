@@ -5,7 +5,7 @@ import lombok.Getter;
 
 public class RegisterUserResponse {
 
-    @JsonProperty("member")
+    @JsonProperty("user")
     private final Response response;
 
     public RegisterUserResponse(String email, String username) {

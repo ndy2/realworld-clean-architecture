@@ -36,8 +36,8 @@ class RegisterUserControllerTest extends BaseControllerTest {
                 //then
                 .andExpect(status().isOk())
                 .andExpectAll(
-                        jsonPath("member.username").value("Jacob"),
-                        jsonPath("member.email").value("jake@jake.jake")
+                        jsonPath("user.username").value("Jacob"),
+                        jsonPath("user.email").value("jake@jake.jake")
                 );
 
         verify(registerUserUseCase).registerUser(
