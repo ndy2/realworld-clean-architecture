@@ -1,13 +1,17 @@
 package com.deukyun.realworld.user.adapter.in.web;
 
 import com.deukyun.realworld.common.BaseControllerTest;
+import com.deukyun.realworld.configuration.SecurityConfiguration;
 import com.deukyun.realworld.user.application.port.in.RegisterUserCommand;
 import com.deukyun.realworld.user.application.port.in.RegisterUserUseCase;
 import com.deukyun.realworld.user.domain.Email;
 import com.deukyun.realworld.user.domain.Password;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
 
 import static org.mockito.Mockito.verify;
@@ -15,6 +19,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * 통합 테스트로 웹 어댑터 테스트하기
+ */
+@WebMvcTest(controllers = RegisterUserController.class,
+        includeFilters = {
+                @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfiguration.class)
+        })
 class RegisterUserControllerTest extends BaseControllerTest {
 
     @MockBean
@@ -22,6 +33,7 @@ class RegisterUserControllerTest extends BaseControllerTest {
 
     @Test
     void 회원_가입() throws Exception {
+
         //given
         ObjectNode registerUserRequest = objectMapper.createObjectNode();
         ObjectNode user = registerUserRequest.putObject("user");
