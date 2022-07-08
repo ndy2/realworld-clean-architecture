@@ -15,6 +15,9 @@ public class User {
 
     private final Password password;
 
+    @Getter
+    private Long profileId;
+
     /**
      * 회원 가입시 사용하는 생성자
      */
@@ -22,10 +25,6 @@ public class User {
         this.email = email;
         this.password = password;
     }
-
-    @Getter
-    private Long profileId;
-
 
     public void assignProfileId(Long profileId){
         checkState(this.profileId == null, "profile id is already assigned");
