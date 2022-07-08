@@ -1,15 +1,15 @@
 package com.deukyun.realworld.user.domain;
 
-import lombok.EqualsAndHashCode;
+import lombok.Value;
 
 import java.util.regex.Pattern;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-@EqualsAndHashCode
+@Value
 public class Email {
 
-    private final String value;
+    String value;
 
     public Email(String value) {
         checkArgument(!Pattern.matches("^(.+)@(.+)$", value), "Invalid email provided");

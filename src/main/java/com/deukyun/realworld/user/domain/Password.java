@@ -1,11 +1,11 @@
 package com.deukyun.realworld.user.domain;
 
-import lombok.EqualsAndHashCode;
+import lombok.Value;
 
-@EqualsAndHashCode
+@Value
 public class Password {
 
-    private final String value;
+    String value;
 
     public Password(String value) {
 
