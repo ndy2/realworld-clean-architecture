@@ -16,8 +16,6 @@ import static lombok.AccessLevel.PROTECTED;
 @NoArgsConstructor(access = PROTECTED)
 class UserJpaEntity extends BaseIdEntity {
 
-
     private String email;
     private String password;
-    private Long profileId;
 }

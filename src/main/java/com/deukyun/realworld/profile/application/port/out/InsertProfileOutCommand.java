@@ -1,6 +1,10 @@
 package com.deukyun.realworld.profile.application.port.out;
 
-public class InsertProfileCommand {
+import lombok.Value;
 
+@Value
+public class InsertProfileOutCommand {
+
+    long userId;
     String username;
 }

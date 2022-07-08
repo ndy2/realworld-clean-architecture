@@ -29,13 +29,12 @@ class AuthenticationControllerTest extends BaseControllerTest {
                 //then
                 .andExpect(status().isOk())
                 .andExpectAll(
-                        jsonPath("user.email").value("Jacob"),
-                        jsonPath("user.token").value("jake@jake.jake"),
-                        jsonPath("user.username").value("Jacob"),
-                        jsonPath("user.bio").value("null"),
-                        jsonPath("user.image").value("null")
+                        jsonPath("user.email").value("jake@jake.jake"),
+                        jsonPath("user.token").exists(),
+                        jsonPath("user.username").value("Jakob"),
+                        jsonPath("user.bio").doesNotExist(),
+                        jsonPath("user.image").doesNotExist()   //사용자 등록만 하면 profile 값 null 임
                 );
-
 
     }
 }

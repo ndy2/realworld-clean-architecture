@@ -24,8 +24,7 @@ class UserPersistenceAdapterTest {
         InsertUserCommand insertUserCommand
                 = new InsertUserCommand(
                 "jake@jake.jake",
-                "[encoded]jakejake",
-                1L
+                "[encoded]jakejake"
         );
 
         //when

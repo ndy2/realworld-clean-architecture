@@ -19,15 +19,14 @@ class UserPersistenceAdapter implements
 
 
     @Override
-    public void insertUser(InsertUserCommand insertUserCommand) {
+    public long insertUser(InsertUserCommand insertUserCommand) {
 
-        userRepository.save(
+        return userRepository.save(
                 new UserJpaEntity(
                         insertUserCommand.getEmail(),
-                        insertUserCommand.getPassword(),
-                        insertUserCommand.getProfileId()
+                        insertUserCommand.getPassword()
                 )
-        );
+        ).getId();
     }
 
     @Override

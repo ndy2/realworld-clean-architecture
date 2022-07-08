@@ -44,22 +44,23 @@ class RegisterUserServiceTest {
                         "Jacob"
                 );
 
+        String encodedPassword = passwordEncoder.encode("jakejake");
+
         //when
         registerUserService.registerUser(command);
 
         //then
-        long profileId = verify(insertProfileInPort).insertProfile(
-                new InsertProfileCommand("Jacob")
-        );
-
-        String encodedPassword = passwordEncoder.encode("jakejake");
-
-        verify(insertUserPort).insertUser(
+        long userId = verify(insertUserPort).insertUser(
                 new InsertUserCommand(
                         "jake@jake.jake",
-                        encodedPassword,
-                        profileId
+                        encodedPassword
                 )
+        );
+
+        verify(insertProfileInPort).insertProfile(
+                new InsertProfileCommand(
+                        userId,
+                        "Jacob")
         );
     }
 }

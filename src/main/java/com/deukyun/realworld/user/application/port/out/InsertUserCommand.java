@@ -7,5 +7,4 @@ public class InsertUserCommand {
 
     String email;
     String password;
-    long profileId;
 }

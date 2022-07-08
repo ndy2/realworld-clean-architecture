@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @UseCase
-@Transactional
 public class RegisterUserService implements RegisterUserUseCase {
 
     private final PasswordEncoder passwordEncoder;
@@ -21,22 +20,23 @@ public class RegisterUserService implements RegisterUserUseCase {
     private final InsertProfileInPort insertProfileInPort;
 
     @Override
+    @Transactional
     public void registerUser(RegisterUserCommand registerUserCommand) {
-
-        long profileId = insertProfileInPort.insertProfile(
-                new InsertProfileCommand(
-                        registerUserCommand.getUsername()
-                )
-        );
 
         String password = registerUserCommand.getPassword().getValue();
         String encodedPassword = passwordEncoder.encode(password);
 
-        insertUserPort.insertUser(
+        long userId = insertUserPort.insertUser(
                 new InsertUserCommand(
                         registerUserCommand.getEmail().getValue(),
-                        encodedPassword,
-                        profileId
+                        encodedPassword
+                )
+        );
+
+        insertProfileInPort.insertProfile(
+                new InsertProfileCommand(
+                        userId,
+                        registerUserCommand.getUsername()
                 )
         );
     }

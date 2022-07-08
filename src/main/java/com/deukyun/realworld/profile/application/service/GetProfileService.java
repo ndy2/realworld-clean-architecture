@@ -2,8 +2,9 @@ package com.deukyun.realworld.profile.application.service;
 
 import com.deukyun.realworld.common.component.Query;
 import com.deukyun.realworld.profile.application.port.in.GetProfileQuery;
-import com.deukyun.realworld.profile.application.port.in.ProfileResponse;
+import com.deukyun.realworld.profile.application.port.in.ProfileInResponse;
 import com.deukyun.realworld.profile.application.port.out.FindProfilePort;
+import com.deukyun.realworld.profile.application.port.out.ProfileOutResponse;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -13,8 +14,14 @@ public class GetProfileService implements GetProfileQuery {
     private final FindProfilePort findProfilePort;
 
     @Override
-    public ProfileResponse getByUserId(Long id) {
+    public ProfileInResponse getByUserId(Long id) {
 
-        return null;
+        ProfileOutResponse profileOutResponse = findProfilePort.findByUserId(id);
+
+        return new ProfileInResponse(
+                profileOutResponse.getUsername(),
+                profileOutResponse.getBio(),
+                profileOutResponse.getImage()
+        );
     }
 }
