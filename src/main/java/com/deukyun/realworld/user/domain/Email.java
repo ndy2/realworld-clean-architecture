@@ -12,7 +12,7 @@ public class Email {
     String value;
 
     public Email(String value) {
-        checkArgument(!Pattern.matches("^(.+)@(.+)$", value), "Invalid email provided");
+        checkArgument(Pattern.matches("^(.+)@(.+)$", value), "Invalid email provided");
 
         this.value = value;
     }
