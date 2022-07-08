@@ -53,6 +53,10 @@ public class ApplicationLayer extends ArchitectureElement {
     return allPackages;
   }
 
+  String getBasePackage() {
+    return basePackage;
+  }
+
   void doesNotContainEmptyPackages() {
     denyEmptyPackages(allPackages());
   }

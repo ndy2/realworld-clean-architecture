@@ -3,9 +3,8 @@ package com.deukyun.realworld;
 import com.deukyun.realworld.archunit.HexagonalArchitecture;
 import com.tngtech.archunit.core.domain.JavaClasses;
 import com.tngtech.archunit.core.importer.ClassFileImporter;
-import org.junit.jupiter.api.Test;
-
-import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  * archUnit 을 활용한 의존성 규칙 테스트
@@ -16,23 +15,11 @@ class DependencyRuleTest {
 
     JavaClasses importPackages = new ClassFileImporter().importPackages("com.deukyun.realworld..");
 
-    @Test
-    void 도메인_계층은_애플리케이션_계층에_의존하지_않는다() {
+    @ParameterizedTest
+    @ValueSource(strings = {"user", "profile"})
+    void Hexagonal_Architecture_의존성_규칙을_만족한다(String boundedContext) {
 
-        noClasses()
-                .that()
-                .resideInAPackage("..domain..")
-                .should()
-                .dependOnClassesThat()
-                .resideInAnyPackage("..application..")
-                .check(importPackages);
-    }
-
-    @Test
-    void Hexagonal_Architecture_의존성_규칙을_만족한다() {
-
-        HexagonalArchitecture.boundedContext("com.deukyun.realworld.user")
-
+        HexagonalArchitecture.boundedContext("com.deukyun.realworld", boundedContext)
                 .withDomainLayer("domain")
 
                 .withAdaptersLayer("adapter")
@@ -47,6 +34,7 @@ class DependencyRuleTest {
                 .and()
 
                 .withConfiguration("configuration")
+                .withInfrastructure("infrastructure")
                 .check(importPackages);
     }
 }

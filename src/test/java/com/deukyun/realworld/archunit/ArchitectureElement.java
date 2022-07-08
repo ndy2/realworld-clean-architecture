@@ -24,11 +24,11 @@ abstract class ArchitectureElement {
 
   static void denyDependency(String fromPackageName, String toPackageName, JavaClasses classes) {
     noClasses()
-        .that()
-        .resideInAPackage("io.reflectoring.reviewapp.domain..")
-        .should()
-        .dependOnClassesThat()
-        .resideInAnyPackage("io.reflectoring.reviewapp.application..")
+            .that()
+            .resideInAPackage(matchAllClassesInPackage(fromPackageName))
+            .should()
+            .dependOnClassesThat()
+            .resideInAnyPackage(matchAllClassesInPackage(toPackageName))
         .check(classes);
   }
 
@@ -68,4 +68,5 @@ abstract class ArchitectureElement {
       denyEmptyPackage(packageName);
     }
   }
+
 }
