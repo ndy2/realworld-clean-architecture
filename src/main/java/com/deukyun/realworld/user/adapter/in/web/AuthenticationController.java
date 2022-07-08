@@ -6,6 +6,7 @@ import com.deukyun.realworld.profile.application.port.in.ProfileResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -17,7 +18,9 @@ public class AuthenticationController {
     private final GetProfileQuery getProfileQuery;
 
     @PostMapping("/api/users/login")
-    public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest) {
+    public AuthenticationResponse authenticate(
+            @RequestBody AuthenticationRequest authenticationRequest
+    ) {
         String email = authenticationRequest.getEmail();
         String password = authenticationRequest.getPassword();
 
