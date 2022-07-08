@@ -7,6 +7,9 @@ import com.deukyun.realworld.profile.application.port.out.FindProfilePort;
 import com.deukyun.realworld.profile.application.port.out.ProfileOutResponse;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * 아웃 포트로 위임하여 전달 만 함
+ */
 @RequiredArgsConstructor
 @Query
 public class GetProfileService implements GetProfileQuery {

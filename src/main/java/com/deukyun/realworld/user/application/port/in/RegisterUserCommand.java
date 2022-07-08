@@ -16,11 +16,11 @@ public class RegisterUserCommand {
 
     String username;
 
-    public RegisterUserCommand(Email email, Password password, String username) {
+    public RegisterUserCommand(String email, String password, String username) {
         checkArgument(hasText(username), "username is not provided");
 
-        this.email = email;
-        this.password = password;
+        this.email = new Email(email);
+        this.password = new Password(password);
         this.username = username;
     }
 }

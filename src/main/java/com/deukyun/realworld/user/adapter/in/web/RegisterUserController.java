@@ -2,8 +2,6 @@ package com.deukyun.realworld.user.adapter.in.web;
 
 import com.deukyun.realworld.user.application.port.in.RegisterUserCommand;
 import com.deukyun.realworld.user.application.port.in.RegisterUserUseCase;
-import com.deukyun.realworld.user.domain.Email;
-import com.deukyun.realworld.user.domain.Password;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,8 +22,8 @@ public class RegisterUserController {
 
         registerUserUseCase.registerUser(
                 new RegisterUserCommand(
-                        new Email(email),
-                        new Password(password),
+                        email,
+                        password,
                         username
                 )
         );
