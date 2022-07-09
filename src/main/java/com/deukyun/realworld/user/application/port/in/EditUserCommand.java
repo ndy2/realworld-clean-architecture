@@ -15,4 +15,12 @@ public class EditUserCommand {
         this.email = new Email(email);
         this.password = new Password(password);
     }
+
+    public String getEmail() {
+        return email.getValue();
+    }
+
+    public String getPassword() {
+        return password.getValue();
+    }
 }
