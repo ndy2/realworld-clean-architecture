@@ -18,4 +18,9 @@ class UserJpaEntity extends BaseIdEntity {
 
     private String email;
     private String password;
+
+    public void update(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
 }

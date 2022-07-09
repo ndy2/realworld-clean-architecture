@@ -1,6 +1,7 @@
 package com.deukyun.realworld.user.adapter.out.persistence;
 
 import com.deukyun.realworld.common.component.PersistenceAdapter;
+import com.deukyun.realworld.common.exception.RealworldRuntimeException;
 import com.deukyun.realworld.user.application.port.out.*;
 import lombok.RequiredArgsConstructor;
 
@@ -36,6 +37,12 @@ class UserPersistenceAdapter implements
     @Override
     public void updateUser(UpdateUserCommand updateUserCommand) {
 
-        userRepository.findById(updateUserCommand.getId());
+        UserJpaEntity userJpaEntity =
+                userRepository.findById(updateUserCommand.getId()).orElseThrow(RealworldRuntimeException::new);
+
+        userJpaEntity.update(
+                updateUserCommand.getEmail(),
+                updateUserCommand.getPassword()
+        );
     }
 }
