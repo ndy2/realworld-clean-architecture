@@ -21,8 +21,8 @@ class FollowPersistenceAdapterTest {
         followPersistenceAdapter.insertFollow(1, 2);
 
         //when
-        boolean isFollow1 = followPersistenceAdapter.checkFollow(1, 2);
-        boolean isFollow2 = followPersistenceAdapter.checkFollow(1, 3);
+        boolean isFollow1 = followPersistenceAdapter.checkFollow(1, 2).isPresent();
+        boolean isFollow2 = followPersistenceAdapter.checkFollow(1, 3).isPresent();
 
         //then
         assertThat(isFollow1).isTrue();

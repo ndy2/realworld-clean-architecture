@@ -1,4 +1,4 @@
-package com.deukyun.realworld.profile.application.port.in;
+package com.deukyun.realworld.follow.application.port.in;
 
 import lombok.Value;
 
