@@ -3,7 +3,7 @@ package com.deukyun.realworld.user.adapter.in.web;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
-class EditUserResponse {
+final class EditUserResponse {
 
     @JsonProperty("user")
     private final Response response;
