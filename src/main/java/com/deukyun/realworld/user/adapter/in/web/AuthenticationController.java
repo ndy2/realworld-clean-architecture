@@ -2,8 +2,8 @@ package com.deukyun.realworld.user.adapter.in.web;
 
 import com.deukyun.realworld.infrastructure.security.jwt.JwtAuthenticationToken;
 import com.deukyun.realworld.infrastructure.security.jwt.JwtAuthenticationToken.JwtAuthentication;
-import com.deukyun.realworld.profile.application.port.in.GetProfileQuery;
-import com.deukyun.realworld.profile.application.port.in.GetProfileResult;
+import com.deukyun.realworld.profile.application.port.in.GetProfileByUserIdQuery;
+import com.deukyun.realworld.profile.application.port.in.GetProfileByUserIdResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
 
     private final AuthenticationManager authenticationManager;
-    private final GetProfileQuery getProfileQuery;
+    private final GetProfileByUserIdQuery getProfileByUserIdQuery;
 
     @PostMapping("/api/users/login")
     public AuthenticationResponse authenticate(
@@ -34,7 +34,7 @@ public class AuthenticationController {
 
         //principal 에서 사용자 아이디와 토큰 조회
         JwtAuthentication principal = (JwtAuthentication) resultToken.getPrincipal();
-        GetProfileResult profileResponse = getProfileQuery.getByUserId(principal.getUserId());
+        GetProfileByUserIdResult profileResponse = getProfileByUserIdQuery.getProfileByUserId(principal.getUserId());
 
         return new AuthenticationResponse(
                 email,

@@ -12,7 +12,8 @@ import java.util.Optional;
 class UserPersistenceAdapter implements
         InsertUserPort,
         FindPasswordPort,
-        UpdateUserPort {
+        UpdateUserPort,
+        FindUserByIdPort {
 
     private final UserRepository userRepository;
 
@@ -48,5 +49,10 @@ class UserPersistenceAdapter implements
         return new UpdateUserResult(
                 userJpaEntity.getEmail()
         );
+    }
+
+    @Override
+    public FindUserByIdResult findUserById(long id) {
+        return userRepository.findByIdProjection(id).orElseThrow(RealworldRuntimeException::new);
     }
 }

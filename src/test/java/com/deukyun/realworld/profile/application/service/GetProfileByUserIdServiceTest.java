@@ -1,6 +1,6 @@
 package com.deukyun.realworld.profile.application.service;
 
-import com.deukyun.realworld.profile.application.port.in.GetProfileResult;
+import com.deukyun.realworld.profile.application.port.in.GetProfileByUserIdResult;
 import com.deukyun.realworld.profile.application.port.out.FindProfileByUserIdPort;
 import com.deukyun.realworld.profile.application.port.out.FindProfileByUserIdResult;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +11,7 @@ import static org.mockito.Mockito.*;
 
 class GetProfileByUserIdServiceTest {
 
-    GetProfileByUserIdService getProfileByUserIdService;
+    GetProfileByUserIdByUserIdService getProfileByUserIdService;
 
     FindProfileByUserIdPort findProfileByUserIdPort = mock(FindProfileByUserIdPort.class);
 
@@ -24,7 +24,7 @@ class GetProfileByUserIdServiceTest {
                         null
                 ));
 
-        getProfileByUserIdService = new GetProfileByUserIdService(findProfileByUserIdPort);
+        getProfileByUserIdService = new GetProfileByUserIdByUserIdService(findProfileByUserIdPort);
     }
 
     @Test
@@ -33,16 +33,16 @@ class GetProfileByUserIdServiceTest {
         long userId = 1L;
 
         //when
-        GetProfileResult response = getProfileByUserIdService.getByUserId(userId);
+        GetProfileByUserIdResult response = getProfileByUserIdService.getProfileByUserId(userId);
 
         //then
         verify(findProfileByUserIdPort).findByUserId(1L);
 
         assertThat(response)
                 .extracting(
-                        GetProfileResult::getUsername,
-                        GetProfileResult::getBio,
-                        GetProfileResult::getImage)
+                        GetProfileByUserIdResult::getUsername,
+                        GetProfileByUserIdResult::getBio,
+                        GetProfileByUserIdResult::getImage)
                 .containsExactly(
                         "Jakob",
                         null,
