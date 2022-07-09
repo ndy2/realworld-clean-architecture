@@ -17,12 +17,15 @@ public class FollowJpaEntity {
     @Id
     @GeneratedValue
     private Long id;
+    private long followerId;
+    private long followeeId;
 
     public FollowJpaEntity(long followerId, long followeeId) {
         this.followerId = followerId;
         this.followeeId = followeeId;
     }
 
-    private long followerId;
-    private long followeeId;
+    public Long getId() {
+        return id;
+    }
 }

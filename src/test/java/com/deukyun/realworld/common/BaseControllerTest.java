@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
@@ -85,6 +86,15 @@ public class BaseControllerTest {
                         .header(AUTHORIZATION, token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(createJson(editUserRequest)))
+                .andExpect(status().isOk());
+    }
+
+    protected void 팔로우(String username) throws Exception {
+
+        mockMvc.perform(RestDocumentationRequestBuilders.post("/api/profiles/{username}/follow", username)
+                        .header(AUTHORIZATION, token)
+                        .contentType(MediaType.APPLICATION_JSON))
+                //then
                 .andExpect(status().isOk());
     }
 }

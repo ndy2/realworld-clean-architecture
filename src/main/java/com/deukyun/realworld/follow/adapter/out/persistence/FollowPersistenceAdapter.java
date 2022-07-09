@@ -19,7 +19,8 @@ public class FollowPersistenceAdapter implements
 
     @Override
     public Optional<Long> checkFollow(long followerId, long followeeId) {
-        return followJpaRepository.findIdByFollowerIdEqualsAndFolloweeIdEquals(followerId, followeeId);
+        return followJpaRepository.findByFollowerIdEqualsAndFolloweeIdEquals(followerId, followeeId)
+                .map(FollowJpaEntity::getId);
     }
 
     @Override

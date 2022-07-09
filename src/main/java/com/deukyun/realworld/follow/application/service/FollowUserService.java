@@ -20,7 +20,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 @RequiredArgsConstructor
 @UseCase
-public class FollowUserService implements
+class FollowUserService implements
         FollowUserUseCase,
         UnfollowUserUseCase {
 
@@ -68,6 +68,7 @@ public class FollowUserService implements
      * 팔로워가 팔로이를 언팔로우 함
      * 팔로우 중이 아니라면 예외를 던짐
      */
+    @Transactional
     @Override
     public FollowUserResult userIdUnfollowsUsername(long userId, String username) {
         FindProfileByUserIdResult followerProfile = findProfileByUserIdPort.findByUserId(userId);

@@ -6,5 +6,5 @@ import java.util.Optional;
 
 public interface FollowJpaRepository extends JpaRepository<FollowJpaEntity, Long> {
 
-    Optional<Long> findIdByFollowerIdEqualsAndFolloweeIdEquals(long followeeId, long followerId);
+    Optional<FollowJpaEntity> findByFollowerIdEqualsAndFolloweeIdEquals(long followeeId, long followerId);
 }
