@@ -1,7 +1,7 @@
 package com.deukyun.realworld.user.adapter.in.web;
 
 
-import com.deukyun.realworld.infrastructure.security.jwt.domain.JwtAuthenticationToken;
+import com.deukyun.realworld.infrastructure.security.jwt.JwtAuthenticationToken;
 import com.deukyun.realworld.profile.application.port.in.EditProfileCommand;
 import com.deukyun.realworld.profile.application.port.in.EditProfileUseCase;
 import com.deukyun.realworld.user.application.port.in.EditUserCommand;

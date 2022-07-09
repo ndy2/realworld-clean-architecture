@@ -1,4 +1,4 @@
-package com.deukyun.realworld.infrastructure.security.jwt.application.port.in;
+package com.deukyun.realworld.infrastructure.security.jwt;
 
 public interface JwtAuthenticationUseCase {
 

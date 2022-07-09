@@ -1,8 +1,6 @@
-package com.deukyun.realworld.infrastructure.security.jwt.application.service;
+package com.deukyun.realworld.infrastructure.security.jwt;
 
-import com.deukyun.realworld.infrastructure.security.jwt.application.port.in.JwtAuthenticationUseCase;
-import com.deukyun.realworld.infrastructure.security.jwt.domain.JwtAuthenticationToken;
-import com.deukyun.realworld.infrastructure.security.jwt.domain.JwtAuthenticationToken.JwtAuthentication;
+import com.deukyun.realworld.infrastructure.security.jwt.JwtAuthenticationToken.JwtAuthentication;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
@@ -13,6 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtAuthenticationProvider implements AuthenticationProvider {
 
+    private final JwtResolver jwtResolver;
     private final JwtAuthenticationUseCase authenticationUseCase;
 
     /**
@@ -22,12 +21,14 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
      */
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        JwtAuthenticationToken jwtAuthentication = (JwtAuthenticationToken) authentication;
+        JwtAuthenticationToken jwtAuthenticationToken = (JwtAuthenticationToken) authentication;
 
-        long userId = authenticationUseCase.authenticate(jwtAuthentication.getPrincipal(), jwtAuthentication.getCredentials());
+        long userId = authenticationUseCase.authenticate(
+                jwtAuthenticationToken.getPrincipal(),
+                jwtAuthenticationToken.getCredentials()
+        );
 
-        //TODO implement jwt
-        String token = "todo.implement.realjwt";
+        String token = jwtResolver.generate(String.valueOf(userId));
 
         return new JwtAuthenticationToken(
                 new JwtAuthentication(userId, token)

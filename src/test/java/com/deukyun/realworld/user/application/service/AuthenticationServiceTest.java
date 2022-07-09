@@ -40,10 +40,10 @@ class AuthenticationServiceTest {
         String password = "jakejake";
 
         //when
-        long userId = authenticationService.authenticate(email, password);
+        long result = authenticationService.authenticate(email, password);
 
         //then
-        assertThat(userId).isEqualTo(1L);
+        assertThat(result).isEqualTo(1L);
     }
 
     @Test

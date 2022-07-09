@@ -1,4 +1,4 @@
-package com.deukyun.realworld.infrastructure.security.jwt.domain;
+package com.deukyun.realworld.infrastructure.security.jwt;
 
 import lombok.Getter;
 import lombok.Value;
@@ -39,10 +39,10 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
         this.credentials = null;
     }
 
-    public Long getId() {
+    public long getId() {
         checkState(isAuthenticated(), "authentication is not provided");
 
-        return ((JwtAuthentication) principal).getId();
+        return ((JwtAuthentication) principal).getUserId();
     }
 
     public String getJwtString() {
@@ -60,7 +60,7 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
     @Value
     public static class JwtAuthentication {
 
-        Long id;
+        long userId;
         String token;
     }
 }
