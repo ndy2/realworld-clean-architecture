@@ -17,7 +17,15 @@ class ProfilePersistenceAdapter implements
 
     @Override
     public FindProfileByUserIdResult findByUserId(long userId) {
-        return profileRepository.findByUserIdProjection(userId).orElseThrow(RealworldRuntimeException::new);
+        ProfileJpaEntity profileJpaEntity
+                = profileRepository.findByUserIdProjection(userId).orElseThrow(RealworldRuntimeException::new);
+
+        return new FindProfileByUserIdResult(
+                profileJpaEntity.getUserEmail(),
+                profileJpaEntity.getUsername(),
+                profileJpaEntity.getBio(),
+                profileJpaEntity.getImage()
+        );
     }
 
     @Override

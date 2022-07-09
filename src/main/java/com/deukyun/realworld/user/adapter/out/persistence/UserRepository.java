@@ -16,6 +16,6 @@ interface UserRepository extends JpaRepository<UserJpaEntity, Long> {
 
     @Query("select new com.deukyun.realworld.user.application.port.out.FindUserByIdResult(u.email) " +
             "from UserJpaEntity u " +
-            "where u.id = :userId")
+            "where u.id = :id")
     Optional<FindUserByIdResult> findByIdProjection(long id);
 }

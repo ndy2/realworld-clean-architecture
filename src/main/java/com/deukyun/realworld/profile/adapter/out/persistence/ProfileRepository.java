@@ -1,6 +1,5 @@
 package com.deukyun.realworld.profile.adapter.out.persistence;
 
-import com.deukyun.realworld.profile.application.port.out.FindProfileByUserIdResult;
 import com.deukyun.realworld.profile.application.port.out.FindProfileByUsernameResult;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -9,10 +8,11 @@ import java.util.Optional;
 
 interface ProfileRepository extends JpaRepository<ProfileJpaEntity, Long> {
 
-    @Query("select new com.deukyun.realworld.profile.application.port.out.FindProfileByUserIdResult(p.username, p.bio, p.image) " +
+    @Query("select p " +
             "from ProfileJpaEntity p " +
-            "where p.userId = :userId")
-    Optional<FindProfileByUserIdResult> findByUserIdProjection(long userId);
+            "join fetch p.user u " +
+            "where u.id = :userId")
+    Optional<ProfileJpaEntity> findByUserIdProjection(long userId);
 
     Optional<ProfileJpaEntity> findByUserId(long userId);
 

@@ -1,32 +1,37 @@
 package com.deukyun.realworld.profile.adapter.out.persistence;
 
-import com.deukyun.realworld.common.base.BaseIdEntity;
+import com.deukyun.realworld.user.adapter.out.persistence.UserJpaEntity;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Optional;
 
+import static javax.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Table(name = "profile")
 @AllArgsConstructor
 @NoArgsConstructor(access = PROTECTED)
-class ProfileJpaEntity extends BaseIdEntity {
+public class ProfileJpaEntity {
 
+    @Id
+    @GeneratedValue
+    private Long id;
     private String username;
     private String bio;
     private String image;
-    private long userId;
+
+    @OneToOne(fetch = LAZY)
+    private UserJpaEntity user;
 
     /**
      * 회원 가입 할 때 사용 - username, userId 만 필요함
      */
     public ProfileJpaEntity(String username, long userId) {
         this.username = username;
-        this.userId = userId;
+        this.user = UserJpaEntity.withId(userId);
     }
 
     public void update(String updateUsername, String updateBio, String updateImage) {
@@ -48,7 +53,7 @@ class ProfileJpaEntity extends BaseIdEntity {
         return image;
     }
 
-    public long getUserId() {
-        return userId;
+    public String getUserEmail() {
+        return user.getEmail();
     }
 }
