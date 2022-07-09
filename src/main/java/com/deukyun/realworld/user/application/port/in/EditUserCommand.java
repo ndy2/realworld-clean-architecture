@@ -7,13 +7,19 @@ import lombok.Value;
 @Value
 public class EditUserCommand {
 
+    long id;
     Email email;
     Password password;
 
-    public EditUserCommand(String email, String password) {
+    public EditUserCommand(long id, String email, String password) {
 
+        this.id = id;
         this.email = new Email(email);
         this.password = new Password(password);
+    }
+
+    public long getId() {
+        return id;
     }
 
     public String getEmail() {

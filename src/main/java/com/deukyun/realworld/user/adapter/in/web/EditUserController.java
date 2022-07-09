@@ -24,18 +24,20 @@ public class EditUserController {
             @AuthenticationPrincipal JwtAuthenticationToken jwtAuthenticationToken,
             @RequestBody EditUserRequest editUserRequest
     ) {
+        long userId = jwtAuthenticationToken.getId();
+        String token = jwtAuthenticationToken.getJwtString();
+
         String email = editUserRequest.getEmail();
         String password = editUserRequest.getPassword();
 
-        editUserUseCase.editUser(new EditUserCommand(email, password));
+        editUserUseCase.editUser(new EditUserCommand(userId, email, password));
 
         String username = editUserRequest.getUsername();
         String bio = editUserRequest.getBio();
         String image = editUserRequest.getImage();
 
-        editProfileUseCase.editProfile(new EditProfileCommand(username, bio, image));
+        editProfileUseCase.editProfile(new EditProfileCommand(userId, username, bio, image));
 
-        String token = jwtAuthenticationToken.getJwtString();
         return new EditUserResponse(email, token, username, bio, image);
     }
 }

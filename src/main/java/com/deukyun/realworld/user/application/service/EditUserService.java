@@ -14,12 +14,13 @@ class EditUserService implements EditUserUseCase {
     private final UpdateUserPort updateUserPort;
 
     @Override
-    public void editUser(EditUserCommand editUserRequest) {
+    public void editUser(EditUserCommand editUserCommand) {
 
         updateUserPort.updateUser(
                 new UpdateUserCommand(
-                        editUserRequest.getEmail(),
-                        editUserRequest.getPassword()
+                        editUserCommand.getId(),
+                        editUserCommand.getEmail(),
+                        editUserCommand.getPassword()
                 )
         );
     }
