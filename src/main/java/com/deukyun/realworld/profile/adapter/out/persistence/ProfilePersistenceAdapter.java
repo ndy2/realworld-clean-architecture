@@ -15,7 +15,7 @@ class ProfilePersistenceAdapter implements
     private final ProfileRepository profileRepository;
 
     @Override
-    public ProfileOutResponse findByUserId(long userId) {
+    public FindProfileResult findByUserId(long userId) {
         return profileRepository.findByUserIdProjection(userId).orElseThrow(RealworldRuntimeException::new);
     }
 

@@ -2,7 +2,7 @@ package com.deukyun.realworld.profile.application.service;
 
 import com.deukyun.realworld.profile.application.port.in.GetProfileResult;
 import com.deukyun.realworld.profile.application.port.out.FindProfilePort;
-import com.deukyun.realworld.profile.application.port.out.ProfileOutResponse;
+import com.deukyun.realworld.profile.application.port.out.FindProfileResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +18,7 @@ class GetProfileServiceTest {
     @BeforeEach
     void setUp() {
         when(findProfilePort.findByUserId(1L))
-                .thenReturn(new ProfileOutResponse(
+                .thenReturn(new FindProfileResult(
                         "Jakob",
                         null,
                         null
