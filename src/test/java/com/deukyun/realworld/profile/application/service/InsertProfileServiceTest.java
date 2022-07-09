@@ -1,7 +1,7 @@
 package com.deukyun.realworld.profile.application.service;
 
 import com.deukyun.realworld.profile.application.port.in.RegisterProfileCommand;
-import com.deukyun.realworld.profile.application.port.out.InsertProfileOutCommand;
+import com.deukyun.realworld.profile.application.port.out.InsertProfileCommand;
 import com.deukyun.realworld.profile.application.port.out.InsertProfilePort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,6 +34,6 @@ class InsertProfileServiceTest {
 
         //then
         verify(insertProfilePort)
-                .insertProfile(new InsertProfileOutCommand(1L, "Jakob"));
+                .insertProfile(new InsertProfileCommand(1L, "Jakob"));
     }
 }

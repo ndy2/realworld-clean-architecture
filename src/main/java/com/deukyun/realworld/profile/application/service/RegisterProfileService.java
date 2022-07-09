@@ -3,7 +3,7 @@ package com.deukyun.realworld.profile.application.service;
 import com.deukyun.realworld.common.component.UseCase;
 import com.deukyun.realworld.profile.application.port.in.RegisterProfileCommand;
 import com.deukyun.realworld.profile.application.port.in.RegisterProfileUseCase;
-import com.deukyun.realworld.profile.application.port.out.InsertProfileOutCommand;
+import com.deukyun.realworld.profile.application.port.out.InsertProfileCommand;
 import com.deukyun.realworld.profile.application.port.out.InsertProfilePort;
 import lombok.RequiredArgsConstructor;
 
@@ -19,7 +19,7 @@ class RegisterProfileService implements RegisterProfileUseCase {
     @Override
     public void registerProfile(RegisterProfileCommand registerProfileCommand) {
         insertProfilePort.insertProfile(
-                new InsertProfileOutCommand(
+                new InsertProfileCommand(
                         registerProfileCommand.getUserId(),
                         registerProfileCommand.getUsername()
                 )

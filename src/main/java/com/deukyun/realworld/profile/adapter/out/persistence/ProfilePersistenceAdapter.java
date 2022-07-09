@@ -3,7 +3,7 @@ package com.deukyun.realworld.profile.adapter.out.persistence;
 import com.deukyun.realworld.common.component.PersistenceAdapter;
 import com.deukyun.realworld.common.exception.RealworldRuntimeException;
 import com.deukyun.realworld.profile.application.port.out.FindProfilePort;
-import com.deukyun.realworld.profile.application.port.out.InsertProfileOutCommand;
+import com.deukyun.realworld.profile.application.port.out.InsertProfileCommand;
 import com.deukyun.realworld.profile.application.port.out.InsertProfilePort;
 import com.deukyun.realworld.profile.application.port.out.ProfileOutResponse;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ class ProfilePersistenceAdapter implements
     }
 
     @Override
-    public void insertProfile(InsertProfileOutCommand insertProfileCommand) {
+    public void insertProfile(InsertProfileCommand insertProfileCommand) {
         profileRepository.save(
                 new ProfileJpaEntity(
                         insertProfileCommand.getUsername(),
