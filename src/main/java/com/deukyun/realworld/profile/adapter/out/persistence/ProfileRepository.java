@@ -12,4 +12,6 @@ interface ProfileRepository extends JpaRepository<ProfileJpaEntity, Long> {
             "from ProfileJpaEntity p " +
             "where p.userId = :userId")
     Optional<FindProfileResult> findByUserIdProjection(long userId);
+
+    Optional<ProfileJpaEntity> findByUserId(long userId);
 }

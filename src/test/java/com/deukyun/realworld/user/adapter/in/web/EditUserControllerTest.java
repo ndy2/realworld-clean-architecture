@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -27,7 +27,7 @@ class EditUserControllerTest extends BaseControllerTest {
         user.put("image", "https://i.stack.imgur.com/xHWG8.jpg");
 
         //when
-        mockMvc.perform(put("/api/users")
+        mockMvc.perform(patch("/api/users")
                         .header(AUTHORIZATION, token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(createJson(editUserRequest)))

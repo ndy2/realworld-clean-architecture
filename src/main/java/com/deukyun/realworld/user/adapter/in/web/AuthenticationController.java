@@ -1,6 +1,7 @@
 package com.deukyun.realworld.user.adapter.in.web;
 
 import com.deukyun.realworld.infrastructure.security.jwt.JwtAuthenticationToken;
+import com.deukyun.realworld.infrastructure.security.jwt.JwtAuthenticationToken.JwtAuthentication;
 import com.deukyun.realworld.profile.application.port.in.GetProfileQuery;
 import com.deukyun.realworld.profile.application.port.in.GetProfileResult;
 import lombok.RequiredArgsConstructor;
@@ -28,14 +29,16 @@ public class AuthenticationController {
         //토큰 생성
         JwtAuthenticationToken jwtAuthenticationToken = new JwtAuthenticationToken(email, password);
         JwtAuthenticationToken resultToken = (JwtAuthenticationToken) authenticationManager.authenticate(jwtAuthenticationToken);
-
+        //컨텍스트 홀더에 저장
         SecurityContextHolder.getContext().setAuthentication(resultToken);
 
-        GetProfileResult profileResponse = getProfileQuery.getByUserId(resultToken.getId());
+        //principal 에서 사용자 아이디와 토큰 조회
+        JwtAuthentication principal = (JwtAuthentication) resultToken.getPrincipal();
+        GetProfileResult profileResponse = getProfileQuery.getByUserId(principal.getUserId());
 
         return new AuthenticationResponse(
                 email,
-                resultToken.getJwtString(),
+                principal.getToken(),
                 profileResponse.getUsername(),
                 profileResponse.getBio(),
                 profileResponse.getImage()

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.util.Optional;
 
 import static lombok.AccessLevel.PROTECTED;
 
@@ -28,9 +29,26 @@ class ProfileJpaEntity extends BaseIdEntity {
         this.userId = userId;
     }
 
-    public void update(String username, String bio, String image) {
-        this.username = username;
-        this.bio = bio;
-        this.image = image;
+    public void update(String updateUsername, String updateBio, String updateImage) {
+
+        Optional.ofNullable(updateUsername).ifPresent(wrapper -> this.username = wrapper);
+        Optional.ofNullable(updateBio).ifPresent(wrapper -> this.bio = wrapper);
+        Optional.ofNullable(updateImage).ifPresent(wrapper -> this.image = wrapper);
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public long getUserId() {
+        return userId;
     }
 }

@@ -35,7 +35,7 @@ class UserPersistenceAdapter implements
     }
 
     @Override
-    public void updateUser(UpdateUserCommand updateUserCommand) {
+    public UpdateUserResult updateUser(UpdateUserCommand updateUserCommand) {
 
         UserJpaEntity userJpaEntity =
                 userRepository.findById(updateUserCommand.getId()).orElseThrow(RealworldRuntimeException::new);
@@ -43,6 +43,10 @@ class UserPersistenceAdapter implements
         userJpaEntity.update(
                 updateUserCommand.getEmail(),
                 updateUserCommand.getPassword()
+        );
+
+        return new UpdateUserResult(
+                userJpaEntity.getEmail()
         );
     }
 }

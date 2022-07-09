@@ -2,9 +2,11 @@ package com.deukyun.realworld.user.application.service;
 
 import com.deukyun.realworld.common.component.UseCase;
 import com.deukyun.realworld.user.application.port.in.EditUserCommand;
+import com.deukyun.realworld.user.application.port.in.EditUserResult;
 import com.deukyun.realworld.user.application.port.in.EditUserUseCase;
 import com.deukyun.realworld.user.application.port.out.UpdateUserCommand;
 import com.deukyun.realworld.user.application.port.out.UpdateUserPort;
+import com.deukyun.realworld.user.application.port.out.UpdateUserResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,14 +18,18 @@ class EditUserService implements EditUserUseCase {
 
     @Transactional
     @Override
-    public void editUser(EditUserCommand editUserCommand) {
+    public EditUserResult editUser(EditUserCommand editUserCommand) {
 
-        updateUserPort.updateUser(
+        UpdateUserResult updateUserResult = updateUserPort.updateUser(
                 new UpdateUserCommand(
                         editUserCommand.getId(),
                         editUserCommand.getEmail(),
                         editUserCommand.getPassword()
                 )
+        );
+
+        return new EditUserResult(
+                updateUserResult.getEmail()
         );
     }
 }

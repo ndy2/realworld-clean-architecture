@@ -6,8 +6,6 @@ import org.springframework.security.authentication.AbstractAuthenticationToken;
 
 import java.util.Collections;
 
-import static com.google.common.base.Preconditions.checkState;
-
 @Getter
 public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 
@@ -37,18 +35,6 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 
         this.principal = principal;
         this.credentials = null;
-    }
-
-    public long getId() {
-        checkState(isAuthenticated(), "authentication is not provided");
-
-        return ((JwtAuthentication) principal).getUserId();
-    }
-
-    public String getJwtString() {
-        checkState(isAuthenticated(), "authentication is not provided");
-
-        return ((JwtAuthentication) principal).getToken();
     }
 
     @Override

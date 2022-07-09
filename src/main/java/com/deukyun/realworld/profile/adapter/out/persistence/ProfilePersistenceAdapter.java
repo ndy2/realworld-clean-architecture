@@ -30,15 +30,21 @@ class ProfilePersistenceAdapter implements
     }
 
     @Override
-    public void updatePort(UpdateProfileCommand updateProfileCommand) {
+    public UpdateProfileResult updatePort(UpdateProfileCommand updateProfileCommand) {
 
         ProfileJpaEntity profileJpaEntity =
-                profileRepository.findById(updateProfileCommand.getUserId()).orElseThrow(RealworldRuntimeException::new);
+                profileRepository.findByUserId(updateProfileCommand.getUserId()).orElseThrow(RealworldRuntimeException::new);
 
         profileJpaEntity.update(
                 updateProfileCommand.getUsername(),
                 updateProfileCommand.getBio(),
                 updateProfileCommand.getImage()
+        );
+
+        return new UpdateProfileResult(
+                profileJpaEntity.getUsername(),
+                profileJpaEntity.getBio(),
+                profileJpaEntity.getImage()
         );
     }
 }
