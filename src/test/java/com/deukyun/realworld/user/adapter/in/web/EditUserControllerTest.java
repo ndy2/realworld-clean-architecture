@@ -16,8 +16,7 @@ class EditUserControllerTest extends BaseControllerTest {
     void 사용자_수정_테스트() throws Exception {
         //setup
         사용자_등록("Ndy", "ndy@ndy.ndy", "ndyndy");
-        String token = 인증("ndy@ndy.ndy", "ndyndy");
-        System.out.println("token = " + token);
+        인증("ndy@ndy.ndy", "ndyndy");
 
         //given
         ObjectNode editUserRequest = objectMapper.createObjectNode();

@@ -9,7 +9,7 @@ import java.util.Optional;
 
 interface ProfileRepository extends JpaRepository<ProfileJpaEntity, Long> {
 
-    @Query("select new com.deukyun.realworld.profile.application.port.out.FindProfileResult(p.username, p.bio, p.image) " +
+    @Query("select new com.deukyun.realworld.profile.application.port.out.FindProfileByUserIdResult(p.username, p.bio, p.image) " +
             "from ProfileJpaEntity p " +
             "where p.userId = :userId")
     Optional<FindProfileByUserIdResult> findByUserIdProjection(long userId);

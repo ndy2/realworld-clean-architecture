@@ -14,8 +14,8 @@ public class EditUserCommand {
     public EditUserCommand(long id, String email, String password) {
 
         this.id = id;
-        this.email = new Email(email);
-        this.password = new Password(password);
+        this.email = email == null ? null : new Email(email);
+        this.password = password == null ? null : new Password(password);
     }
 
     public long getId() {
@@ -23,10 +23,10 @@ public class EditUserCommand {
     }
 
     public String getEmail() {
-        return email.getValue();
+        return email == null ? null : email.getValue();
     }
 
     public String getPassword() {
-        return password.getValue();
+        return password == null ? null : password.getValue();
     }
 }

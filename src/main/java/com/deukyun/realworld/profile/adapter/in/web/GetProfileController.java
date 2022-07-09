@@ -4,6 +4,7 @@ import com.deukyun.realworld.profile.application.port.in.GetProfileByUsernameQue
 import com.deukyun.realworld.profile.application.port.in.GetProfileByUsernameResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
@@ -14,7 +15,7 @@ public class GetProfileController {
 
     @GetMapping("/api/profiles/{username}")
     public GetProfileResponse getProfile(
-            String username
+            @PathVariable String username
     ) {
         GetProfileByUsernameResult queryResult = getProfileByUsernameQuery.getProfileByUsername(username);
 

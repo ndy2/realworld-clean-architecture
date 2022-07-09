@@ -7,11 +7,14 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -28,6 +31,8 @@ public class BaseControllerTest {
 
     @Autowired
     protected ObjectMapper objectMapper;
+
+    protected String token;
 
     protected String createJson(Object dto) throws JsonProcessingException {
         return objectMapper.writeValueAsString(dto);
@@ -46,8 +51,8 @@ public class BaseControllerTest {
                 .andExpect(status().isOk());
     }
 
-    //인증 후 토큰 반환
-    protected String 인증(String email, String password) throws Exception {
+    //인증 후 토큰 저장
+    protected void 인증(String email, String password) throws Exception {
         ObjectNode authenticationRequest = objectMapper.createObjectNode();
         ObjectNode user = authenticationRequest.putObject("user");
         user.put("email", email);
@@ -61,6 +66,23 @@ public class BaseControllerTest {
 
         String content = mvcResult.getResponse().getContentAsString();
 
-        return objectMapper.readValue(content, JsonNode.class).get("user").get("token").asText();
+        token = objectMapper.readValue(content, JsonNode.class).get("user").get("token").asText();
+    }
+
+    protected void 프로필_업데이트(String email, String username, String password, String image, String bio) throws Exception {
+
+        ObjectNode editUserRequest = objectMapper.createObjectNode();
+        ObjectNode user = editUserRequest.putObject("user");
+        user.put("email", email);
+        user.put("username", username);
+        user.put("password", password);
+        user.put("bio", bio);
+        user.put("image", image);
+
+        mockMvc.perform(patch("/api/users")
+                        .header(AUTHORIZATION, token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(createJson(editUserRequest)))
+                .andExpect(status().isOk());
     }
 }
