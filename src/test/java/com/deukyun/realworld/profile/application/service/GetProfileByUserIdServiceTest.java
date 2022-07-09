@@ -19,6 +19,7 @@ class GetProfileByUserIdServiceTest {
     void setUp() {
         when(findProfileByUserIdPort.findByUserId(1L))
                 .thenReturn(new FindProfileByUserIdResult(
+                        2L,
                         "jake@jake.jake",
                         "Jakob",
                         null,

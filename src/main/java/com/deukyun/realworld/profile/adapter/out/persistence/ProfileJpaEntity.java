@@ -41,6 +41,10 @@ public class ProfileJpaEntity {
         Optional.ofNullable(updateImage).ifPresent(wrapper -> this.image = wrapper);
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public String getUsername() {
         return username;
     }

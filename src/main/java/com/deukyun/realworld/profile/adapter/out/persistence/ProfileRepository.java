@@ -17,7 +17,7 @@ interface ProfileRepository extends JpaRepository<ProfileJpaEntity, Long> {
     Optional<ProfileJpaEntity> findByUserId(long userId);
 
 
-    @Query("select new com.deukyun.realworld.profile.application.port.out.FindProfileByUsernameResult(p.username, p.bio, p.image) " +
+    @Query("select new com.deukyun.realworld.profile.application.port.out.FindProfileByUsernameResult(p.id, p.username, p.bio, p.image) " +
             "from ProfileJpaEntity p " +
             "where p.username = :username")
     Optional<FindProfileByUsernameResult> findByUsernameProjection(String username);

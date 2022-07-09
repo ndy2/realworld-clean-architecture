@@ -21,6 +21,7 @@ class ProfilePersistenceAdapter implements
                 = profileRepository.findByUserIdProjection(userId).orElseThrow(RealworldRuntimeException::new);
 
         return new FindProfileByUserIdResult(
+                profileJpaEntity.getId(),
                 profileJpaEntity.getUserEmail(),
                 profileJpaEntity.getUsername(),
                 profileJpaEntity.getBio(),

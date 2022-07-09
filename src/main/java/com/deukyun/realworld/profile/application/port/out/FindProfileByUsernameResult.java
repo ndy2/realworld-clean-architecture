@@ -5,6 +5,7 @@ import lombok.Value;
 @Value
 public class FindProfileByUsernameResult {
 
+    long id;
     String username;
     String bio;
     String image;
