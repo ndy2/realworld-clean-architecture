@@ -53,7 +53,7 @@ public class FollowUserService implements FollowUserUseCase {
                 followeeProfileId
         );
 
-        checkArgument(isAlreadyFollow, "이미 팔로우 중입니다");
-        checkArgument(followerProfileId == followeeProfileId, "자기 자신을 팔로우 할 수 없습니다");
+        checkArgument(!isAlreadyFollow, "이미 팔로우 중입니다");
+        checkArgument(followerProfileId != followeeProfileId, "자기 자신을 팔로우 할 수 없습니다");
     }
 }
