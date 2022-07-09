@@ -3,7 +3,7 @@ package com.deukyun.realworld.user.application.port.in;
 import lombok.Value;
 
 @Value
-public class EditUserResponse {
+public class EditUserResult {
 
     String email;
     String password;

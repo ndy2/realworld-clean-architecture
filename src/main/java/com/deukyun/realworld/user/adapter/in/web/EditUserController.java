@@ -2,7 +2,7 @@ package com.deukyun.realworld.user.adapter.in.web;
 
 
 import com.deukyun.realworld.profile.application.port.in.EditProfileUseCase;
-import com.deukyun.realworld.user.application.port.in.EditUserResponse;
+import com.deukyun.realworld.user.application.port.in.EditUserResult;
 import com.deukyun.realworld.user.application.port.in.EditUserUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -17,7 +17,7 @@ public class EditUserController {
     private final EditProfileUseCase editProfileUseCase;
 
     @PutMapping("/api/users")
-    public EditUserResponse editUser(
+    public EditUserResult editUser(
             @RequestBody EditUserRequest editUserRequest
     ) {
 

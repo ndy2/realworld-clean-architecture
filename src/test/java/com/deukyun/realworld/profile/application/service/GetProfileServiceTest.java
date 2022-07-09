@@ -1,6 +1,6 @@
 package com.deukyun.realworld.profile.application.service;
 
-import com.deukyun.realworld.profile.application.port.in.ProfileInResponse;
+import com.deukyun.realworld.profile.application.port.in.GetProfileResult;
 import com.deukyun.realworld.profile.application.port.out.FindProfilePort;
 import com.deukyun.realworld.profile.application.port.out.ProfileOutResponse;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,16 +33,16 @@ class GetProfileServiceTest {
         long userId = 1L;
 
         //when
-        ProfileInResponse response = getProfileService.getByUserId(userId);
+        GetProfileResult response = getProfileService.getByUserId(userId);
 
         //then
         verify(findProfilePort).findByUserId(1L);
 
         assertThat(response)
                 .extracting(
-                        ProfileInResponse::getUsername,
-                        ProfileInResponse::getBio,
-                        ProfileInResponse::getImage)
+                        GetProfileResult::getUsername,
+                        GetProfileResult::getBio,
+                        GetProfileResult::getImage)
                 .containsExactly(
                         "Jakob",
                         null,

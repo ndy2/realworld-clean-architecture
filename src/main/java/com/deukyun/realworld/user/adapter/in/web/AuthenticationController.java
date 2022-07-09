@@ -2,7 +2,7 @@ package com.deukyun.realworld.user.adapter.in.web;
 
 import com.deukyun.realworld.infrastructure.security.jwt.domain.JwtAuthenticationToken;
 import com.deukyun.realworld.profile.application.port.in.GetProfileQuery;
-import com.deukyun.realworld.profile.application.port.in.ProfileInResponse;
+import com.deukyun.realworld.profile.application.port.in.GetProfileResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,7 +28,7 @@ public class AuthenticationController {
         JwtAuthenticationToken jwtAuthenticationToken = new JwtAuthenticationToken(email, password);
         JwtAuthenticationToken resultToken = (JwtAuthenticationToken) authenticationManager.authenticate(jwtAuthenticationToken);
 
-        ProfileInResponse profileResponse = getProfileQuery.getByUserId(resultToken.getId());
+        GetProfileResult profileResponse = getProfileQuery.getByUserId(resultToken.getId());
 
         return new AuthenticationResponse(
                 email,
