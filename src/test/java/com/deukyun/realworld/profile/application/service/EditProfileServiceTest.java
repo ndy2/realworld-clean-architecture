@@ -1,13 +1,15 @@
 package com.deukyun.realworld.profile.application.service;
 
 import com.deukyun.realworld.profile.application.port.in.EditProfileCommand;
+import com.deukyun.realworld.profile.application.port.in.EditProfileResult;
 import com.deukyun.realworld.profile.application.port.out.UpdateProfileCommand;
 import com.deukyun.realworld.profile.application.port.out.UpdateProfilePort;
+import com.deukyun.realworld.profile.application.port.out.UpdateProfileResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 class EditProfileServiceTest {
 
@@ -24,13 +26,21 @@ class EditProfileServiceTest {
     void 프로필_업데이트() {
         //given
         EditProfileCommand editProfileCommand =
-                new EditProfileCommand(1L, "editname", "editbio", "editiamge");
+                new EditProfileCommand(1L, "editName", "editBio", "editImage");
+
+        when(updateProfilePort.updatePort(
+                new UpdateProfileCommand(1L, "editName", "editBio", "editImage")
+        )).thenReturn(
+                new UpdateProfileResult("editName", "editBio", "editImage"));
+
 
         //when
-        editProfileService.editProfile(editProfileCommand);
+        EditProfileResult editProfileResult = editProfileService.editProfile(editProfileCommand);
 
         //then
         verify(updateProfilePort)
-                .updatePort(new UpdateProfileCommand(1L, "editname", "editbio", "editiamge"));
+                .updatePort(new UpdateProfileCommand(1L, "editName", "editBio", "editImage"));
+        assertThat(editProfileResult)
+                .isEqualTo(new EditProfileResult("editName", "editBio", "editImage"));
     }
 }

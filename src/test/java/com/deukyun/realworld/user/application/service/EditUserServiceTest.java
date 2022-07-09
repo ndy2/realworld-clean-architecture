@@ -1,13 +1,15 @@
 package com.deukyun.realworld.user.application.service;
 
 import com.deukyun.realworld.user.application.port.in.EditUserCommand;
+import com.deukyun.realworld.user.application.port.in.EditUserResult;
 import com.deukyun.realworld.user.application.port.out.UpdateUserCommand;
 import com.deukyun.realworld.user.application.port.out.UpdateUserPort;
+import com.deukyun.realworld.user.application.port.out.UpdateUserResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 class EditUserServiceTest {
 
@@ -24,12 +26,20 @@ class EditUserServiceTest {
     void 사용자_업데이트() {
         //given
         EditUserCommand editUserCommand = new EditUserCommand(1L, "edit@edit.edit", "editedit");
+        when(updateUserPort.updateUser(
+                new UpdateUserCommand(1L, "edit@edit.edit", "editedit")
+        )).thenReturn(
+                new UpdateUserResult("edit@edit.edit")
+        );
+
 
         //when
-        editUserService.editUser(editUserCommand);
+        EditUserResult editUserResult = editUserService.editUser(editUserCommand);
 
         //then
         verify(updateUserPort)
                 .updateUser(new UpdateUserCommand(1L, "edit@edit.edit", "editedit"));
+        assertThat(editUserResult)
+                .isEqualTo(new EditUserResult("edit@edit.edit"));
     }
 }
