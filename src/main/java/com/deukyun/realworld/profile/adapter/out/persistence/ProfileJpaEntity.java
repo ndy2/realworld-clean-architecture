@@ -27,4 +27,10 @@ class ProfileJpaEntity extends BaseIdEntity {
         this.username = username;
         this.userId = userId;
     }
+
+    public void update(String username, String bio, String image) {
+        this.username = username;
+        this.bio = bio;
+        this.image = image;
+    }
 }

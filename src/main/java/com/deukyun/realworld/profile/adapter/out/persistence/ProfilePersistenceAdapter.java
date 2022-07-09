@@ -2,23 +2,21 @@ package com.deukyun.realworld.profile.adapter.out.persistence;
 
 import com.deukyun.realworld.common.component.PersistenceAdapter;
 import com.deukyun.realworld.common.exception.RealworldRuntimeException;
-import com.deukyun.realworld.profile.application.port.out.FindProfilePort;
-import com.deukyun.realworld.profile.application.port.out.InsertProfileCommand;
-import com.deukyun.realworld.profile.application.port.out.InsertProfilePort;
-import com.deukyun.realworld.profile.application.port.out.ProfileOutResponse;
+import com.deukyun.realworld.profile.application.port.out.*;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @PersistenceAdapter
 class ProfilePersistenceAdapter implements
         InsertProfilePort,
-        FindProfilePort {
+        FindProfilePort,
+        UpdateProfilePort {
 
     private final ProfileRepository profileRepository;
 
     @Override
     public ProfileOutResponse findByUserId(long userId) {
-        return profileRepository.findByUserId(userId).orElseThrow(RealworldRuntimeException::new);
+        return profileRepository.findByUserIdProjection(userId).orElseThrow(RealworldRuntimeException::new);
     }
 
     @Override
@@ -28,6 +26,19 @@ class ProfilePersistenceAdapter implements
                         insertProfileCommand.getUsername(),
                         insertProfileCommand.getUserId()
                 )
+        );
+    }
+
+    @Override
+    public void updatePort(UpdateProfileCommand updateProfileCommand) {
+
+        ProfileJpaEntity profileJpaEntity =
+                profileRepository.findById(updateProfileCommand.getUserId()).orElseThrow(RealworldRuntimeException::new);
+
+        profileJpaEntity.update(
+                updateProfileCommand.getUsername(),
+                updateProfileCommand.getBio(),
+                updateProfileCommand.getImage()
         );
     }
 }
