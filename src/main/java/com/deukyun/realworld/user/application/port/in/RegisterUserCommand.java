@@ -23,4 +23,16 @@ public class RegisterUserCommand {
         this.password = new Password(password);
         this.username = username;
     }
+
+    public String getEmail() {
+        return email.getValue();
+    }
+
+    public String getPassword() {
+        return password.getValue();
+    }
+
+    public String getUsername() {
+        return username;
+    }
 }

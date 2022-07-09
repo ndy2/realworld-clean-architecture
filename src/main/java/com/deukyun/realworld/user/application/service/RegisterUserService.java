@@ -23,12 +23,12 @@ class RegisterUserService implements RegisterUserUseCase {
     @Transactional
     public void registerUser(RegisterUserCommand registerUserCommand) {
 
-        String password = registerUserCommand.getPassword().getValue();
+        String password = registerUserCommand.getPassword();
         String encodedPassword = passwordEncoder.encode(password);
 
         long userId = insertUserPort.insertUser(
                 new InsertUserCommand(
-                        registerUserCommand.getEmail().getValue(),
+                        registerUserCommand.getEmail(),
                         encodedPassword
                 )
         );
