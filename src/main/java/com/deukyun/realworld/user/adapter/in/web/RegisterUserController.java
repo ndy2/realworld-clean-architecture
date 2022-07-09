@@ -15,7 +15,8 @@ public class RegisterUserController {
 
     @PostMapping("/api/users")
     public RegisterUserResponse registerUser(
-            @RequestBody RegisterUserRequest registerUserRequest) {
+            @RequestBody RegisterUserRequest registerUserRequest
+    ) {
         String email = registerUserRequest.getEmail();
         String password = registerUserRequest.getPassword();
         String username = registerUserRequest.getUsername();
