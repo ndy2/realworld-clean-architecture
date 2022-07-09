@@ -3,7 +3,7 @@ package com.deukyun.realworld.profile.application.port.out;
 import lombok.Value;
 
 @Value
-public class FindProfileResult {
+public class FindProfileByUserIdResult {
 
     String username;
     String bio;

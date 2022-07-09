@@ -9,14 +9,14 @@ import lombok.RequiredArgsConstructor;
 @PersistenceAdapter
 class ProfilePersistenceAdapter implements
         InsertProfilePort,
-        FindProfilePort,
+        FindProfileByUserIdPort,
         UpdateProfilePort,
         FindProfileByUsernamePort {
 
     private final ProfileRepository profileRepository;
 
     @Override
-    public FindProfileResult findByUserId(long userId) {
+    public FindProfileByUserIdResult findByUserId(long userId) {
         return profileRepository.findByUserIdProjection(userId).orElseThrow(RealworldRuntimeException::new);
     }
 
