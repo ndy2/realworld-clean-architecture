@@ -3,7 +3,7 @@ package com.deukyun.realworld.user.application.service;
 import com.deukyun.realworld.common.component.UseCase;
 import com.deukyun.realworld.infrastructure.security.jwt.JwtAuthenticationUseCase;
 import com.deukyun.realworld.user.application.port.out.FindPasswordPort;
-import com.deukyun.realworld.user.application.port.out.FindPasswordResponse;
+import com.deukyun.realworld.user.application.port.out.FindPasswordResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -22,12 +22,12 @@ class AuthenticationService implements JwtAuthenticationUseCase {
         String email = String.valueOf(principal);
         String password = String.valueOf(credentials);
 
-        FindPasswordResponse findPasswordResponse = findUserPort
+        FindPasswordResult findPasswordResult = findUserPort
                 .findPasswordByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("invalid email or password provided"));
 
-        checkArgument(passwordEncoder.matches(password, findPasswordResponse.getPassword()), "invalid email or password provided");
+        checkArgument(passwordEncoder.matches(password, findPasswordResult.getPassword()), "invalid email or password provided");
 
-        return findPasswordResponse.getId();
+        return findPasswordResult.getId();
     }
 }

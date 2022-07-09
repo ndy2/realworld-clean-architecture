@@ -29,7 +29,7 @@ class UserPersistenceAdapter implements
     }
 
     @Override
-    public Optional<FindPasswordResponse> findPasswordByEmail(String email) {
+    public Optional<FindPasswordResult> findPasswordByEmail(String email) {
 
         return userRepository.findPasswordByEmail(email);
     }

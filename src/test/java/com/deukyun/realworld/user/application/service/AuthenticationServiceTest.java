@@ -1,7 +1,7 @@
 package com.deukyun.realworld.user.application.service;
 
 import com.deukyun.realworld.user.application.port.out.FindPasswordPort;
-import com.deukyun.realworld.user.application.port.out.FindPasswordResponse;
+import com.deukyun.realworld.user.application.port.out.FindPasswordResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,7 +23,7 @@ class AuthenticationServiceTest {
     @BeforeEach
     void setUp() {
         when(findPasswordPort.findPasswordByEmail("jake@jake.jake")).thenReturn(
-                Optional.of(new FindPasswordResponse(1L, "[encoded]jakejake"))
+                Optional.of(new FindPasswordResult(1L, "[encoded]jakejake"))
         );
         when(passwordEncoder.matches("jakejake", "[encoded]jakejake")).thenReturn(true);
 

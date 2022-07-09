@@ -4,5 +4,5 @@ import java.util.Optional;
 
 public interface FindPasswordPort {
 
-    Optional<FindPasswordResponse> findPasswordByEmail(String email);
+    Optional<FindPasswordResult> findPasswordByEmail(String email);
 }
