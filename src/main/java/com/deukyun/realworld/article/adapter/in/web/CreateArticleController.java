@@ -1,11 +1,13 @@
 package com.deukyun.realworld.article.adapter.in.web;
 
+import com.deukyun.realworld.article.application.port.in.AuthorResult;
 import com.deukyun.realworld.article.application.port.in.CreateArticleCommand;
 import com.deukyun.realworld.article.application.port.in.CreateArticleResult;
 import com.deukyun.realworld.article.application.port.in.CreateArticleUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
@@ -22,8 +24,8 @@ public class CreateArticleController {
     @PostMapping("/api/articles")
     public CreateArticleResponse createArticle(
             @AuthenticationPrincipal JwtAuthentication jwtAuthentication,
-            CreateArticleRequest createArticleRequest) {
-
+            @RequestBody CreateArticleRequest createArticleRequest
+    ) {
         String title = createArticleRequest.getTitle();
         String description = createArticleRequest.getDescription();
         String body = createArticleRequest.getBody();
@@ -35,9 +37,15 @@ public class CreateArticleController {
 
         String slug = articleResult.getSlug();
         LocalDateTime createdAt = articleResult.getCreatedAt();
+        AuthorResult authorResult = articleResult.getAuthorResult();
 
-        //TODO - 페이보릿 기능
-        return new CreateArticleResponse(slug, title, description, body, tagList, createdAt, false, 0);
+        CreateArticleResponse response = new CreateArticleResponse(slug, title, description, body, tagList, createdAt);
+        response.addAuthorResponse(
+                authorResult.getUsername(),
+                authorResult.getBio(),
+                authorResult.getImage()
+        );
+        return response;
     }
 
 }

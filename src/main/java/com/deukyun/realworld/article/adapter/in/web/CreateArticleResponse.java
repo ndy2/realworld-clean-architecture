@@ -1,5 +1,6 @@
 package com.deukyun.realworld.article.adapter.in.web;
 
+import com.deukyun.realworld.article.adapter.in.web.CreateArticleResponse.Response.AuthorResponse;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -17,21 +18,22 @@ final class CreateArticleResponse {
                                  String description,
                                  String body,
                                  List<String> tagList,
-                                 LocalDateTime createdAt,
-                                 boolean favorited,
-                                 long favoritesCount) {
+                                 LocalDateTime createdAt) {
 
         this.response = new Response(slug,
                 title,
                 description,
                 body,
                 tagList,
-                createdAt,
-                favorited,
-                favoritesCount);
+                createdAt);
+    }
+
+    public void addAuthorResponse(String username, String bio, String image) {
+        response.author = new AuthorResponse(username, bio, image);
     }
 
     @Getter
+    @RequiredArgsConstructor
     public static class Response {
 
         private final String slug;
@@ -40,35 +42,15 @@ final class CreateArticleResponse {
         private final String body;
         private final List<String> tagList;
         private final LocalDateTime createdAt;
-        private final boolean favorited;
-        private final long favoritesCount;
-        private AuthorResponse authorResponse;
+        private AuthorResponse author;
 
-        public Response(String slug,
-                        String title,
-                        String description,
-                        String body,
-                        List<String> tagList,
-                        LocalDateTime createdAt,
-                        boolean favorited,
-                        long favoritesCount) {
-            this.slug = slug;
-            this.title = title;
-            this.description = description;
-            this.body = body;
-            this.tagList = tagList;
-            this.createdAt = createdAt;
-            this.favorited = favorited;
-            this.favoritesCount = favoritesCount;
-        }
-
+        @Getter
         @RequiredArgsConstructor
         public static class AuthorResponse {
 
             private final String username;
             private final String bio;
             private final String image;
-            private final boolean following;
         }
     }
 }
