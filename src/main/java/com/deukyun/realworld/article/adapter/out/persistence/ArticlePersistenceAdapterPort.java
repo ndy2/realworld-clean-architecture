@@ -73,7 +73,9 @@ class ArticlePersistenceAdapterPort implements
     public FindArticleResult findArticleBySlug(String slug) {
         ArticleJpaEntity article = articleRepository.findBySlug(slug).orElseThrow(IllegalArgumentException::new);
 
+        // TODO - tag, author
         return new FindArticleResult(
+                article.getId(),
                 article.getSlug(),
                 article.getTitle(),
                 article.getDescription(),

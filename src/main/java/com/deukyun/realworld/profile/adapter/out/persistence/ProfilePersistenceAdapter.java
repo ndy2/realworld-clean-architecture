@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 class ProfilePersistenceAdapter implements
         InsertProfilePort,
         FindProfileByUserIdPort,
+        FindProfileIdByUserIdPort,
         UpdateProfilePort,
         FindProfileByUsernamePort {
 
@@ -27,6 +28,11 @@ class ProfilePersistenceAdapter implements
                 profileJpaEntity.getBio(),
                 profileJpaEntity.getImage()
         );
+    }
+
+    @Override
+    public long findProfileIdByUserId(long userId) {
+        return profileRepository.findIdByUserId(userId).orElseThrow(RealworldRuntimeException::new);
     }
 
     @Override
@@ -62,4 +68,5 @@ class ProfilePersistenceAdapter implements
     public FindProfileByUsernameResult findProfileByUsername(String username) {
         return profileRepository.findByUsernameProjection(username).orElseThrow(RealworldRuntimeException::new);
     }
+
 }

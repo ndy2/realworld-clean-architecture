@@ -8,6 +8,7 @@ import java.util.List;
 @Value
 public class FindArticleResult {
 
+    long id;
     String slug;
     String title;
     String description;
