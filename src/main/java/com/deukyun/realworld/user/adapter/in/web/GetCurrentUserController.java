@@ -1,6 +1,6 @@
 package com.deukyun.realworld.user.adapter.in.web;
 
-import com.deukyun.realworld.infrastructure.security.jwt.JwtAuthenticationToken.JwtAuthentication;
+import com.deukyun.realworld.configuration.jwt.JwtAuthenticationToken.JwtAuthentication;
 import com.deukyun.realworld.profile.application.port.in.GetProfileByUserIdQuery;
 import com.deukyun.realworld.profile.application.port.in.GetProfileByUserIdResult;
 import lombok.RequiredArgsConstructor;

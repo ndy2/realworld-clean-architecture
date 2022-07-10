@@ -1,6 +1,6 @@
-package com.deukyun.realworld.infrastructure.security.jwt;
+package com.deukyun.realworld.configuration.jwt;
 
-import com.deukyun.realworld.infrastructure.security.jwt.JwtAuthenticationToken.JwtAuthentication;
+import com.deukyun.realworld.configuration.jwt.JwtAuthenticationToken.JwtAuthentication;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;

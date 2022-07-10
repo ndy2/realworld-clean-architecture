@@ -1,9 +1,9 @@
 package com.deukyun.realworld.profile.adapter.in.web;
 
+import com.deukyun.realworld.configuration.jwt.JwtAuthenticationToken.JwtAuthentication;
 import com.deukyun.realworld.follow.application.port.in.FollowUserResult;
 import com.deukyun.realworld.follow.application.port.in.FollowUserUseCase;
 import com.deukyun.realworld.follow.application.port.in.UnfollowUserUseCase;
-import com.deukyun.realworld.infrastructure.security.jwt.JwtAuthenticationToken.JwtAuthentication;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;

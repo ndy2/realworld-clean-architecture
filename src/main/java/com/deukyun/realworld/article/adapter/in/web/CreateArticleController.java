@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.deukyun.realworld.infrastructure.security.jwt.JwtAuthenticationToken.JwtAuthentication;
+import static com.deukyun.realworld.configuration.jwt.JwtAuthenticationToken.JwtAuthentication;
 
 @RequiredArgsConstructor
 @RestController

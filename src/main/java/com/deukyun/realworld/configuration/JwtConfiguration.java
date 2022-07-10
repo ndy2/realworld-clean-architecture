@@ -1,8 +1,8 @@
 package com.deukyun.realworld.configuration;
 
-import com.deukyun.realworld.infrastructure.security.jwt.JwtAuthenticationFilter;
-import com.deukyun.realworld.infrastructure.security.jwt.JwtAuthenticationProvider;
-import com.deukyun.realworld.infrastructure.security.jwt.JwtResolver;
+import com.deukyun.realworld.configuration.jwt.JwtAuthenticationFilter;
+import com.deukyun.realworld.configuration.jwt.JwtAuthenticationProvider;
+import com.deukyun.realworld.configuration.jwt.JwtResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

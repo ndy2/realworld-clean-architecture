@@ -1,7 +1,7 @@
 package com.deukyun.realworld.user.application.service;
 
 import com.deukyun.realworld.common.component.UseCase;
-import com.deukyun.realworld.infrastructure.security.jwt.JwtAuthenticationUseCase;
+import com.deukyun.realworld.configuration.jwt.JwtAuthenticationUseCase;
 import com.deukyun.realworld.user.application.port.out.FindPasswordPort;
 import com.deukyun.realworld.user.application.port.out.FindPasswordResult;
 import lombok.RequiredArgsConstructor;

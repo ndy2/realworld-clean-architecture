@@ -1,6 +1,5 @@
-package com.deukyun.realworld.infrastructure.security.jwt;
+package com.deukyun.realworld.configuration.jwt;
 
-import com.deukyun.realworld.infrastructure.security.jwt.JwtAuthenticationToken.JwtAuthentication;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +35,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 String id = jwtResolver.getClaims(token, Claims::getId);
 
                 SecurityContextHolder.getContext()
-                        .setAuthentication(new JwtAuthenticationToken(new JwtAuthentication(Long.parseLong(id), token)));
+                        .setAuthentication(new JwtAuthenticationToken(new JwtAuthenticationToken.JwtAuthentication(Long.parseLong(id), token)));
             }
 
             filterChain.doFilter(request, response);
