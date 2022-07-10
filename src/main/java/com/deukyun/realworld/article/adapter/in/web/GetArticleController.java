@@ -7,7 +7,7 @@ import com.deukyun.realworld.article.application.port.in.ArticleQueries;
 import com.deukyun.realworld.article.application.port.in.ArticleResult;
 import com.deukyun.realworld.article.application.port.in.FeedArticlesCommand;
 import com.deukyun.realworld.article.application.port.in.ListArticlesCommand;
-import com.deukyun.realworld.configuration.jwt.JwtAuthenticationToken.JwtAuthentication;
+import com.deukyun.realworld.common.SecurityUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,14 +46,14 @@ public class GetArticleController {
 
     @GetMapping("/api/articles/feed")
     public ListArticlesResponse feedArticles(
-            @AuthenticationPrincipal JwtAuthentication jwtAuthentication,
+            @AuthenticationPrincipal SecurityUser securityUser,
             PagingQueryParam pagingQueryParam
     ) {
         List<ArticleResult> articleResults = articleQueries.feedArticles(
                 new FeedArticlesCommand(
                         pagingQueryParam.limit,
                         pagingQueryParam.offset,
-                        jwtAuthentication.getUserId()
+                        securityUser.getUserId()
                 )
         );
 

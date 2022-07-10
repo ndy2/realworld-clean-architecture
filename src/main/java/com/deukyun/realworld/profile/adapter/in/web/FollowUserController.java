@@ -1,6 +1,6 @@
 package com.deukyun.realworld.profile.adapter.in.web;
 
-import com.deukyun.realworld.configuration.jwt.JwtAuthenticationToken.JwtAuthentication;
+import com.deukyun.realworld.common.SecurityUser;
 import com.deukyun.realworld.follow.application.port.in.FollowUserResult;
 import com.deukyun.realworld.follow.application.port.in.FollowUserUseCase;
 import com.deukyun.realworld.follow.application.port.in.UnfollowUserUseCase;
@@ -20,10 +20,10 @@ public class FollowUserController {
 
     @PostMapping("/api/profiles/{username}/follow")
     public FollowUserResponse followUser(
-            @AuthenticationPrincipal JwtAuthentication jwtAuthentication,
+            @AuthenticationPrincipal SecurityUser securityUser,
             @PathVariable String username
     ) {
-        long userId = jwtAuthentication.getUserId();
+        long userId = securityUser.getUserId();
 
         FollowUserResult followUserResult = followUserUseCase.userIdFollowsUsername(userId, username);
 
@@ -37,10 +37,10 @@ public class FollowUserController {
 
     @DeleteMapping("/api/profiles/{username}/follow")
     public FollowUserResponse unFollowUser(
-            @AuthenticationPrincipal JwtAuthentication jwtAuthentication,
+            @AuthenticationPrincipal SecurityUser securityUser,
             @PathVariable String username
     ) {
-        long userId = jwtAuthentication.getUserId();
+        long userId = securityUser.getUserId();
 
         FollowUserResult unfollowUserResult = unfollowUserUseCase.userIdUnfollowsUsername(userId, username);
 

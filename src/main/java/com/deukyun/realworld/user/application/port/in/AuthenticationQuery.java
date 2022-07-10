@@ -1,6 +1,6 @@
-package com.deukyun.realworld.configuration.jwt;
+package com.deukyun.realworld.user.application.port.in;
 
-public interface JwtAuthenticationUseCase {
+public interface AuthenticationQuery {
 
     /**
      * 인증 처리 - 실패시 예외 던짐

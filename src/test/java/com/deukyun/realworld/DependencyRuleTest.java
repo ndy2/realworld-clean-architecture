@@ -16,7 +16,7 @@ class DependencyRuleTest {
     JavaClasses importPackages = new ClassFileImporter().importPackages("com.deukyun.realworld..");
 
     @ParameterizedTest
-    @ValueSource(strings = {"user", "profile", "follow"})
+    @ValueSource(strings = {"user", "profile", "follow", "favorite", "article"})
     void Hexagonal_Architecture_의존성_규칙을_만족한다(String boundedContext) {
 
         HexagonalArchitecture.boundedContext("com.deukyun.realworld", boundedContext)

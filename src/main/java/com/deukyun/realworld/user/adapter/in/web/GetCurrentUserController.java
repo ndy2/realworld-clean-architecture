@@ -1,6 +1,6 @@
 package com.deukyun.realworld.user.adapter.in.web;
 
-import com.deukyun.realworld.configuration.jwt.JwtAuthenticationToken.JwtAuthentication;
+import com.deukyun.realworld.common.SecurityUser;
 import com.deukyun.realworld.profile.application.port.in.GetProfileByUserIdQuery;
 import com.deukyun.realworld.profile.application.port.in.GetProfileByUserIdResult;
 import lombok.RequiredArgsConstructor;
@@ -16,10 +16,10 @@ public class GetCurrentUserController {
 
     @GetMapping("/api/user")
     public GetCurrentUserResponse getCurrentUser(
-            @AuthenticationPrincipal JwtAuthentication jwtAuthentication
+            @AuthenticationPrincipal SecurityUser securityUser
     ) {
-        long userId = jwtAuthentication.getUserId();
-        String token = jwtAuthentication.getToken();
+        long userId = securityUser.getUserId();
+        String token = securityUser.getToken();
 
         GetProfileByUserIdResult profileResult = getProfileByUserIdQuery.getProfileByUserId(userId);
 

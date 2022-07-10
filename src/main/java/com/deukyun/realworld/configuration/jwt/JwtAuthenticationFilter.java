@@ -1,8 +1,10 @@
 package com.deukyun.realworld.configuration.jwt;
 
+import com.deukyun.realworld.common.SecurityUser;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
 import java.util.Objects;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
@@ -35,7 +38,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 String id = jwtResolver.getClaims(token, Claims::getId);
 
                 SecurityContextHolder.getContext()
-                        .setAuthentication(new JwtAuthenticationToken(new JwtAuthenticationToken.JwtAuthentication(Long.parseLong(id), token)));
+                        .setAuthentication(new UsernamePasswordAuthenticationToken(new SecurityUser(Long.parseLong(id), token), null, Collections.emptySet()));
             }
 
             filterChain.doFilter(request, response);

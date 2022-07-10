@@ -4,6 +4,7 @@ import com.deukyun.realworld.article.application.port.in.AuthorResult;
 import com.deukyun.realworld.article.application.port.in.CreateArticleCommand;
 import com.deukyun.realworld.article.application.port.in.CreateArticleResult;
 import com.deukyun.realworld.article.application.port.in.CreateArticleUseCase;
+import com.deukyun.realworld.common.SecurityUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.deukyun.realworld.configuration.jwt.JwtAuthenticationToken.JwtAuthentication;
 
 @RequiredArgsConstructor
 @RestController
@@ -23,14 +23,14 @@ public class CreateArticleController {
 
     @PostMapping("/api/articles")
     public CreateArticleResponse createArticle(
-            @AuthenticationPrincipal JwtAuthentication jwtAuthentication,
+            @AuthenticationPrincipal SecurityUser securityUser,
             @RequestBody CreateArticleRequest createArticleRequest
     ) {
         String title = createArticleRequest.getTitle();
         String description = createArticleRequest.getDescription();
         String body = createArticleRequest.getBody();
         List<String> tagList = createArticleRequest.getTagList();
-        long userId = jwtAuthentication.getUserId();
+        long userId = securityUser.getUserId();
 
         CreateArticleResult articleResult
                 = createArticleUseCase.createArticle(new CreateArticleCommand(title, description, body, tagList, userId));

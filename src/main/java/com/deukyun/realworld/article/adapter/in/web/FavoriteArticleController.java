@@ -2,6 +2,7 @@ package com.deukyun.realworld.article.adapter.in.web;
 
 import com.deukyun.realworld.article.adapter.in.web.ArticleResponses.Response;
 import com.deukyun.realworld.article.adapter.in.web.ArticleResponses.SingleArticleResponse;
+import com.deukyun.realworld.common.SecurityUser;
 import com.deukyun.realworld.favorite.application.port.in.FavoriteArticleResult;
 import com.deukyun.realworld.favorite.application.port.in.FavoriteArticleUseCase;
 import com.deukyun.realworld.favorite.application.port.in.UnfavoriteArticleUseCase;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static com.deukyun.realworld.configuration.jwt.JwtAuthenticationToken.JwtAuthentication;
 
 @RequiredArgsConstructor
 @RestController
@@ -23,10 +23,10 @@ public class FavoriteArticleController {
 
     @PostMapping("/api/articles/{slug}/favorite")
     public SingleArticleResponse favoriteArticle(
-            @AuthenticationPrincipal JwtAuthentication jwtAuthentication,
+            @AuthenticationPrincipal SecurityUser securityUser,
             @PathVariable String slug
     ) {
-        long userId = jwtAuthentication.getUserId();
+        long userId = securityUser.getUserId();
 
         FavoriteArticleResult articleResult = favoriteArticleUseCase.favorite(userId, slug);
 
@@ -35,10 +35,10 @@ public class FavoriteArticleController {
 
     @DeleteMapping("/api/articles/{slug}/unfavorite")
     public SingleArticleResponse unfavoriteArticle(
-            @AuthenticationPrincipal JwtAuthentication jwtAuthentication,
+            @AuthenticationPrincipal SecurityUser securityUser,
             @PathVariable String slug
     ) {
-        long userId = jwtAuthentication.getUserId();
+        long userId = securityUser.getUserId();
 
         FavoriteArticleResult articleResult = unfavoriteArticleUseCase.unfavorite(userId, slug);
 

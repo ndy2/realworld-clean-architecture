@@ -34,7 +34,6 @@ class EditUserControllerTest extends BaseControllerTest {
                 .andExpect(status().isOk())
                 .andExpectAll(
                         jsonPath("user.email").value("jake@jake.jake"),
-                        jsonPath("user.token").exists(),
                         jsonPath("user.username").value("Ndy"),
                         jsonPath("user.bio").value("I like to skateboard"),
                         jsonPath("user.image").value("https://i.stack.imgur.com/xHWG8.jpg")

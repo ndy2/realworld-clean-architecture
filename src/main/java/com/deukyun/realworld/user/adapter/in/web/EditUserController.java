@@ -1,7 +1,7 @@
 package com.deukyun.realworld.user.adapter.in.web;
 
 
-import com.deukyun.realworld.configuration.jwt.JwtAuthenticationToken.JwtAuthentication;
+import com.deukyun.realworld.common.SecurityUser;
 import com.deukyun.realworld.profile.application.port.in.EditProfileCommand;
 import com.deukyun.realworld.profile.application.port.in.EditProfileResult;
 import com.deukyun.realworld.profile.application.port.in.EditProfileUseCase;
@@ -23,11 +23,10 @@ public class EditUserController {
 
     @PatchMapping("/api/users")
     public EditUserResponse editUser(
-            @AuthenticationPrincipal JwtAuthentication jwtAuthentication,
+            @AuthenticationPrincipal SecurityUser securityUser,
             @RequestBody EditUserRequest editUserRequest
     ) {
-        long userId = jwtAuthentication.getUserId();
-        String token = jwtAuthentication.getToken();
+        long userId = securityUser.getUserId();
 
         String email = editUserRequest.getEmail();
         String password = editUserRequest.getPassword();
@@ -42,7 +41,6 @@ public class EditUserController {
 
         return new EditUserResponse(
                 editUserResult.getEmail(),
-                token,
                 editProfileResult.getUsername(),
                 editProfileResult.getBio(),
                 editProfileResult.getImage()

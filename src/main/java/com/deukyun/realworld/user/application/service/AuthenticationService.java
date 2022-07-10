@@ -1,7 +1,7 @@
 package com.deukyun.realworld.user.application.service;
 
-import com.deukyun.realworld.common.component.UseCase;
-import com.deukyun.realworld.configuration.jwt.JwtAuthenticationUseCase;
+import com.deukyun.realworld.common.component.Query;
+import com.deukyun.realworld.user.application.port.in.AuthenticationQuery;
 import com.deukyun.realworld.user.application.port.out.FindPasswordPort;
 import com.deukyun.realworld.user.application.port.out.FindPasswordResult;
 import lombok.RequiredArgsConstructor;
@@ -10,8 +10,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import static com.google.common.base.Preconditions.checkArgument;
 
 @RequiredArgsConstructor
-@UseCase
-class AuthenticationService implements JwtAuthenticationUseCase {
+@Query
+class AuthenticationService implements AuthenticationQuery {
 
     private final FindPasswordPort findUserPort;
     private final PasswordEncoder passwordEncoder;
