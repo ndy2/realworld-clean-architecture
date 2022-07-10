@@ -1,17 +1,51 @@
 package com.deukyun.realworld.article.application.service;
 
-import com.deukyun.realworld.article.application.port.in.FeedArticlesQuery;
-import com.deukyun.realworld.article.application.port.in.GetArticleBySlugQuery;
-import com.deukyun.realworld.article.application.port.in.ListArticlesQuery;
+import com.deukyun.realworld.article.application.port.in.ArticleQueries;
+import com.deukyun.realworld.article.application.port.in.ArticleResult;
+import com.deukyun.realworld.article.application.port.in.FeedArticlesCommand;
+import com.deukyun.realworld.article.application.port.in.ListArticlesCommand;
+import com.deukyun.realworld.article.application.port.out.FindArticleBySlug;
+import com.deukyun.realworld.article.application.port.out.FindArticleResult;
+import com.deukyun.realworld.article.application.port.out.FindArticlesByFieldsCommand;
+import com.deukyun.realworld.article.application.port.out.FindArticlesByFieldsPort;
 import com.deukyun.realworld.common.component.Query;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Query
 class GetArticleService implements
-        ListArticlesQuery,
-        FeedArticlesQuery,
-        GetArticleBySlugQuery {
+        ArticleQueries {
 
+    private final FindArticlesByFieldsPort findArticles;
+    private final FindArticleBySlug findArticleBySlug;
 
+    @Override
+    public List<ArticleResult> listArticles(ListArticlesCommand listArticlesCommand) {
+        List<FindArticleResult> articleResults = findArticles.findArticlesByFields(
+                new FindArticlesByFieldsCommand(
+                        listArticlesCommand.getTag(),
+                        listArticlesCommand.getAuthor(),
+                        listArticlesCommand.getFavorited(),
+                        listArticlesCommand.getLimit(),
+                        listArticlesCommand.getOffset()
+                )
+        );
+
+        return null;
+    }
+
+    @Override
+    public List<ArticleResult> feedArticles(FeedArticlesCommand listArticlesCommand) {
+        return null;
+    }
+
+    @Override
+    public ArticleResult getArticleBySlug(String slug) {
+
+        FindArticleResult articleResult = findArticleBySlug.findArticleBySlug(slug);
+
+        return null;
+    }
 }

@@ -1,9 +1,7 @@
 package com.deukyun.realworld.article.adapter.out.persistence;
 
 import com.deukyun.realworld.article.adapter.out.persistence.ArticleJpaEntity.ArticleTagJpaEntity;
-import com.deukyun.realworld.article.application.port.out.InsertArticleCommand;
-import com.deukyun.realworld.article.application.port.out.InsertArticlePort;
-import com.deukyun.realworld.article.application.port.out.InsertArticleResult;
+import com.deukyun.realworld.article.application.port.out.*;
 import com.deukyun.realworld.common.component.PersistenceAdapter;
 import lombok.RequiredArgsConstructor;
 
@@ -15,7 +13,8 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 @PersistenceAdapter
 class ArticlePersistenceAdapter implements
-        InsertArticlePort {
+        InsertArticlePort,
+        FindArticlesByFieldsPort {
 
     private final ArticleRepository articleRepository;
     private final TagRepository tagRepository;
@@ -59,5 +58,13 @@ class ArticlePersistenceAdapter implements
                         .isEmpty()
                 )
                 .collect(toList());
+    }
+
+    @Override
+    public List<FindArticleResult> findArticlesByFields(FindArticlesByFieldsCommand command) {
+        //TODO - 동적 where 절 binding
+        
+
+        return null;
     }
 }

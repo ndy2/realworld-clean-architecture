@@ -3,7 +3,10 @@ package com.deukyun.realworld.article.adapter.in.web;
 import com.deukyun.realworld.article.adapter.in.web.ArticleResponses.ListArticlesResponse;
 import com.deukyun.realworld.article.adapter.in.web.ArticleResponses.Response;
 import com.deukyun.realworld.article.adapter.in.web.ArticleResponses.SingleArticleResponse;
-import com.deukyun.realworld.article.application.port.in.*;
+import com.deukyun.realworld.article.application.port.in.ArticleQueries;
+import com.deukyun.realworld.article.application.port.in.ArticleResult;
+import com.deukyun.realworld.article.application.port.in.FeedArticlesCommand;
+import com.deukyun.realworld.article.application.port.in.ListArticlesCommand;
 import com.deukyun.realworld.configuration.jwt.JwtAuthenticationToken.JwtAuthentication;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,16 +22,14 @@ import static java.util.stream.Collectors.toList;
 @RestController
 public class GetArticleController {
 
-    private final ListArticlesQuery listArticlesQuery;
-    private final FeedArticlesQuery feedArticlesQuery;
-    private final GetArticleBySlugQuery getArticleBySlugQuery;
+    private final ArticleQueries articleQueries;
 
     @GetMapping("/api/articles")
     public ListArticlesResponse listArticles(
             PagingQueryParam pagingQueryParam,
             String tag, String author, String favorited
     ) {
-        List<ArticleResult> articleResults = listArticlesQuery.listArticles(
+        List<ArticleResult> articleResults = articleQueries.listArticles(
                 new ListArticlesCommand(
                         tag,
                         author,
@@ -48,7 +49,7 @@ public class GetArticleController {
             @AuthenticationPrincipal JwtAuthentication jwtAuthentication,
             PagingQueryParam pagingQueryParam
     ) {
-        List<ArticleResult> articleResults = feedArticlesQuery.feedArticles(
+        List<ArticleResult> articleResults = articleQueries.feedArticles(
                 new FeedArticlesCommand(
                         pagingQueryParam.limit,
                         pagingQueryParam.offset,
@@ -65,7 +66,7 @@ public class GetArticleController {
     public SingleArticleResponse getArticle(
             @PathVariable String slug
     ) {
-        ArticleResult articleResult = getArticleBySlugQuery.getArticleBySlug(slug);
+        ArticleResult articleResult = articleQueries.getArticleBySlug(slug);
 
         return new SingleArticleResponse(Response.of(articleResult));
     }
