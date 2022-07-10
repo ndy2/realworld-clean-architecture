@@ -9,6 +9,7 @@ import com.deukyun.realworld.favorite.application.port.in.FavoriteArticleUseCase
 import com.deukyun.realworld.favorite.application.port.in.FavoriteAuthorResult;
 import com.deukyun.realworld.favorite.application.port.in.UnfavoriteArticleUseCase;
 import com.deukyun.realworld.favorite.application.port.out.CheckFavoritePort;
+import com.deukyun.realworld.favorite.application.port.out.CountFavoritesPort;
 import com.deukyun.realworld.favorite.application.port.out.DeleteFavoritePort;
 import com.deukyun.realworld.favorite.application.port.out.InsertFavoritePort;
 import com.deukyun.realworld.follow.application.port.out.CheckFollowPort;
@@ -32,6 +33,7 @@ class FavoriteArticleService implements
     private final CheckFavoritePort checkFavoritePort;
     private final InsertFavoritePort insertFavoritePort;
     private final DeleteFavoritePort deleteFavoritePort;
+    private final CountFavoritesPort countFavoritesPort;
 
     @Transactional
     @Override
@@ -52,7 +54,10 @@ class FavoriteArticleService implements
         FindAuthorResult author = article.getAuthor();
         boolean isFollow = checkFollowPort.checkFollow(userProfileId, author.getId()).isPresent();
 
-        // 5. 데이터 반환
+        // 5. 페이보릿 카운트 확인
+        long favoritesCount = countFavoritesPort.countFavorite(articleId);
+
+        // 6. 데이터 반환
         return new FavoriteArticleResult(
                 article.getSlug(),
                 article.getTitle(),
@@ -62,7 +67,7 @@ class FavoriteArticleService implements
                 article.getCreatedAt(),
                 article.getUpdatedAt(),
                 true,
-                1,
+                favoritesCount,
                 new FavoriteAuthorResult(
                         author.getUsername(),
                         author.getBio(),
@@ -96,7 +101,10 @@ class FavoriteArticleService implements
         FindAuthorResult author = article.getAuthor();
         boolean isFollow = checkFollowPort.checkFollow(userProfileId, author.getId()).isPresent();
 
-        // 5. 데이터 반환
+        // 5. 페이보릿 카운트 확인
+        long favoritesCount = countFavoritesPort.countFavorite(articleId);
+
+        // 6. 데이터 반환
         return new FavoriteArticleResult(
                 article.getSlug(),
                 article.getTitle(),
@@ -105,8 +113,8 @@ class FavoriteArticleService implements
                 article.getTagList(),
                 article.getCreatedAt(),
                 article.getUpdatedAt(),
-                true,
-                1,
+                false,
+                favoritesCount,
                 new FavoriteAuthorResult(
                         author.getUsername(),
                         author.getBio(),

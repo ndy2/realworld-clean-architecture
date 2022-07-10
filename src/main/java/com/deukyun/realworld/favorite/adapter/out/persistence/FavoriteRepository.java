@@ -7,4 +7,6 @@ import java.util.Optional;
 interface FavoriteRepository extends JpaRepository<FavoriteJpaEntity, Long> {
 
     Optional<FavoriteJpaEntity> findByUserIdEqualsAndArticleIdEquals(long userId, long article);
+
+    long countByArticleId(long articleId);
 }

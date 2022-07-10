@@ -2,6 +2,7 @@ package com.deukyun.realworld.favorite.adapter.out.persistence;
 
 import com.deukyun.realworld.common.component.PersistenceAdapter;
 import com.deukyun.realworld.favorite.application.port.out.CheckFavoritePort;
+import com.deukyun.realworld.favorite.application.port.out.CountFavoritesPort;
 import com.deukyun.realworld.favorite.application.port.out.DeleteFavoritePort;
 import com.deukyun.realworld.favorite.application.port.out.InsertFavoritePort;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,8 @@ import java.util.Optional;
 class FavoritePersistenceAdapter implements
         CheckFavoritePort,
         InsertFavoritePort,
-        DeleteFavoritePort {
+        DeleteFavoritePort,
+        CountFavoritesPort {
 
     private final FavoriteRepository favoriteRepository;
 
@@ -32,5 +34,10 @@ class FavoritePersistenceAdapter implements
     public void deleteById(long id) {
         FavoriteJpaEntity deleteTarget = favoriteRepository.findById(id).orElseThrow(IllegalStateException::new);
         favoriteRepository.delete(deleteTarget);
+    }
+
+    @Override
+    public long countFavorite(long articleId) {
+        return favoriteRepository.countByArticleId(articleId);
     }
 }
