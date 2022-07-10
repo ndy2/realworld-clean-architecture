@@ -1,5 +1,8 @@
 package com.deukyun.realworld.article.adapter.in.web;
 
+import com.deukyun.realworld.article.adapter.in.web.ArticleResponses.Response;
+import com.deukyun.realworld.article.adapter.in.web.ArticleResponses.SingleArticleResponse;
+import com.deukyun.realworld.favorite.application.port.in.FavoriteArticleResult;
 import com.deukyun.realworld.favorite.application.port.in.FavoriteArticleUseCase;
 import com.deukyun.realworld.favorite.application.port.in.UnfavoriteArticleUseCase;
 import lombok.RequiredArgsConstructor;
@@ -19,26 +22,27 @@ public class FavoriteArticleController {
     private final UnfavoriteArticleUseCase unfavoriteArticleUseCase;
 
     @PostMapping("/api/articles/{slug}/favorite")
-    public ArticleResponses favoriteArticle(
+    public SingleArticleResponse favoriteArticle(
             @AuthenticationPrincipal JwtAuthentication jwtAuthentication,
             @PathVariable String slug
     ) {
         long userId = jwtAuthentication.getUserId();
 
+        FavoriteArticleResult articleResult = favoriteArticleUseCase.favorite(userId, slug);
 
-        return null;
+        return new SingleArticleResponse(Response.of(articleResult));
     }
 
     @DeleteMapping("/api/articles/{slug}/unfavorite")
-    public ArticleResponses unfavoriteArticle(
+    public SingleArticleResponse unfavoriteArticle(
             @AuthenticationPrincipal JwtAuthentication jwtAuthentication,
             @PathVariable String slug
     ) {
         long userId = jwtAuthentication.getUserId();
 
+        FavoriteArticleResult articleResult = unfavoriteArticleUseCase.unfavorite(userId, slug);
 
-        return null;
-
+        return new SingleArticleResponse(Response.of(articleResult));
     }
 
 }

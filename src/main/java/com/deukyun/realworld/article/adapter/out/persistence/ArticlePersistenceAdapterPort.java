@@ -12,9 +12,10 @@ import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
 @PersistenceAdapter
-class ArticlePersistenceAdapter implements
+class ArticlePersistenceAdapterPort implements
         InsertArticlePort,
-        FindArticlesByFieldsPort {
+        FindArticlesByFieldsPort,
+        FindArticleBySlugPort {
 
     private final ArticleRepository articleRepository;
     private final TagRepository tagRepository;
@@ -63,8 +64,24 @@ class ArticlePersistenceAdapter implements
     @Override
     public List<FindArticleResult> findArticlesByFields(FindArticlesByFieldsCommand command) {
         //TODO - 동적 where 절 binding
-        
+
 
         return null;
+    }
+
+    @Override
+    public FindArticleResult findArticleBySlug(String slug) {
+        ArticleJpaEntity article = articleRepository.findBySlug(slug).orElseThrow(IllegalArgumentException::new);
+
+        return new FindArticleResult(
+                article.getSlug(),
+                article.getTitle(),
+                article.getDescription(),
+                article.getBody(),
+                null,
+                article.getCreatedAt(),
+                article.getCreatedAt(),
+                null
+        );
     }
 }

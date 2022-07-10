@@ -1,6 +1,6 @@
 package com.deukyun.realworld.article.application.port.out;
 
-public interface FindArticleBySlug {
+public interface FindArticleBySlugPort {
 
     FindArticleResult findArticleBySlug(String slug);
 }

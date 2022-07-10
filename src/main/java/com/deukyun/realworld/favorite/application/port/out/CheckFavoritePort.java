@@ -9,5 +9,5 @@ public interface CheckFavoritePort {
      * <p>
      * 존재한다면 id 리턴, 존재하지 않으면 null 리턴
      */
-    Optional<Long> checkFollow(long userId, long articleId);
+    Optional<Long> checkFavorite(long userId, long articleId);
 }

@@ -4,7 +4,7 @@ import com.deukyun.realworld.article.application.port.in.ArticleQueries;
 import com.deukyun.realworld.article.application.port.in.ArticleResult;
 import com.deukyun.realworld.article.application.port.in.FeedArticlesCommand;
 import com.deukyun.realworld.article.application.port.in.ListArticlesCommand;
-import com.deukyun.realworld.article.application.port.out.FindArticleBySlug;
+import com.deukyun.realworld.article.application.port.out.FindArticleBySlugPort;
 import com.deukyun.realworld.article.application.port.out.FindArticleResult;
 import com.deukyun.realworld.article.application.port.out.FindArticlesByFieldsCommand;
 import com.deukyun.realworld.article.application.port.out.FindArticlesByFieldsPort;
@@ -19,7 +19,7 @@ class GetArticleService implements
         ArticleQueries {
 
     private final FindArticlesByFieldsPort findArticles;
-    private final FindArticleBySlug findArticleBySlug;
+    private final FindArticleBySlugPort findArticleBySlugPort;
 
     @Override
     public List<ArticleResult> listArticles(ListArticlesCommand listArticlesCommand) {
@@ -44,7 +44,7 @@ class GetArticleService implements
     @Override
     public ArticleResult getArticleBySlug(String slug) {
 
-        FindArticleResult articleResult = findArticleBySlug.findArticleBySlug(slug);
+        FindArticleResult articleResult = findArticleBySlugPort.findArticleBySlug(slug);
 
         return null;
     }

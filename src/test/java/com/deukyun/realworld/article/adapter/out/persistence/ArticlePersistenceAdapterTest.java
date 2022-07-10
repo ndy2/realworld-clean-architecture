@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * 쿼리를 확인하자
  */
-@Import(ArticlePersistenceAdapter.class)
+@Import(ArticlePersistenceAdapterPort.class)
 @DataJpaTest
 @TestPropertySource(properties = {
         "logging.level.org.hibernate.SQL=DEBUG",
@@ -26,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ArticlePersistenceAdapterTest {
 
     @Autowired
-    ArticlePersistenceAdapter adapter;
+    ArticlePersistenceAdapterPort adapter;
 
     @Autowired
     EntityManager em;

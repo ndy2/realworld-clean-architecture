@@ -1,5 +1,6 @@
 package com.deukyun.realworld.article.adapter.out.persistence;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PROTECTED;
 
+@Getter
 @Table(name = "article")
 @Entity
 @NoArgsConstructor(access = PROTECTED)
@@ -27,6 +29,12 @@ class ArticleJpaEntity {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private long authorProfileId;
+/*
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "authorProfileId")
+    private ProfileJpaEntity authorProfile;
+*/
 
     @OneToMany(cascade = PERSIST, mappedBy = "article")
     private List<ArticleTagJpaEntity> articleTags = new ArrayList<>();
