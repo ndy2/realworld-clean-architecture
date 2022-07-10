@@ -1,6 +1,6 @@
 package com.deukyun.realworld.article.adapter.in.web;
 
-import com.deukyun.realworld.article.application.port.in.CreateArticlePort;
+import com.deukyun.realworld.article.application.port.in.CreateArticleUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +12,7 @@ import static com.deukyun.realworld.infrastructure.security.jwt.JwtAuthenticatio
 @RestController
 public class CreateArticleController {
 
-    private final CreateArticlePort createArticlePort;
+    private final CreateArticleUseCase createArticleUseCase;
 
     @PostMapping("/api/articles")
     public CreateArticleResponse createArticle(
