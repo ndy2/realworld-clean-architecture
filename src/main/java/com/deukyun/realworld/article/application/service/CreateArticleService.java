@@ -1,5 +1,6 @@
 package com.deukyun.realworld.article.application.service;
 
+import com.deukyun.realworld.article.application.port.in.AuthorResult;
 import com.deukyun.realworld.article.application.port.in.CreateArticleCommand;
 import com.deukyun.realworld.article.application.port.in.CreateArticleResult;
 import com.deukyun.realworld.article.application.port.in.CreateArticleUseCase;
@@ -7,6 +8,8 @@ import com.deukyun.realworld.article.application.port.out.InsertArticleCommand;
 import com.deukyun.realworld.article.application.port.out.InsertArticlePort;
 import com.deukyun.realworld.article.application.port.out.InsertArticleResult;
 import com.deukyun.realworld.common.component.UseCase;
+import com.deukyun.realworld.profile.application.port.in.GetProfileByUserIdQuery;
+import com.deukyun.realworld.profile.application.port.in.GetProfileByUserIdResult;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -14,13 +17,15 @@ import lombok.RequiredArgsConstructor;
 class CreateArticleService implements CreateArticleUseCase {
 
     private final InsertArticlePort insertArticlePort;
+    private final GetProfileByUserIdQuery getProfileByUserIdQuery;
 
     @Override
     public CreateArticleResult createArticle(CreateArticleCommand createArticleCommand) {
 
         String slug = createSlug(createArticleCommand);
-        long authorUserId = createArticleCommand.getAuthorUserId();
-        long authorProfileId = authorUserId + 1;
+
+        GetProfileByUserIdResult authorProfile
+                = getProfileByUserIdQuery.getProfileByUserId(createArticleCommand.getAuthorUserId());
 
         InsertArticleResult articleResult = insertArticlePort.insertArticle(
                 new InsertArticleCommand(
@@ -29,14 +34,20 @@ class CreateArticleService implements CreateArticleUseCase {
                         createArticleCommand.getDescription(),
                         createArticleCommand.getBody(),
                         createArticleCommand.getTagList(),
-                        authorProfileId
+                        authorProfile.getId()
                 )
         );
 
         return new CreateArticleResult(
                 slug,
                 articleResult.getCreatedAt(),
-                null
+                new AuthorResult(
+                        authorProfile.getUsername(),
+                        authorProfile.getBio(),
+                        authorProfile.getImage(),
+                        //자신의 아티클 이므로 팔로잉 여부 : false
+                        false
+                )
         );
     }
 

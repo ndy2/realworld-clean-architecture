@@ -19,6 +19,7 @@ class GetProfileByUserIdByUserIdService implements GetProfileByUserIdQuery {
         FindProfileByUserIdResult findProfileByUserIdResult = findProfileByUserIdPort.findByUserId(id);
 
         return new GetProfileByUserIdResult(
+                findProfileByUserIdResult.getId(),
                 findProfileByUserIdResult.getEmail(),
                 findProfileByUserIdResult.getUsername(),
                 findProfileByUserIdResult.getBio(),

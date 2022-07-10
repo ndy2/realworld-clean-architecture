@@ -5,6 +5,7 @@ import lombok.Value;
 @Value
 public class GetProfileByUserIdResult {
 
+    long id;
     String email;
     String username;
     String bio;
