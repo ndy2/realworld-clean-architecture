@@ -15,6 +15,10 @@ public class Tags {
         this.values = values.stream().map(Tag::new).collect(toList());
     }
 
+    public List<String> getTagList() {
+        return values.stream().map(Tag::getValue).collect(toList());
+    }
+
     @Value
     private static class Tag {
         String value;
