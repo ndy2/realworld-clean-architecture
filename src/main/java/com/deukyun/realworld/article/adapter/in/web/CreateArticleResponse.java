@@ -18,7 +18,6 @@ final class CreateArticleResponse {
                                  String body,
                                  List<String> tagList,
                                  LocalDateTime createdAt,
-                                 LocalDateTime updatedAt,
                                  boolean favorited,
                                  long favoritesCount) {
 
@@ -28,7 +27,6 @@ final class CreateArticleResponse {
                 body,
                 tagList,
                 createdAt,
-                updatedAt,
                 favorited,
                 favoritesCount);
     }
@@ -42,7 +40,6 @@ final class CreateArticleResponse {
         private final String body;
         private final List<String> tagList;
         private final LocalDateTime createdAt;
-        private final LocalDateTime updatedAt;
         private final boolean favorited;
         private final long favoritesCount;
         private AuthorResponse authorResponse;
@@ -53,7 +50,6 @@ final class CreateArticleResponse {
                         String body,
                         List<String> tagList,
                         LocalDateTime createdAt,
-                        LocalDateTime updatedAt,
                         boolean favorited,
                         long favoritesCount) {
             this.slug = slug;
@@ -62,7 +58,6 @@ final class CreateArticleResponse {
             this.body = body;
             this.tagList = tagList;
             this.createdAt = createdAt;
-            this.updatedAt = updatedAt;
             this.favorited = favorited;
             this.favoritesCount = favoritesCount;
         }
