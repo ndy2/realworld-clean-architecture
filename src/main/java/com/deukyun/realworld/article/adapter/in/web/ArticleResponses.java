@@ -1,5 +1,7 @@
 package com.deukyun.realworld.article.adapter.in.web;
 
+import com.deukyun.realworld.article.application.port.in.ArticleResult;
+import com.deukyun.realworld.article.application.port.in.AuthorResult;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -50,6 +52,28 @@ final class ArticleResponses {
             private final String bio;
             private final String image;
             private final boolean following;
+        }
+
+        static Response of(ArticleResult articleResult) {
+            AuthorResult authorResult = articleResult.getAuthorResult();
+
+            return new Response(
+                    articleResult.getSlug(),
+                    articleResult.getTitle(),
+                    articleResult.getDescription(),
+                    articleResult.getBody(),
+                    articleResult.getTagList(),
+                    articleResult.getCreatedAt(),
+                    articleResult.getUpdatedAt(),
+                    articleResult.isFavorited(),
+                    articleResult.getFavoritesCount(),
+                    new AuthorResponse(
+                            authorResult.getUsername(),
+                            authorResult.getBio(),
+                            authorResult.getImage(),
+                            authorResult.isFollowing()
+                    )
+            );
         }
     }
 }

@@ -1,14 +1,19 @@
 package com.deukyun.realworld.article.adapter.in.web;
 
-import com.deukyun.realworld.article.application.port.in.FeedArticlesQuery;
-import com.deukyun.realworld.article.application.port.in.GetArticleBySlugQuery;
-import com.deukyun.realworld.article.application.port.in.ListArticlesQuery;
+import com.deukyun.realworld.article.adapter.in.web.ArticleResponses.ListArticlesResponse;
+import com.deukyun.realworld.article.adapter.in.web.ArticleResponses.Response;
+import com.deukyun.realworld.article.adapter.in.web.ArticleResponses.SingleArticleResponse;
+import com.deukyun.realworld.article.application.port.in.*;
 import com.deukyun.realworld.configuration.jwt.JwtAuthenticationToken.JwtAuthentication;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
 @RestController
@@ -19,25 +24,49 @@ public class GetArticleController {
     private final GetArticleBySlugQuery getArticleBySlugQuery;
 
     @GetMapping("/api/articles")
-    public void listArticles(
+    public ListArticlesResponse listArticles(
             PagingQueryParam pagingQueryParam,
             String tag, String author, String favorited
     ) {
+        List<ArticleResult> articleResults = listArticlesQuery.listArticles(
+                new ListArticlesCommand(
+                        tag,
+                        author,
+                        favorited,
+                        pagingQueryParam.limit,
+                        pagingQueryParam.offset
+                )
+        );
 
+        return new ListArticlesResponse(
+                articleResults.stream().map(Response::of).collect(toList())
+        );
     }
 
     @GetMapping("/api/articles/feed")
-    public void feedArticles(
+    public ListArticlesResponse feedArticles(
             @AuthenticationPrincipal JwtAuthentication jwtAuthentication,
             PagingQueryParam pagingQueryParam
     ) {
+        List<ArticleResult> articleResults = feedArticlesQuery.feedArticles(
+                new FeedArticlesCommand(
+                        pagingQueryParam.limit,
+                        pagingQueryParam.offset,
+                        jwtAuthentication.getUserId()
+                )
+        );
 
+        return new ListArticlesResponse(
+                articleResults.stream().map(Response::of).collect(toList())
+        );
     }
 
     @GetMapping("/api/articles/{slug}")
-    public void getArticle(
+    public SingleArticleResponse getArticle(
             @PathVariable String slug
     ) {
+        ArticleResult articleResult = getArticleBySlugQuery.getArticleBySlug(slug);
 
+        return new SingleArticleResponse(Response.of(articleResult));
     }
 }
