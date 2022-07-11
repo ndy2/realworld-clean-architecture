@@ -8,10 +8,10 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
@@ -26,10 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @AutoConfigureMockMvc
 @SpringBootTest
-@TestPropertySource(properties = {
-        "logging.level.org.hibernate.SQL=DEBUG",
-        "logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE"
-})
+@Import(P6spyLogMessageFormatConfiguration.class)
 public class BaseControllerTest {
 
     @Autowired
@@ -118,6 +115,15 @@ public class BaseControllerTest {
                         .header(AUTHORIZATION, token)
                         .contentType(APPLICATION_JSON)
                         .content(createJson(createArticleRequest)))
+                //then
+                .andExpect(status().isOk());
+    }
+
+    protected void 페이보릿_추가(String slug) throws Exception {
+
+        mockMvc.perform(post("/api/articles/{slug}/favorite", slug)
+                        .header(AUTHORIZATION, token)
+                        .contentType(APPLICATION_JSON))
                 //then
                 .andExpect(status().isOk());
     }

@@ -43,8 +43,8 @@ class ArticlePersistenceAdapter implements
                 insertArticleCommand.getDescription(),
                 insertArticleCommand.getAuthorProfileId()
         );
-        alreadyExistingTags.forEach(tag -> article.addArticleTag(new ArticleTagJpaEntity(tag.getId())));
-        newTags.forEach(tag -> article.addArticleTag(new ArticleTagJpaEntity(tag.getId())));
+        alreadyExistingTags.forEach(tag -> article.addArticleTag(new ArticleTagJpaEntity(tag)));
+        newTags.forEach(tag -> article.addArticleTag(new ArticleTagJpaEntity(tag)));
 
         articleRepository.save(article);
 
@@ -73,14 +73,13 @@ class ArticlePersistenceAdapter implements
     public FindArticleResult findArticleBySlug(String slug) {
         ArticleJpaEntity article = articleRepository.findBySlug(slug).orElseThrow(IllegalArgumentException::new);
 
-        // TODO - tag, author
         return new FindArticleResult(
                 article.getId(),
                 article.getSlug(),
                 article.getTitle(),
                 article.getDescription(),
                 article.getBody(),
-                null,
+                article.getTagList(),
                 article.getCreatedAt(),
                 article.getUpdatedAt(),
                 new FindAuthorResult(

@@ -17,6 +17,7 @@ import javax.persistence.EntityManager;
 import java.util.Collections;
 import java.util.List;
 
+import static com.deukyun.realworld.article.adapter.out.persistence.ArticleJpaEntity.ArticleTagJpaEntity;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -171,6 +172,11 @@ class ArticlePersistenceAdapterTest {
                 "Ever wonder how?",
                 "You have to believe",
                 profile.getId());
+
+        addTag(article, "reactjs");
+        addTag(article, "angularjs");
+        addTag(article, "dragons");
+
         em.persist(article);
         em.flush();
         em.clear();
@@ -183,12 +189,10 @@ class ArticlePersistenceAdapterTest {
 
         //then
         assertThat(articleResult).isNotNull();
-        assertThat(articleResult)
-                .extracting(FindArticleResult::getUpdatedAt, FindArticleResult::getTagList)
-                .containsOnlyNulls();
-        assertThat(articleResult)
-                .extracting(FindArticleResult::getId, FindArticleResult::getCreatedAt)
-                .doesNotContainNull();
+
+        // article 검증
+        assertThat(articleResult.getUpdatedAt()).isNull();
+        assertThat(articleResult).extracting(FindArticleResult::getId, FindArticleResult::getCreatedAt).doesNotContainNull();
         assertThat(articleResult)
                 .extracting(
                         FindArticleResult::getSlug,
@@ -201,6 +205,8 @@ class ArticlePersistenceAdapterTest {
                         "Ever wonder how?",
                         "You have to believe"
                 );
+
+        // author profile fetch 검증
         assertThat(articleResult.getAuthor())
                 .extracting(
                         FindAuthorResult::getId,
@@ -213,6 +219,16 @@ class ArticlePersistenceAdapterTest {
                         "I love skateboard",
                         "haha.png"
                 );
+
+        // tag fetch 검증
+        assertThat(articleResult.getTagList())
+                .containsExactly("reactjs", "angularjs", "dragons");
+    }
+
+    private void addTag(ArticleJpaEntity article, String name) {
+        TagJpaEntity tag = new TagJpaEntity(name);
+        em.persist(tag);
+        article.addArticleTag(new ArticleTagJpaEntity(tag));
     }
 
 }

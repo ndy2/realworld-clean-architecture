@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static java.time.LocalDateTime.now;
+import static java.util.stream.Collectors.toList;
 import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PROTECTED;
@@ -55,25 +56,6 @@ class ArticleJpaEntity {
         articleTags.add(articleTag);
     }
 
-    @Table(name = "article_tag")
-    @Entity
-    @NoArgsConstructor(access = PROTECTED)
-    static class ArticleTagJpaEntity {
-
-        @Id
-        @GeneratedValue
-        private Long id;
-        private long tagId;
-
-        @ManyToOne(fetch = LAZY)
-        @JoinColumn
-        private ArticleJpaEntity article;
-
-        public ArticleTagJpaEntity(long tagId) {
-            this.tagId = tagId;
-        }
-    }
-
     public Long getAuthorProfileId() {
         return authorProfile.getId();
     }
@@ -90,4 +72,34 @@ class ArticleJpaEntity {
         return authorProfile.getImage();
     }
 
+    public List<String> getTagList() {
+        return articleTags.stream().map(ArticleTagJpaEntity::getTagName).collect(toList());
+    }
+
+    @Table(name = "article_tag")
+    @Entity
+    @NoArgsConstructor(access = PROTECTED)
+    static class ArticleTagJpaEntity {
+
+        @Id
+        @GeneratedValue
+        private Long id;
+
+        // update 문 방지를 위한 양방향 연관관계 설정
+        @ManyToOne(fetch = LAZY)
+        @JoinColumn
+        private ArticleJpaEntity article;
+
+        @ManyToOne(fetch = LAZY)
+        @JoinColumn
+        private TagJpaEntity tag;
+
+        public ArticleTagJpaEntity(TagJpaEntity tag) {
+            this.tag = tag;
+        }
+
+        public String getTagName() {
+            return tag.getName();
+        }
+    }
 }

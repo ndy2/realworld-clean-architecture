@@ -32,7 +32,7 @@ final class ArticleResponses {
         }
     }
 
-
+    @Getter
     @RequiredArgsConstructor
     public static class Response {
         private final String slug;
@@ -44,7 +44,7 @@ final class ArticleResponses {
         private final LocalDateTime updatedAt;
         private final boolean favorited;
         private final long favoritesCount;
-        private final AuthorResponse authorResponse;
+        private final AuthorResponse author;
 
         @Getter
         @RequiredArgsConstructor
