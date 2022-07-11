@@ -1,5 +1,6 @@
 package com.deukyun.realworld.article.adapter.out.persistence;
 
+import com.deukyun.realworld.profile.adapter.out.persistence.ProfileJpaEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -28,13 +29,9 @@ class ArticleJpaEntity {
     private String description;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private long authorProfileId;
-/*
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "authorProfileId")
     private ProfileJpaEntity authorProfile;
-*/
 
     @OneToMany(cascade = PERSIST, mappedBy = "article")
     private List<ArticleTagJpaEntity> articleTags = new ArrayList<>();
@@ -45,7 +42,7 @@ class ArticleJpaEntity {
         this.body = body;
         this.description = description;
         this.createdAt = now();
-        this.authorProfileId = authorProfileId;
+        this.authorProfile = ProfileJpaEntity.withId(authorProfileId);
     }
 
     public LocalDateTime getCreatedAt() {
@@ -76,4 +73,21 @@ class ArticleJpaEntity {
             this.tagId = tagId;
         }
     }
+
+    public Long getAuthorProfileId() {
+        return authorProfile.getId();
+    }
+
+    public String getAuthorUsername() {
+        return authorProfile.getUsername();
+    }
+
+    public String getAuthorBio() {
+        return authorProfile.getBio();
+    }
+
+    public String getAuthorImage() {
+        return authorProfile.getImage();
+    }
+
 }

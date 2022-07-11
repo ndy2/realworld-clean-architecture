@@ -1,7 +1,12 @@
 package com.deukyun.realworld.article.adapter.out.persistence;
 
+import com.deukyun.realworld.article.application.port.out.FindArticleResult;
+import com.deukyun.realworld.article.application.port.out.FindAuthorResult;
 import com.deukyun.realworld.article.application.port.out.InsertArticleCommand;
 import com.deukyun.realworld.article.application.port.out.InsertArticleResult;
+import com.deukyun.realworld.profile.adapter.out.persistence.ProfileJpaEntity;
+import com.deukyun.realworld.user.adapter.out.persistence.UserJpaEntity;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -17,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * 쿼리를 확인하자
  */
-@Import(ArticlePersistenceAdapterPort.class)
+@Import(ArticlePersistenceAdapter.class)
 @DataJpaTest
 @TestPropertySource(properties = {
         "logging.level.org.hibernate.SQL=DEBUG",
@@ -26,10 +31,24 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ArticlePersistenceAdapterTest {
 
     @Autowired
-    ArticlePersistenceAdapterPort adapter;
+    ArticlePersistenceAdapter adapter;
 
     @Autowired
     EntityManager em;
+
+    ProfileJpaEntity profile;
+
+    @BeforeEach
+    void setUp() {
+        UserJpaEntity user = new UserJpaEntity("jake@jake.jake", "jakejake");
+        em.persist(user);
+        profile = new ProfileJpaEntity("Jakob", user.getId());
+        profile.update(null, "I love skateboard", "haha.png");
+        em.persist(profile);
+
+        em.flush();
+        em.clear();
+    }
 
     /**
      * Hibernate:
@@ -45,7 +64,7 @@ class ArticlePersistenceAdapterTest {
                 "Ever wonder how?",
                 "You have to believe",
                 Collections.emptyList(),
-                1L
+                profile.getId()
         );
 
         //when
@@ -54,8 +73,6 @@ class ArticlePersistenceAdapterTest {
         //then
         assertThat(result).isNotNull();
         assertThat(result.getCreatedAt()).isNotNull();
-
-        em.flush();
     }
 
     /**
@@ -84,7 +101,7 @@ class ArticlePersistenceAdapterTest {
                 "Ever wonder how?",
                 "You have to believe",
                 List.of("reactjs", "angularjs", "dragons"),
-                1L
+                profile.getId()
         );
 
         //when
@@ -93,8 +110,6 @@ class ArticlePersistenceAdapterTest {
         //then
         assertThat(result).isNotNull();
         assertThat(result.getCreatedAt()).isNotNull();
-
-        em.flush();
     }
 
     /**
@@ -125,7 +140,7 @@ class ArticlePersistenceAdapterTest {
                 "Ever wonder how?",
                 "You have to believe",
                 List.of("reactjs", "angularjs", "dragons"),
-                1L
+                profile.getId()
         );
         InsertArticleCommand insertArticleCommand2 = new InsertArticleCommand(
                 "how-to-train-your-dragon",
@@ -133,12 +148,13 @@ class ArticlePersistenceAdapterTest {
                 "Ever wonder how?",
                 "You have to believe",
                 List.of("reactjs", "angularjs", "dragons", "new-tag"),
-                1L
+                profile.getId()
         );
 
         //when
         InsertArticleResult result1 = adapter.insertArticle(insertArticleCommand1);
         em.flush();
+        em.clear();
         System.out.println("====flushed=====");
         InsertArticleResult result2 = adapter.insertArticle(insertArticleCommand2);
 
@@ -147,9 +163,60 @@ class ArticlePersistenceAdapterTest {
         assertThat(result1.getCreatedAt()).isNotNull();
         assertThat(result2).isNotNull();
         assertThat(result2.getCreatedAt()).isNotNull();
-
-        em.flush();
     }
 
+
+    @Test
+    void 아티클_slug_로_조회() {
+        //setup
+        ArticleJpaEntity article = new ArticleJpaEntity(
+                "how-to-train-your-dragon",
+                "How to train your dragon",
+                "Ever wonder how?",
+                "You have to believe",
+                profile.getId());
+        em.persist(article);
+        em.flush();
+        em.clear();
+
+        //given
+        String slug = "how-to-train-your-dragon";
+
+        //when
+        FindArticleResult articleResult = adapter.findArticleBySlug(slug);
+
+        //then
+        assertThat(articleResult).isNotNull();
+        assertThat(articleResult)
+                .extracting(FindArticleResult::getUpdatedAt, FindArticleResult::getTagList)
+                .containsOnlyNulls();
+        assertThat(articleResult)
+                .extracting(FindArticleResult::getId, FindArticleResult::getCreatedAt)
+                .doesNotContainNull();
+        assertThat(articleResult)
+                .extracting(
+                        FindArticleResult::getSlug,
+                        FindArticleResult::getTitle,
+                        FindArticleResult::getBody,
+                        FindArticleResult::getDescription
+                ).containsExactly(
+                        "how-to-train-your-dragon",
+                        "How to train your dragon",
+                        "Ever wonder how?",
+                        "You have to believe"
+                );
+        assertThat(articleResult.getAuthor())
+                .extracting(
+                        FindAuthorResult::getId,
+                        FindAuthorResult::getUsername,
+                        FindAuthorResult::getBio,
+                        FindAuthorResult::getImage
+                ).containsExactly(
+                        profile.getId(),
+                        "Jakob",
+                        "I love skateboard",
+                        "haha.png"
+                );
+    }
 
 }

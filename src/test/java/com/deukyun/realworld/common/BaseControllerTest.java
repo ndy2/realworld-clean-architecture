@@ -3,6 +3,7 @@ package com.deukyun.realworld.common;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -13,6 +14,8 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+
+import java.util.List;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -94,6 +97,27 @@ public class BaseControllerTest {
         mockMvc.perform(RestDocumentationRequestBuilders.post("/api/profiles/{username}/follow", username)
                         .header(AUTHORIZATION, token)
                         .contentType(MediaType.APPLICATION_JSON))
+                //then
+                .andExpect(status().isOk());
+    }
+
+    protected void 아티클_등록(String title, String description, String body, List<String> tagList) throws Exception {
+
+        //given
+        ObjectNode createArticleRequest = objectMapper.createObjectNode();
+        ObjectNode article = createArticleRequest.putObject("article");
+        article.put("title", title);
+        article.put("description", description);
+        article.put("body", body);
+        if (tagList != null && !tagList.isEmpty()) {
+            ArrayNode tagArrayNode = article.putArray("tagList");
+            tagList.forEach(tagArrayNode::add);
+        }
+
+        mockMvc.perform(post("/api/articles")
+                        .header(AUTHORIZATION, token)
+                        .contentType(APPLICATION_JSON)
+                        .content(createJson(createArticleRequest)))
                 //then
                 .andExpect(status().isOk());
     }

@@ -1,7 +1,6 @@
 package com.deukyun.realworld.user.adapter.out.persistence;
 
 
-import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
@@ -14,7 +13,6 @@ import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Table(name = "users")
-@AllArgsConstructor
 @NoArgsConstructor(access = PROTECTED)
 public class UserJpaEntity {
 

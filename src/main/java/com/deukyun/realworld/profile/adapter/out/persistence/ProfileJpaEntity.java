@@ -1,7 +1,6 @@
 package com.deukyun.realworld.profile.adapter.out.persistence;
 
 import com.deukyun.realworld.user.adapter.out.persistence.UserJpaEntity;
-import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -12,7 +11,6 @@ import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Table(name = "profile")
-@AllArgsConstructor
 @NoArgsConstructor(access = PROTECTED)
 public class ProfileJpaEntity {
 
@@ -39,6 +37,13 @@ public class ProfileJpaEntity {
         Optional.ofNullable(updateUsername).ifPresent(wrapper -> this.username = wrapper);
         Optional.ofNullable(updateBio).ifPresent(wrapper -> this.bio = wrapper);
         Optional.ofNullable(updateImage).ifPresent(wrapper -> this.image = wrapper);
+    }
+
+    public static ProfileJpaEntity withId(long id) {
+        ProfileJpaEntity profileJpaEntity = new ProfileJpaEntity();
+        profileJpaEntity.id = id;
+
+        return profileJpaEntity;
     }
 
     public Long getId() {

@@ -12,7 +12,7 @@ import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
 @PersistenceAdapter
-class ArticlePersistenceAdapterPort implements
+class ArticlePersistenceAdapter implements
         InsertArticlePort,
         FindArticlesByFieldsPort,
         FindArticleBySlugPort {
@@ -82,8 +82,13 @@ class ArticlePersistenceAdapterPort implements
                 article.getBody(),
                 null,
                 article.getCreatedAt(),
-                article.getCreatedAt(),
-                null
+                article.getUpdatedAt(),
+                new FindAuthorResult(
+                        article.getAuthorProfileId(),
+                        article.getAuthorUsername(),
+                        article.getAuthorBio(),
+                        article.getAuthorImage()
+                )
         );
     }
 }
