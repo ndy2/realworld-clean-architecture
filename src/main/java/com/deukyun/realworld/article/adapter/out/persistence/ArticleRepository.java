@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 
-interface ArticleRepository extends JpaRepository<ArticleJpaEntity, Long> {
+interface ArticleRepository extends JpaRepository<ArticleJpaEntity, Long>, ArticleRepositoryCustom {
 
     //Tag 와 Author 정보 fetch
     @Query("select a " +
