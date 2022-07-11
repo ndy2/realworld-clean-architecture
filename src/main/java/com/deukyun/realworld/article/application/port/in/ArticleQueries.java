@@ -8,5 +8,5 @@ public interface ArticleQueries {
 
     List<ArticleResult> feedArticles(FeedArticlesCommand listArticlesCommand);
 
-    ArticleResult getArticleBySlug(String slug);
+    ArticleResult getArticleBySlug(GetArticleBySlugCommand getArticleBySlugCommand);
 }

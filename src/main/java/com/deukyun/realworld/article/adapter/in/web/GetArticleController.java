@@ -3,10 +3,7 @@ package com.deukyun.realworld.article.adapter.in.web;
 import com.deukyun.realworld.article.adapter.in.web.ArticleResponses.ListArticlesResponse;
 import com.deukyun.realworld.article.adapter.in.web.ArticleResponses.Response;
 import com.deukyun.realworld.article.adapter.in.web.ArticleResponses.SingleArticleResponse;
-import com.deukyun.realworld.article.application.port.in.ArticleQueries;
-import com.deukyun.realworld.article.application.port.in.ArticleResult;
-import com.deukyun.realworld.article.application.port.in.FeedArticlesCommand;
-import com.deukyun.realworld.article.application.port.in.ListArticlesCommand;
+import com.deukyun.realworld.article.application.port.in.*;
 import com.deukyun.realworld.common.SecurityUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -24,6 +21,7 @@ public class GetArticleController {
 
     private final ArticleQueries articleQueries;
 
+    /* 아티클 목록 조회 */
     @GetMapping("/api/articles")
     public ListArticlesResponse listArticles(
             PagingQueryParam pagingQueryParam,
@@ -44,6 +42,7 @@ public class GetArticleController {
         );
     }
 
+    /* 팔로우 중인 유저의 아티클 목록 조회 */
     @GetMapping("/api/articles/feed")
     public ListArticlesResponse feedArticles(
             @AuthenticationPrincipal SecurityUser securityUser,
@@ -62,11 +61,18 @@ public class GetArticleController {
         );
     }
 
+    /* 아티클 단건 조회 */
     @GetMapping("/api/articles/{slug}")
     public SingleArticleResponse getArticle(
+            @AuthenticationPrincipal SecurityUser securityUser,
             @PathVariable String slug
     ) {
-        ArticleResult articleResult = articleQueries.getArticleBySlug(slug);
+        ArticleResult articleResult = articleQueries.getArticleBySlug(
+                new GetArticleBySlugCommand(
+                        slug,
+                        securityUser == null ? null : securityUser.getUserId()
+                )
+        );
 
         return new SingleArticleResponse(Response.of(articleResult));
     }
