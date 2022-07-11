@@ -24,6 +24,7 @@ public class GetArticleController {
     /* 아티클 목록 조회 */
     @GetMapping("/api/articles")
     public ListArticlesResponse listArticles(
+            @AuthenticationPrincipal SecurityUser securityUser,
             PagingQueryParam pagingQueryParam,
             String tag, String author, String favorited
     ) {
@@ -33,7 +34,8 @@ public class GetArticleController {
                         author,
                         favorited,
                         pagingQueryParam.limit,
-                        pagingQueryParam.offset
+                        pagingQueryParam.offset,
+                        securityUser == null ? null : securityUser.getUserId()
                 )
         );
 

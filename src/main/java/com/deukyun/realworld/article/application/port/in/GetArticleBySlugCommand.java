@@ -6,5 +6,7 @@ import lombok.Value;
 public class GetArticleBySlugCommand {
 
     String slug;
+
+
     Long userId;
 }

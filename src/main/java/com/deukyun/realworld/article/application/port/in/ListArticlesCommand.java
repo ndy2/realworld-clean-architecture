@@ -10,4 +10,7 @@ public class ListArticlesCommand {
     String favorited;
     long limit;
     long offset;
+
+    // nullable - 미 인증 사용자의 경우 null
+    Long userId;
 }
