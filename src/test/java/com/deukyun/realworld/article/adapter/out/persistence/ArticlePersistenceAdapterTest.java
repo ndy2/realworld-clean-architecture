@@ -4,6 +4,7 @@ import com.deukyun.realworld.article.application.port.out.FindArticleResult;
 import com.deukyun.realworld.article.application.port.out.FindAuthorResult;
 import com.deukyun.realworld.article.application.port.out.InsertArticleCommand;
 import com.deukyun.realworld.article.application.port.out.InsertArticleResult;
+import com.deukyun.realworld.common.P6spyLogMessageFormatConfiguration;
 import com.deukyun.realworld.profile.adapter.out.persistence.ProfileJpaEntity;
 import com.deukyun.realworld.user.adapter.out.persistence.UserJpaEntity;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.context.TestPropertySource;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -22,12 +22,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * 쿼리를 확인하자
  */
-@Import(ArticlePersistenceAdapter.class)
+@Import({ArticlePersistenceAdapter.class, P6spyLogMessageFormatConfiguration.class})
 @DataJpaTest
-@TestPropertySource(properties = {
-        "logging.level.org.hibernate.SQL=DEBUG",
-        "logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE"
-})
 class ArticlePersistenceAdapterTest {
 
     @Autowired

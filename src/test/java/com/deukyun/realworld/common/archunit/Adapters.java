@@ -1,4 +1,4 @@
-package com.deukyun.realworld.archunit;
+package com.deukyun.realworld.common.archunit;
 
 import com.tngtech.archunit.core.domain.JavaClasses;
 

@@ -1,6 +1,6 @@
 package com.deukyun.realworld;
 
-import com.deukyun.realworld.archunit.HexagonalArchitecture;
+import com.deukyun.realworld.common.archunit.HexagonalArchitecture;
 import com.tngtech.archunit.core.domain.JavaClasses;
 import com.tngtech.archunit.core.importer.ClassFileImporter;
 import org.junit.jupiter.params.ParameterizedTest;
