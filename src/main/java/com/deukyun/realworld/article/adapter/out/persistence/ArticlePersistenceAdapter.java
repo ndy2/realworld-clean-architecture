@@ -66,7 +66,7 @@ class ArticlePersistenceAdapter implements
     }
 
     @Override
-    public List<FindArticleResult> findArticlesByFields(FindArticlesByFieldsCommand command) {
+    public List<FindArticleResult> findArticlesByFields(FindArticlesByFieldsQuery command) {
 
         List<ArticleJpaEntity> articles = articleRepository.searchArticle(
                 new ArticleSearchCond(command.getTag(), command.getAuthor(), command.getFavorited()),
@@ -83,7 +83,7 @@ class ArticlePersistenceAdapter implements
     }
 
     @Override
-    public List<FindArticleResult> findFeedArticles(FindFeedArticleCommand command) {
+    public List<FindArticleResult> findFeedArticles(FindFeedArticleQuery command) {
         //팔로우중인 사용자의 아티클 조회
         List<ArticleJpaEntity> articles = articleRepository.feedArticles(
                 command.getUserId(),

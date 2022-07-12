@@ -29,7 +29,7 @@ public class GetArticleController {
             String tag, String author, String favorited
     ) {
         List<ArticleResult> articleResults = articleQueries.listArticles(
-                new ListArticlesCommand(
+                new ListArticlesQuery(
                         tag,
                         author,
                         favorited,
@@ -51,7 +51,7 @@ public class GetArticleController {
             PagingQueryParam pagingQueryParam
     ) {
         List<ArticleResult> articleResults = articleQueries.feedArticles(
-                new FeedArticlesCommand(
+                new FeedArticlesQuery(
                         pagingQueryParam.limit,
                         pagingQueryParam.offset,
                         securityUser.getUserId()
@@ -70,7 +70,7 @@ public class GetArticleController {
             @PathVariable String slug
     ) {
         ArticleResult articleResult = articleQueries.getArticleBySlug(
-                new GetArticleBySlugCommand(
+                new GetArticleBySlugQuery(
                         slug,
                         securityUser == null ? null : securityUser.getUserId()
                 )

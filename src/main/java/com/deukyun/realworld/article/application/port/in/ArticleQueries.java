@@ -4,9 +4,9 @@ import java.util.List;
 
 public interface ArticleQueries {
 
-    List<ArticleResult> listArticles(ListArticlesCommand listArticlesCommand);
+    List<ArticleResult> listArticles(ListArticlesQuery listArticlesQuery);
 
-    List<ArticleResult> feedArticles(FeedArticlesCommand listArticlesCommand);
+    List<ArticleResult> feedArticles(FeedArticlesQuery listArticlesCommand);
 
-    ArticleResult getArticleBySlug(GetArticleBySlugCommand getArticleBySlugCommand);
+    ArticleResult getArticleBySlug(GetArticleBySlugQuery getArticleBySlugQuery);
 }

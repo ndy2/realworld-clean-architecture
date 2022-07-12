@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface FindFeedArticlesPort {
 
-    List<FindArticleResult> findFeedArticles(FindFeedArticleCommand command);
+    List<FindArticleResult> findFeedArticles(FindFeedArticleQuery command);
 }

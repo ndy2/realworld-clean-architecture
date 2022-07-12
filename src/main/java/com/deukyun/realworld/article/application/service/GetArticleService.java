@@ -28,17 +28,17 @@ class GetArticleService implements
     private final CountFavoritesPort countFavoritesPort;
 
     @Override
-    public List<ArticleResult> listArticles(ListArticlesCommand command) {
-        Long userId = command.getUserId();
+    public List<ArticleResult> listArticles(ListArticlesQuery query) {
+        Long userId = query.getUserId();
 
         // 검색 조건에 따라 아티클 목록 조회
         List<FindArticleResult> articles = findArticlesByFieldsPort.findArticlesByFields(
-                new FindArticlesByFieldsCommand(
-                        command.getTag(),
-                        command.getAuthor(),
-                        command.getFavorited(),
-                        command.getLimit(),
-                        command.getOffset()
+                new FindArticlesByFieldsQuery(
+                        query.getTag(),
+                        query.getAuthor(),
+                        query.getFavorited(),
+                        query.getLimit(),
+                        query.getOffset()
                 )
         );
 
@@ -46,23 +46,23 @@ class GetArticleService implements
     }
 
     @Override
-    public List<ArticleResult> feedArticles(FeedArticlesCommand command) {
+    public List<ArticleResult> feedArticles(FeedArticlesQuery query) {
 
         List<FindArticleResult> articles = findFeedArticlesPort.findFeedArticles(
-                new FindFeedArticleCommand(
-                        command.getLimit(),
-                        command.getOffset(),
-                        command.getUserId()
+                new FindFeedArticleQuery(
+                        query.getLimit(),
+                        query.getOffset(),
+                        query.getUserId()
                 )
         );
 
-        return toArticleResults(articles, command.getUserId());
+        return toArticleResults(articles, query.getUserId());
     }
 
     @Override
-    public ArticleResult getArticleBySlug(GetArticleBySlugCommand command) {
-        String slug = command.getSlug();
-        Long userId = command.getUserId();
+    public ArticleResult getArticleBySlug(GetArticleBySlugQuery query) {
+        String slug = query.getSlug();
+        Long userId = query.getUserId();
 
         // 슬러그로 아티클 조회
         FindArticleResult article = findArticleBySlugPort.findArticleBySlug(slug);

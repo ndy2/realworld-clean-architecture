@@ -3,7 +3,7 @@ package com.deukyun.realworld.article.application.port.in;
 import lombok.Value;
 
 @Value
-public class FeedArticlesCommand {
+public class FeedArticlesQuery {
 
     long limit;
     long offset;
