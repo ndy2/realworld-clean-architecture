@@ -10,6 +10,9 @@ public class EditProfileCommand {
     String bio;
     String image;
 
+    /**
+     * no validation due to partial update
+     */
     public EditProfileCommand(long userId, String username, String bio, String image) {
 
         this.userId = userId;

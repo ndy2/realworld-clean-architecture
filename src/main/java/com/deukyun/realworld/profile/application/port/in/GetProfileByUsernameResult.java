@@ -8,4 +8,5 @@ public class GetProfileByUsernameResult {
     String username;
     String bio;
     String image;
+    boolean isFollow;
 }
