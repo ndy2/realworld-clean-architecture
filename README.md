@@ -1,4 +1,4 @@
-# ![RealWorld Example App](logo.png)
+# ![RealWorld Example App](images/logo.png)
 
 ## 소개
 
@@ -53,13 +53,16 @@
 
 - `인터페이스 분리 원칙`을 준수하여 프로그래밍 해보면서 막연하게 알고 있던 ISP의 의의를 직접 느낄 수 있었습니다.
 
+## ERD
+
+![RealWorld Example App](images/erd.png)
+
 ## 의문점
 
 ### 도메인 로직?
 
 아무래도 CRUD 프로젝트라 그런가 도메인 로직이라는 것이 어떤 건지 감을 못잡겠습니다. <br>
-서비스 계층의 도메인 모델을 전혀 사용하지 않고 디비에서 조회한 Result 를 바로 말아서 컨트롤러로 반환 하였는데 <br>
-아무래도 이상합니다.
+서비스 계층의 도메인 모델을 전혀 사용하지 않고 디비에서 조회한 Result 를 바로 말아서 컨트롤러로 반환 하였는데 아무래도 이상합니다.
 
 ## Getting started
 
