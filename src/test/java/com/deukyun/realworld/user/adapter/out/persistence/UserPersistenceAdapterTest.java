@@ -2,6 +2,8 @@ package com.deukyun.realworld.user.adapter.out.persistence;
 
 import com.deukyun.realworld.user.application.port.out.FindPasswordResult;
 import com.deukyun.realworld.user.application.port.out.InsertUserCommand;
+import com.deukyun.realworld.user.domain.Email;
+import com.deukyun.realworld.user.domain.Password;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -23,17 +25,17 @@ class UserPersistenceAdapterTest {
         //given
         InsertUserCommand insertUserCommand
                 = new InsertUserCommand(
-                "jake@jake.jake",
-                "[encoded]jakejake"
+                new Email("jake@jake.jake"),
+                new Password("[encoded]jakejake")
         );
 
         //when
         userPersistenceAdapter.insertUser(insertUserCommand);
-        Optional<FindPasswordResult> findPasswordResponse = userPersistenceAdapter.findPasswordByEmail("jake@jake.jake");
+        Optional<FindPasswordResult> findPasswordResponse = userPersistenceAdapter.findPasswordByEmail(new Email("jake@jake.jake"));
 
         //then
         assertThat(findPasswordResponse).isPresent();
-        assertThat(findPasswordResponse.get().getId()).isNotNull();
-        assertThat(findPasswordResponse.get().getPassword()).isEqualTo("[encoded]jakejake");
+        assertThat(findPasswordResponse.get().getPassword()).isNotNull();
+        assertThat(findPasswordResponse.get().getPassword()).isEqualTo(new Password("[encoded]jakejake"));
     }
 }

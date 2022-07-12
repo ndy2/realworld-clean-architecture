@@ -21,10 +21,10 @@ public class GetProfileController {
             @AuthenticationPrincipal SecurityUser securityUser,
             @PathVariable String username
     ) {
+        UserId userId = securityUser.getUserId();
+
         GetProfileByUsernameResult queryResult
-                = getProfileByUsernameQuery.getProfileByUsername(
-                        new UserId(securityUser.getUserId()), username
-        );
+                = getProfileByUsernameQuery.getProfileByUsername(userId, username);
 
         return new GetProfileResponse(
                 queryResult.getUsername(),

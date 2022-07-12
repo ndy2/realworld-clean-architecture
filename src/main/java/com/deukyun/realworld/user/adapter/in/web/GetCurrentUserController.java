@@ -19,7 +19,7 @@ public class GetCurrentUserController {
     public GetCurrentUserResponse getCurrentUser(
             @AuthenticationPrincipal SecurityUser securityUser
     ) {
-        UserId userId = new UserId(securityUser.getUserId());
+        UserId userId = securityUser.getUserId();
         String token = securityUser.getToken();
 
         GetProfileByUserIdResult profileResult = getProfileByUserIdQuery.getProfileByUserId(userId);

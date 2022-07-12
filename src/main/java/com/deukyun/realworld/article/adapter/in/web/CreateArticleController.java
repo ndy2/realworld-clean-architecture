@@ -31,10 +31,10 @@ public class CreateArticleController {
         String description = createArticleRequest.getDescription();
         String body = createArticleRequest.getBody();
         List<String> tagList = createArticleRequest.getTagList();
-        long userId = securityUser.getUserId();
+        UserId userId = securityUser.getUserId();
 
         CreateArticleResult articleResult
-                = createArticleUseCase.createArticle(new CreateArticleCommand(title, description, body, tagList, new UserId(userId)));
+                = createArticleUseCase.createArticle(new CreateArticleCommand(title, description, body, tagList, userId));
 
         String slug = articleResult.getSlug();
         LocalDateTime createdAt = articleResult.getCreatedAt();

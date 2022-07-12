@@ -2,31 +2,20 @@ package com.deukyun.realworld.user.application.port.in;
 
 import com.deukyun.realworld.user.domain.Email;
 import com.deukyun.realworld.user.domain.Password;
+import com.deukyun.realworld.user.domain.User.UserId;
 import lombok.Value;
 
 @Value
 public class EditUserCommand {
 
-    long id;
+    UserId userId;
     Email email;
     Password password;
 
-    public EditUserCommand(long id, String email, String password) {
+    public EditUserCommand(UserId userId, String email, String password) {
 
-        this.id = id;
+        this.userId = userId;
         this.email = email == null ? null : new Email(email);
         this.password = password == null ? null : new Password(password);
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public String getEmail() {
-        return email == null ? null : email.getValue();
-    }
-
-    public String getPassword() {
-        return password == null ? null : password.getValue();
     }
 }

@@ -22,7 +22,7 @@ class EditUserService implements EditUserUseCase {
 
         UpdateUserResult updateUserResult = updateUserPort.updateUser(
                 new UpdateUserCommand(
-                        editUserCommand.getId(),
+                        editUserCommand.getUserId(),
                         editUserCommand.getEmail(),
                         editUserCommand.getPassword()
                 )

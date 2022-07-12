@@ -2,6 +2,7 @@ package com.deukyun.realworld.configuration.jwt;
 
 import com.deukyun.realworld.common.SecurityUser;
 import com.deukyun.realworld.user.application.port.in.AuthenticationQuery;
+import com.deukyun.realworld.user.domain.User.UserId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,12 +28,12 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) authentication;
 
-        long userId = authenticationUseCase.authenticate(
+        UserId userId = authenticationUseCase.authenticate(
                 authenticationToken.getPrincipal(),
                 authenticationToken.getCredentials()
         );
 
-        String token = jwtResolver.generate(String.valueOf(userId));
+        String token = jwtResolver.generate(String.valueOf(userId.getValue()));
 
         return new UsernamePasswordAuthenticationToken(
                 new SecurityUser(userId, token), null, Collections.emptySet()

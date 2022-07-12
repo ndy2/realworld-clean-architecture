@@ -2,12 +2,14 @@ package com.deukyun.realworld.user.application.service;
 
 import com.deukyun.realworld.profile.application.port.in.RegisterProfileCommand;
 import com.deukyun.realworld.profile.application.port.in.RegisterProfileUseCase;
+import com.deukyun.realworld.user.application.port.in.CustomPasswordEncoder;
 import com.deukyun.realworld.user.application.port.in.RegisterUserCommand;
 import com.deukyun.realworld.user.application.port.out.InsertUserCommand;
 import com.deukyun.realworld.user.application.port.out.InsertUserPort;
+import com.deukyun.realworld.user.domain.Email;
+import com.deukyun.realworld.user.domain.Password;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -15,8 +17,7 @@ import static org.mockito.Mockito.verify;
 class RegisterUserServiceTest {
 
     RegisterUserService registerUserService;
-
-    PasswordEncoder passwordEncoder = mock(PasswordEncoder.class);
+    CustomPasswordEncoder passwordEncoder = mock(CustomPasswordEncoder.class);
     InsertUserPort insertUserPort = mock(InsertUserPort.class);
     RegisterProfileUseCase insertProfileInPort = mock(RegisterProfileUseCase.class);
 
@@ -34,12 +35,12 @@ class RegisterUserServiceTest {
         //given
         RegisterUserCommand command =
                 new RegisterUserCommand(
-                        "jake@jake.jake",
-                        "jakejake",
+                        new Email("jake@jake.jake"),
+                        new Password("jakejake"),
                         "Jacob"
                 );
 
-        String encodedPassword = passwordEncoder.encode("jakejake");
+        Password encodedPassword = passwordEncoder.encode(new Password("jakejake"));
 
         //when
         registerUserService.registerUser(command);
@@ -47,7 +48,7 @@ class RegisterUserServiceTest {
         //then
         long userId = verify(insertUserPort).insertUser(
                 new InsertUserCommand(
-                        "jake@jake.jake",
+                        new Email("jake@jake.jake"),
                         encodedPassword
                 )
         );

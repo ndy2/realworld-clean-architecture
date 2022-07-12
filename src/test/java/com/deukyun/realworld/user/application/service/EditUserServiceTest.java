@@ -5,6 +5,9 @@ import com.deukyun.realworld.user.application.port.in.EditUserResult;
 import com.deukyun.realworld.user.application.port.out.UpdateUserCommand;
 import com.deukyun.realworld.user.application.port.out.UpdateUserPort;
 import com.deukyun.realworld.user.application.port.out.UpdateUserResult;
+import com.deukyun.realworld.user.domain.Email;
+import com.deukyun.realworld.user.domain.Password;
+import com.deukyun.realworld.user.domain.User.UserId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,11 +28,14 @@ class EditUserServiceTest {
     @Test
     void 사용자_업데이트() {
         //given
-        EditUserCommand editUserCommand = new EditUserCommand(1L, "edit@edit.edit", "editedit");
-        when(updateUserPort.updateUser(
-                new UpdateUserCommand(1L, "edit@edit.edit", "editedit")
+        EditUserCommand editUserCommand = new EditUserCommand(new UserId(1L), "edit@edit.edit", "editedit");
+        when(updateUserPort.updateUser(new UpdateUserCommand(
+                        new UserId(1L),
+                        new Email("edit@edit.edit"),
+                        new Password("editedit")
+                )
         )).thenReturn(
-                new UpdateUserResult("edit@edit.edit")
+                new UpdateUserResult(new Email("edit@edit.edit"))
         );
 
 
@@ -37,9 +43,12 @@ class EditUserServiceTest {
         EditUserResult editUserResult = editUserService.editUser(editUserCommand);
 
         //then
-        verify(updateUserPort)
-                .updateUser(new UpdateUserCommand(1L, "edit@edit.edit", "editedit"));
+        verify(updateUserPort).updateUser(new UpdateUserCommand(
+                new UserId(1L),
+                new Email("edit@edit.edit"),
+                new Password("editedit")
+        ));
         assertThat(editUserResult)
-                .isEqualTo(new EditUserResult("edit@edit.edit"));
+                .isEqualTo(new EditUserResult(new Email("edit@edit.edit")));
     }
 }

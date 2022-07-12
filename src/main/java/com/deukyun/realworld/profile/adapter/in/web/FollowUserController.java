@@ -24,7 +24,7 @@ public class FollowUserController {
             @AuthenticationPrincipal SecurityUser securityUser,
             @PathVariable String username
     ) {
-        UserId userId = new UserId(securityUser.getUserId());
+        UserId userId = securityUser.getUserId();
 
         FollowUserResult followUserResult = followUserUseCase.userIdFollowsUsername(userId, username);
 
@@ -41,7 +41,7 @@ public class FollowUserController {
             @AuthenticationPrincipal SecurityUser securityUser,
             @PathVariable String username
     ) {
-        UserId userId = new UserId(securityUser.getUserId());
+        UserId userId = securityUser.getUserId();
 
         FollowUserResult unfollowUserResult = unfollowUserUseCase.userIdUnfollowsUsername(userId, username);
 

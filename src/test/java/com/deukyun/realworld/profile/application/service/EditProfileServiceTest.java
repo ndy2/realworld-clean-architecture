@@ -5,6 +5,7 @@ import com.deukyun.realworld.profile.application.port.in.EditProfileResult;
 import com.deukyun.realworld.profile.application.port.out.UpdateProfileCommand;
 import com.deukyun.realworld.profile.application.port.out.UpdateProfilePort;
 import com.deukyun.realworld.profile.application.port.out.UpdateProfileResult;
+import com.deukyun.realworld.user.domain.User.UserId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,21 +26,30 @@ class EditProfileServiceTest {
     @Test
     void 프로필_업데이트() {
         //given
-        EditProfileCommand editProfileCommand =
-                new EditProfileCommand(1L, "editName", "editBio", "editImage");
+        EditProfileCommand editProfileCommand = new EditProfileCommand(
+                new UserId(1L),
+                "editName",
+                "editBio",
+                "editImage"
+        );
 
-        when(updateProfilePort.updatePort(
-                new UpdateProfileCommand(1L, "editName", "editBio", "editImage")
-        )).thenReturn(
-                new UpdateProfileResult("editName", "editBio", "editImage"));
+        when(updateProfilePort.updatePort(new UpdateProfileCommand(
+                new UserId(1L),
+                "editName",
+                "editBio",
+                "editImage"))
+        ).thenReturn(new UpdateProfileResult("editName", "editBio", "editImage"));
 
 
         //when
         EditProfileResult editProfileResult = editProfileService.editProfile(editProfileCommand);
 
         //then
-        verify(updateProfilePort)
-                .updatePort(new UpdateProfileCommand(1L, "editName", "editBio", "editImage"));
+        verify(updateProfilePort).updatePort(new UpdateProfileCommand(
+                new UserId(1L),
+                "editName",
+                "editBio",
+                "editImage"));
         assertThat(editProfileResult)
                 .isEqualTo(new EditProfileResult("editName", "editBio", "editImage"));
     }

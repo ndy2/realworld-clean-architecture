@@ -2,10 +2,13 @@ package com.deukyun.realworld.user.application.service;
 
 import com.deukyun.realworld.common.component.Query;
 import com.deukyun.realworld.user.application.port.in.AuthenticationQuery;
+import com.deukyun.realworld.user.application.port.in.CustomPasswordEncoder;
 import com.deukyun.realworld.user.application.port.out.FindPasswordPort;
 import com.deukyun.realworld.user.application.port.out.FindPasswordResult;
+import com.deukyun.realworld.user.domain.Email;
+import com.deukyun.realworld.user.domain.Password;
+import com.deukyun.realworld.user.domain.User.UserId;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -14,13 +17,13 @@ import static com.google.common.base.Preconditions.checkArgument;
 class AuthenticationService implements AuthenticationQuery {
 
     private final FindPasswordPort findUserPort;
-    private final PasswordEncoder passwordEncoder;
+    private final CustomPasswordEncoder passwordEncoder;
 
     @Override
-    public long authenticate(Object principal, Object credentials) {
+    public UserId authenticate(Object principal, Object credentials) {
 
-        String email = String.valueOf(principal);
-        String password = String.valueOf(credentials);
+        Email email = (Email) principal;
+        Password password = (Password) credentials;
 
         FindPasswordResult findPasswordResult = findUserPort
                 .findPasswordByEmail(email)
@@ -28,6 +31,6 @@ class AuthenticationService implements AuthenticationQuery {
 
         checkArgument(passwordEncoder.matches(password, findPasswordResult.getPassword()), "invalid email or password provided");
 
-        return findPasswordResult.getId();
+        return findPasswordResult.getUserId();
     }
 }

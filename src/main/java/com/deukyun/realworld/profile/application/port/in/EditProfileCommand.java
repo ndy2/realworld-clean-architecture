@@ -1,11 +1,12 @@
 package com.deukyun.realworld.profile.application.port.in;
 
+import com.deukyun.realworld.user.domain.User.UserId;
 import lombok.Value;
 
 @Value
 public class EditProfileCommand {
 
-    long userId;
+    UserId userId;
     String username;
     String bio;
     String image;
@@ -13,7 +14,7 @@ public class EditProfileCommand {
     /**
      * no validation due to partial update
      */
-    public EditProfileCommand(long userId, String username, String bio, String image) {
+    public EditProfileCommand(UserId userId, String username, String bio, String image) {
 
         this.userId = userId;
         this.username = username;

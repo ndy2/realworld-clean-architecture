@@ -1,5 +1,6 @@
 package com.deukyun.realworld.user.adapter.in.web;
 
+import com.deukyun.realworld.user.domain.Email;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
@@ -8,8 +9,19 @@ final class EditUserResponse {
     @JsonProperty("user")
     private final Response response;
 
-    public EditUserResponse(String email, String username, String bio, String image) {
-        this.response = new Response(email, username, bio, image);
+    /**
+     * @param email    - nullable
+     * @param username - nullable
+     * @param bio      - nullable
+     * @param image    - nullable
+     */
+    public EditUserResponse(Email email, String username, String bio, String image) {
+        this.response = new Response(
+                email == null ? null : email.getValue(),
+                username,
+                bio,
+                image
+        );
     }
 
     @Getter

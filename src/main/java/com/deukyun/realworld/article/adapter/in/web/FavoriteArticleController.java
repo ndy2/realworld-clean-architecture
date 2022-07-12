@@ -27,7 +27,7 @@ public class FavoriteArticleController {
             @AuthenticationPrincipal SecurityUser securityUser,
             @PathVariable String slug
     ) {
-        UserId userId = new UserId(securityUser.getUserId());
+        UserId userId = securityUser.getUserId();
 
         FavoriteArticleResult articleResult = favoriteArticleUseCase.favorite(userId, slug);
 
@@ -39,7 +39,7 @@ public class FavoriteArticleController {
             @AuthenticationPrincipal SecurityUser securityUser,
             @PathVariable String slug
     ) {
-        UserId userId = new UserId(securityUser.getUserId());
+        UserId userId = securityUser.getUserId();
 
         FavoriteArticleResult articleResult = unfavoriteArticleUseCase.unfavorite(userId, slug);
 

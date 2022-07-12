@@ -37,7 +37,7 @@ public class GetArticleController {
                         favorited,
                         pagingQueryParam.limit,
                         pagingQueryParam.offset,
-                        securityUser == null ? new UserId(null) : new UserId(securityUser.getUserId())
+                        securityUser == null ? new UserId(null) : securityUser.getUserId()
                 )
         );
 
@@ -56,7 +56,7 @@ public class GetArticleController {
                 new FeedArticlesQuery(
                         pagingQueryParam.limit,
                         pagingQueryParam.offset,
-                        new UserId(securityUser.getUserId())
+                        securityUser.getUserId()
                 )
         );
 
@@ -74,7 +74,7 @@ public class GetArticleController {
         ArticleResult articleResult = articleQueries.getArticleBySlug(
                 new GetArticleBySlugQuery(
                         slug,
-                        securityUser == null ? new UserId(null) : new UserId(securityUser.getUserId())
+                        securityUser == null ? new UserId(null) : securityUser.getUserId()
                 )
         );
 

@@ -1,6 +1,7 @@
 package com.deukyun.realworld.configuration.jwt;
 
 import com.deukyun.realworld.common.SecurityUser;
+import com.deukyun.realworld.user.domain.User.UserId;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,10 +36,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String token = getToken(request);
 
             if (token != null) {
-                String id = jwtResolver.getClaims(token, Claims::getId);
+                long id = Long.parseLong(jwtResolver.getClaims(token, Claims::getId));
+
 
                 UsernamePasswordAuthenticationToken authentication
-                        = new UsernamePasswordAuthenticationToken(new SecurityUser(Long.parseLong(id), token), null, Collections.emptySet());
+                        = new UsernamePasswordAuthenticationToken(new SecurityUser(new UserId(id), token), null, Collections.emptySet());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
 

@@ -1,10 +1,12 @@
 package com.deukyun.realworld.user.application.port.out;
 
+import com.deukyun.realworld.user.domain.Email;
+import com.deukyun.realworld.user.domain.Password;
 import lombok.Value;
 
 @Value
 public class InsertUserCommand {
 
-    String email;
-    String password;
+    Email email;
+    Password password;
 }
