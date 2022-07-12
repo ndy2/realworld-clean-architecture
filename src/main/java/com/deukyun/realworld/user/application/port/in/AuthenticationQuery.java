@@ -5,7 +5,7 @@ public interface AuthenticationQuery {
     /**
      * 인증 처리 - 실패시 예외 던짐
      *
-     * @throws com.deukyun.realworld.common.exception.RealworldRuntimeException
+     * @throws java.lang.IllegalArgumentException
      */
     long authenticate(Object principal, Object credentials);
 }
