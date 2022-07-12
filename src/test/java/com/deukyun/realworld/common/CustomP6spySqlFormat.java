@@ -27,7 +27,6 @@ public class CustomP6spySqlFormat implements MessageFormattingStrategy {
             }
         }
         // 여기 까지 주석하면 한줄 출력
-
         return sql;
     }
 }

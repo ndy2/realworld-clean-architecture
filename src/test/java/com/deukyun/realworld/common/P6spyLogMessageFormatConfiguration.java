@@ -11,7 +11,6 @@ public class P6spyLogMessageFormatConfiguration {
 
     @PostConstruct
     public void setLogMessageFormat() {
-        System.out.println("log");
         P6SpyOptions.getActiveInstance().setLogMessageFormat(CustomP6spySqlFormat.class.getName());
     }
 

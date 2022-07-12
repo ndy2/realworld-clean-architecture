@@ -70,6 +70,8 @@ class ArticlePersistenceAdapterTest {
         //then
         assertThat(result).isNotNull();
         assertThat(result.getCreatedAt()).isNotNull();
+
+        em.flush();
     }
 
     /**
