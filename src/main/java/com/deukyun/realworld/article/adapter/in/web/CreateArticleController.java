@@ -4,6 +4,7 @@ import com.deukyun.realworld.article.application.port.in.AuthorResult;
 import com.deukyun.realworld.article.application.port.in.CreateArticleCommand;
 import com.deukyun.realworld.article.application.port.in.CreateArticleResult;
 import com.deukyun.realworld.article.application.port.in.CreateArticleUseCase;
+import com.deukyun.realworld.article.domain.Tags;
 import com.deukyun.realworld.common.SecurityUser;
 import com.deukyun.realworld.user.domain.User.UserId;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 
 @RequiredArgsConstructor
@@ -27,20 +27,21 @@ public class CreateArticleController {
             @AuthenticationPrincipal SecurityUser securityUser,
             @RequestBody CreateArticleRequest createArticleRequest
     ) {
+        UserId userId = securityUser.getUserId();
         String title = createArticleRequest.getTitle();
         String description = createArticleRequest.getDescription();
         String body = createArticleRequest.getBody();
-        List<String> tagList = createArticleRequest.getTagList();
-        UserId userId = securityUser.getUserId();
+        Tags tags = createArticleRequest.getTags();
 
         CreateArticleResult articleResult
-                = createArticleUseCase.createArticle(new CreateArticleCommand(title, description, body, tagList, userId));
+                = createArticleUseCase.createArticle(new CreateArticleCommand(title, description, body, tags, userId));
 
         String slug = articleResult.getSlug();
         LocalDateTime createdAt = articleResult.getCreatedAt();
         AuthorResult authorResult = articleResult.getAuthorResult();
 
-        CreateArticleResponse response = new CreateArticleResponse(slug, title, description, body, tagList, createdAt);
+        // 응답 말기
+        CreateArticleResponse response = new CreateArticleResponse(slug, title, description, body, tags, createdAt);
         response.addAuthorResponse(
                 authorResult.getUsername(),
                 authorResult.getBio(),

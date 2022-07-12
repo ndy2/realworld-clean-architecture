@@ -1,5 +1,7 @@
 package com.deukyun.realworld.favorite.application.port.out;
 
+import com.deukyun.realworld.article.domain.Article.ArticleId;
+import com.deukyun.realworld.favorite.domain.FavoriteId;
 import com.deukyun.realworld.user.domain.User.UserId;
 
 import java.util.List;
@@ -12,11 +14,11 @@ public interface CheckFavoritePort {
      * <p>
      * 존재한다면 id 리턴, 존재하지 않으면 null 리턴
      */
-    Optional<Long> checkFavorite(UserId userId, long articleId);
+    Optional<FavoriteId> checkFavorite(UserId userId, ArticleId articleId);
 
     /**
      * 유저의 아티클 아이디 목록에 대한
      * 아티클의 페이보릿 여부를 반환
      */
-    List<Boolean> checkFavorites(UserId userId, List<Long> articleIds);
+    List<Boolean> checkFavorites(UserId userId, List<ArticleId> articleIds);
 }

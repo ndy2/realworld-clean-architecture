@@ -1,6 +1,7 @@
 package com.deukyun.realworld.article.adapter.in.web;
 
 import com.deukyun.realworld.article.adapter.in.web.CreateArticleResponse.Response.AuthorResponse;
+import com.deukyun.realworld.article.domain.Tags;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -17,14 +18,14 @@ final class CreateArticleResponse {
                                  String title,
                                  String description,
                                  String body,
-                                 List<String> tagList,
+                                 Tags tags,
                                  LocalDateTime createdAt) {
 
         this.response = new Response(slug,
                 title,
                 description,
                 body,
-                tagList,
+                tags.getTagList(),
                 createdAt);
     }
 

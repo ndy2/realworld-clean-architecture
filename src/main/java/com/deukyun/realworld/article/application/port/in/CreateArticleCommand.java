@@ -4,9 +4,6 @@ import com.deukyun.realworld.article.domain.Tags;
 import com.deukyun.realworld.user.domain.User.UserId;
 import lombok.Value;
 
-import java.util.Collections;
-import java.util.List;
-
 import static com.google.common.base.Preconditions.checkArgument;
 import static org.springframework.util.StringUtils.hasText;
 
@@ -19,7 +16,7 @@ public class CreateArticleCommand {
     Tags tags;
     UserId authorUserId;
 
-    public CreateArticleCommand(String title, String description, String body, List<String> tagList, UserId authorUserId) {
+    public CreateArticleCommand(String title, String description, String body, Tags tags, UserId authorUserId) {
         checkArgument(hasText(title), "title is not provided");
         checkArgument(hasText(description), "description is not provided");
         checkArgument(hasText(body), "body is not provided");
@@ -27,27 +24,8 @@ public class CreateArticleCommand {
         this.title = title;
         this.description = description;
         this.body = body;
-        this.tags = tagList == null ? new Tags(Collections.emptyList()) : new Tags(tagList);
+        this.tags = tags;
         this.authorUserId = authorUserId;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getBody() {
-        return body;
-    }
-
-    public List<String> getTagList() {
-        return tags.getTagList();
-    }
-
-    public UserId getAuthorUserId() {
-        return authorUserId;
-    }
 }

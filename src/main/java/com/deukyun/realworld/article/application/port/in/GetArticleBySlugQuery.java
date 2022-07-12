@@ -8,6 +8,5 @@ public class GetArticleBySlugQuery {
 
     String slug;
 
-
     UserId userId;
 }

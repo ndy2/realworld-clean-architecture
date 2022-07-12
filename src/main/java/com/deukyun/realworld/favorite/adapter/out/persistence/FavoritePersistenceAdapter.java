@@ -1,10 +1,12 @@
 package com.deukyun.realworld.favorite.adapter.out.persistence;
 
+import com.deukyun.realworld.article.domain.Article.ArticleId;
 import com.deukyun.realworld.common.component.PersistenceAdapter;
 import com.deukyun.realworld.favorite.application.port.out.CheckFavoritePort;
 import com.deukyun.realworld.favorite.application.port.out.CountFavoritesPort;
 import com.deukyun.realworld.favorite.application.port.out.DeleteFavoritePort;
 import com.deukyun.realworld.favorite.application.port.out.InsertFavoritePort;
+import com.deukyun.realworld.favorite.domain.FavoriteId;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -24,32 +26,34 @@ class FavoritePersistenceAdapter implements
     private final FavoriteRepository favoriteRepository;
 
     @Override
-    public Optional<Long> checkFavorite(UserId userId , long article) {
-        return favoriteRepository.findByUserIdEqualsAndArticleIdEquals(userId.getValue(), article)
-                .map(FavoriteJpaEntity::getId);
+    public Optional<FavoriteId> checkFavorite(UserId userId, ArticleId article) {
+        return favoriteRepository.findByUserIdEqualsAndArticleIdEquals(userId.getValue(), article.getValue())
+                .map(FavoriteJpaEntity::getId)
+                .map(FavoriteId::new);
     }
 
     @Override
-    public List<Boolean> checkFavorites(UserId userId, List<Long> articleIds) {
+    public List<Boolean> checkFavorites(UserId userId, List<ArticleId> articleIds) {
         List<Long> favoriteArticleIds = favoriteRepository.findFavoriteArticleIdsByUserId(userId.getValue());
 
         return articleIds.stream()
+                .map(ArticleId::getValue)
                 .map(id -> favoriteArticleIds.stream().anyMatch(id::equals)).collect(toList());
     }
 
     @Override
-    public void insertFavorite(UserId userId, long articleId) {
-        favoriteRepository.save(new FavoriteJpaEntity(userId.getValue(), articleId));
+    public void insertFavorite(UserId userId, ArticleId articleId) {
+        favoriteRepository.save(new FavoriteJpaEntity(userId.getValue(), articleId.getValue()));
     }
 
     @Override
-    public void deleteById(long id) {
-        FavoriteJpaEntity deleteTarget = favoriteRepository.findById(id).orElseThrow(IllegalStateException::new);
+    public void deleteById(FavoriteId id) {
+        FavoriteJpaEntity deleteTarget = favoriteRepository.findById(id.getValue()).orElseThrow(IllegalStateException::new);
         favoriteRepository.delete(deleteTarget);
     }
 
     @Override
-    public long countFavorite(long articleId) {
-        return favoriteRepository.countByArticleId(articleId);
+    public long countFavorite(ArticleId articleId) {
+        return favoriteRepository.countByArticleId(articleId.getValue());
     }
 }

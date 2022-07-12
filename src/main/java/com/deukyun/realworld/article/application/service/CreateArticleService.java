@@ -33,7 +33,7 @@ class CreateArticleService implements CreateArticleUseCase {
                         createArticleCommand.getTitle(),
                         createArticleCommand.getDescription(),
                         createArticleCommand.getBody(),
-                        createArticleCommand.getTagList(),
+                        createArticleCommand.getTags(),
                         authorProfile.getId()
                 )
         );
@@ -52,7 +52,7 @@ class CreateArticleService implements CreateArticleUseCase {
     }
 
     /**
-     * 타이틀을 이요해 Slug 를 만듬
+     * 타이틀을 이용해 Slug 를 만듬
      */
     private String createSlug(CreateArticleCommand createArticleCommand) {
 

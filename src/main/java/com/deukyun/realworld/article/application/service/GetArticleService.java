@@ -2,6 +2,7 @@ package com.deukyun.realworld.article.application.service;
 
 import com.deukyun.realworld.article.application.port.in.*;
 import com.deukyun.realworld.article.application.port.out.*;
+import com.deukyun.realworld.article.domain.Article.ArticleId;
 import com.deukyun.realworld.common.component.Query;
 import com.deukyun.realworld.favorite.application.port.out.CheckFavoritePort;
 import com.deukyun.realworld.favorite.application.port.out.CountFavoritesPort;
@@ -98,7 +99,7 @@ class GetArticleService implements
         ProfileId userProfileId = findProfileIdByUserIdPort.findProfileIdByUserId(userId);
 
         // db 조회 아티클의 아이디, 작가 프로필 아이디 목록
-        List<Long> articleIds
+        List<ArticleId> articleIds
                 = articles.stream()
                 .map(FindArticleResult::getId)
                 .collect(toList());
@@ -129,7 +130,7 @@ class GetArticleService implements
      * 단건 db 아티클 서비스 아티클로 변환
      */
     private ArticleResult toArticleResult(FindArticleResult article, boolean isFollow, boolean isFavorited) {
-        long articleId = article.getId();
+        ArticleId articleId = article.getId();
         FindAuthorResult author = article.getAuthor();
 
         long favoritesCount = countFavoritesPort.countFavorite(articleId);

@@ -3,6 +3,7 @@ package com.deukyun.realworld.favorite.application.service;
 import com.deukyun.realworld.article.application.port.out.FindArticleBySlugPort;
 import com.deukyun.realworld.article.application.port.out.FindArticleResult;
 import com.deukyun.realworld.article.application.port.out.FindAuthorResult;
+import com.deukyun.realworld.article.domain.Article.ArticleId;
 import com.deukyun.realworld.common.component.UseCase;
 import com.deukyun.realworld.favorite.application.port.in.FavoriteArticleResult;
 import com.deukyun.realworld.favorite.application.port.in.FavoriteArticleUseCase;
@@ -12,6 +13,7 @@ import com.deukyun.realworld.favorite.application.port.out.CheckFavoritePort;
 import com.deukyun.realworld.favorite.application.port.out.CountFavoritesPort;
 import com.deukyun.realworld.favorite.application.port.out.DeleteFavoritePort;
 import com.deukyun.realworld.favorite.application.port.out.InsertFavoritePort;
+import com.deukyun.realworld.favorite.domain.FavoriteId;
 import com.deukyun.realworld.follow.application.port.out.CheckFollowPort;
 import com.deukyun.realworld.profile.application.port.out.FindProfileIdByUserIdPort;
 import com.deukyun.realworld.profile.domain.Profile.ProfileId;
@@ -43,7 +45,7 @@ class FavoriteArticleService implements
 
         // 1. 슬러그로 아티클 조회
         FindArticleResult article = findArticleBySlugPort.findArticleBySlug(slug);
-        long articleId = article.getId();
+        ArticleId articleId = article.getId();
 
         // 2. 이미 페이보릿 인지 확인하고 페이보릿 추가
         checkFavoritable(userId, articleId);
@@ -79,7 +81,7 @@ class FavoriteArticleService implements
         );
     }
 
-    private void checkFavoritable(UserId userId, long articleId) {
+    private void checkFavoritable(UserId userId, ArticleId articleId) {
         boolean isAlreadyFavorite = checkFavoritePort.checkFavorite(userId, articleId).isPresent();
 
         checkArgument(!isAlreadyFavorite, "이미 페이보릿 입니다");
@@ -90,10 +92,10 @@ class FavoriteArticleService implements
     public FavoriteArticleResult unfavorite(UserId userId, String slug) {
         // 1. 슬러그로 아티클 조회
         FindArticleResult article = findArticleBySlugPort.findArticleBySlug(slug);
-        long articleId = article.getId();
+        ArticleId articleId = article.getId();
 
         // 2. 언페이보릿 할 수 있는지 확인하고 페이보릿 제거
-        long favoriteId = checkUnfFavoritable(userId, articleId);
+        FavoriteId favoriteId = checkUnfFavoritable(userId, articleId);
         deleteFavoritePort.deleteById(favoriteId);
 
         // 3. 팔로우 여부를 확인 하기 위해 자신의 프로필 아이디 조회
@@ -126,8 +128,8 @@ class FavoriteArticleService implements
         );
     }
 
-    private long checkUnfFavoritable(UserId userId, long articleId) {
-        Optional<Long> idIfPresent = checkFavoritePort.checkFavorite(userId, articleId);
+    private FavoriteId checkUnfFavoritable(UserId userId, ArticleId articleId) {
+        Optional<FavoriteId> idIfPresent = checkFavoritePort.checkFavorite(userId, articleId);
 
         boolean isAlreadyFavorite = idIfPresent.isPresent();
 

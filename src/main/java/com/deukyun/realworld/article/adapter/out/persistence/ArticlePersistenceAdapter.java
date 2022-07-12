@@ -5,6 +5,7 @@ import com.deukyun.realworld.article.adapter.out.persistence.repository.ArticleR
 import com.deukyun.realworld.article.adapter.out.persistence.repository.ArticleSearchCond;
 import com.deukyun.realworld.article.adapter.out.persistence.repository.TagRepository;
 import com.deukyun.realworld.article.application.port.out.*;
+import com.deukyun.realworld.article.domain.Article.ArticleId;
 import com.deukyun.realworld.common.component.PersistenceAdapter;
 import com.deukyun.realworld.profile.domain.Profile.ProfileId;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +33,7 @@ class ArticlePersistenceAdapter implements
           이미 있던 태그를 필터링 하고
           새롭게 추가된 태그에 대해서만 태그 삽입
          */
-        List<String> allTagNames = insertArticleCommand.getTags();
+        List<String> allTagNames = insertArticleCommand.getTags().getTagList();
 
         List<TagJpaEntity> allTags = allTagNames.stream().map(TagJpaEntity::new).collect(toList());
         List<TagJpaEntity> alreadyExistingTags = tagRepository.findByNameIn(allTagNames);
@@ -101,7 +102,7 @@ class ArticlePersistenceAdapter implements
 
     private FindArticleResult toResult(ArticleJpaEntity article) {
         return new FindArticleResult(
-                article.getId(),
+                new ArticleId(article.getId()),
                 article.getSlug(),
                 article.getTitle(),
                 article.getDescription(),

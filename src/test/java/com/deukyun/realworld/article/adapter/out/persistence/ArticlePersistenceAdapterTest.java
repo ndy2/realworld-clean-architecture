@@ -4,6 +4,7 @@ import com.deukyun.realworld.article.application.port.out.FindArticleResult;
 import com.deukyun.realworld.article.application.port.out.FindAuthorResult;
 import com.deukyun.realworld.article.application.port.out.InsertArticleCommand;
 import com.deukyun.realworld.article.application.port.out.InsertArticleResult;
+import com.deukyun.realworld.article.domain.Tags;
 import com.deukyun.realworld.common.P6spyLogMessageFormatConfiguration;
 import com.deukyun.realworld.profile.adapter.out.persistence.ProfileJpaEntity;
 import com.deukyun.realworld.profile.domain.Profile.ProfileId;
@@ -15,7 +16,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 
 import javax.persistence.EntityManager;
-import java.util.Collections;
 import java.util.List;
 
 import static com.deukyun.realworld.article.adapter.out.persistence.ArticleJpaEntity.ArticleTagJpaEntity;
@@ -61,7 +61,7 @@ class ArticlePersistenceAdapterTest {
                 "How to train your dragon",
                 "Ever wonder how?",
                 "You have to believe",
-                Collections.emptyList(),
+                new Tags(null),
                 new ProfileId(profile.getId())
         );
 
@@ -100,7 +100,7 @@ class ArticlePersistenceAdapterTest {
                 "How to train your dragon",
                 "Ever wonder how?",
                 "You have to believe",
-                List.of("reactjs", "angularjs", "dragons"),
+                new Tags(List.of("reactjs", "angularjs", "dragons")),
                 new ProfileId(profile.getId())
         );
 
@@ -139,7 +139,7 @@ class ArticlePersistenceAdapterTest {
                 "How to train your dragon",
                 "Ever wonder how?",
                 "You have to believe",
-                List.of("reactjs", "angularjs", "dragons"),
+                new Tags(List.of("reactjs", "angularjs", "dragons")),
                 new ProfileId(profile.getId())
         );
         InsertArticleCommand insertArticleCommand2 = new InsertArticleCommand(
@@ -147,7 +147,7 @@ class ArticlePersistenceAdapterTest {
                 "How to train your dragon",
                 "Ever wonder how?",
                 "You have to believe",
-                List.of("reactjs", "angularjs", "dragons", "new-tag"),
+                new Tags(List.of("reactjs", "angularjs", "dragons", "new-tag")),
                 new ProfileId(profile.getId())
         );
 

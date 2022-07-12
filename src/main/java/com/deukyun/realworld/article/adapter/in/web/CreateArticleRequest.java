@@ -1,5 +1,6 @@
 package com.deukyun.realworld.article.adapter.in.web;
 
+import com.deukyun.realworld.article.domain.Tags;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
@@ -22,8 +23,8 @@ final class CreateArticleRequest {
         return request.body;
     }
 
-    public List<String> getTagList() {
-        return request.tagList;
+    public Tags getTags() {
+        return new Tags(request.tagList);
     }
 
     @Getter
