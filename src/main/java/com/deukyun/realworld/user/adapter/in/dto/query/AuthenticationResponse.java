@@ -1,9 +1,9 @@
-package com.deukyun.realworld.user.adapter.in.web;
+package com.deukyun.realworld.user.adapter.in.dto.query;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
-final class AuthenticationResponse {
+public final class AuthenticationResponse {
 
     @JsonProperty("user")
     private final Response response;

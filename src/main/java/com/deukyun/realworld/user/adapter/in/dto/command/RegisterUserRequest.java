@@ -1,12 +1,16 @@
-package com.deukyun.realworld.user.adapter.in.web;
+package com.deukyun.realworld.user.adapter.in.dto.command;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
-final class AuthenticationRequest {
+public final class RegisterUserRequest {
 
     @JsonProperty("user")
     private Request request;
+
+    public String getUsername() {
+        return request.username;
+    }
 
     public String getEmail() {
         return request.email;
@@ -19,6 +23,7 @@ final class AuthenticationRequest {
     @Getter
     private static class Request {
 
+        private String username;
         private String email;
         private String password;
     }

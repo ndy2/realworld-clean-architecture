@@ -4,6 +4,7 @@ import com.deukyun.realworld.common.SecurityUser;
 import com.deukyun.realworld.follow.application.port.in.FollowUserResult;
 import com.deukyun.realworld.follow.application.port.in.FollowUserUseCase;
 import com.deukyun.realworld.follow.application.port.in.UnfollowUserUseCase;
+import com.deukyun.realworld.profile.adapter.in.dto.command.FollowUserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;

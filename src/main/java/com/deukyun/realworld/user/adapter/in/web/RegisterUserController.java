@@ -1,5 +1,7 @@
 package com.deukyun.realworld.user.adapter.in.web;
 
+import com.deukyun.realworld.user.adapter.in.dto.command.RegisterUserRequest;
+import com.deukyun.realworld.user.adapter.in.dto.command.RegisterUserResponse;
 import com.deukyun.realworld.user.application.port.in.RegisterUserCommand;
 import com.deukyun.realworld.user.application.port.in.RegisterUserUseCase;
 import lombok.RequiredArgsConstructor;

@@ -1,9 +1,9 @@
-package com.deukyun.realworld.user.adapter.in.web;
+package com.deukyun.realworld.user.adapter.in.dto.command;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
-final class EditUserRequest {
+public final class EditUserRequest {
 
     @JsonProperty("user")
     private Request request;

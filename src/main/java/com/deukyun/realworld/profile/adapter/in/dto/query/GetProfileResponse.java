@@ -1,14 +1,14 @@
-package com.deukyun.realworld.profile.adapter.in.web;
+package com.deukyun.realworld.profile.adapter.in.dto.query;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
-final class FollowUserResponse {
+public final class GetProfileResponse {
 
     @JsonProperty("profile")
     private final Response response;
 
-    public FollowUserResponse(String username, String bio, String image, boolean following) {
+    public GetProfileResponse(String username, String bio, String image, boolean following) {
         this.response = new Response(username, bio, image, following);
     }
 

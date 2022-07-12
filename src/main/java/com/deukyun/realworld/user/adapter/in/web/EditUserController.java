@@ -5,6 +5,8 @@ import com.deukyun.realworld.common.SecurityUser;
 import com.deukyun.realworld.profile.application.port.in.EditProfileCommand;
 import com.deukyun.realworld.profile.application.port.in.EditProfileResult;
 import com.deukyun.realworld.profile.application.port.in.EditProfileUseCase;
+import com.deukyun.realworld.user.adapter.in.dto.command.EditUserRequest;
+import com.deukyun.realworld.user.adapter.in.dto.command.EditUserResponse;
 import com.deukyun.realworld.user.application.port.in.EditUserCommand;
 import com.deukyun.realworld.user.application.port.in.EditUserResult;
 import com.deukyun.realworld.user.application.port.in.EditUserUseCase;
