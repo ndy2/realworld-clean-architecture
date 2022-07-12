@@ -6,10 +6,6 @@
   입니다. [노션 요약 링크](https://ndy-dev.notion.site/d737675bbc324c09ae6d1721754b2dcb)
 - 아티클, 사용자, 프로필, 좋아요(페이보릿), 팔로우 등의 도메인으로 구성된 CRUD 연습용 프로젝트 입니다. [RealWorld 참고](https://realworld-docs.netlify.app/)
 
-## TODO
-
-> 예외 처리
-
 ## 신경써서 개발한 부분
 
 ### 네이밍 룰
