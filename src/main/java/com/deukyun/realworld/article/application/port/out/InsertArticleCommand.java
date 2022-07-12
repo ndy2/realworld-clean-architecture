@@ -1,5 +1,6 @@
 package com.deukyun.realworld.article.application.port.out;
 
+import com.deukyun.realworld.profile.domain.Profile.ProfileId;
 import lombok.Value;
 
 import java.util.List;
@@ -12,5 +13,5 @@ public class InsertArticleCommand {
     String description;
     String body;
     List<String> tags;
-    long authorProfileId;
+    ProfileId authorProfileId;
 }

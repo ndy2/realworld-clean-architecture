@@ -3,6 +3,8 @@ package com.deukyun.realworld.profile.application.service;
 import com.deukyun.realworld.profile.application.port.in.GetProfileByUserIdResult;
 import com.deukyun.realworld.profile.application.port.out.FindProfileByUserIdPort;
 import com.deukyun.realworld.profile.application.port.out.FindProfileByUserIdResult;
+import com.deukyun.realworld.profile.domain.Profile;
+import com.deukyun.realworld.user.domain.Email;
 import com.deukyun.realworld.user.domain.User.UserId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,8 +22,8 @@ class GetProfileByUserIdServiceTest {
     void setUp() {
         when(findProfileByUserIdPort.findByUserId(new UserId(1L)))
                 .thenReturn(new FindProfileByUserIdResult(
-                        2L,
-                        "jake@jake.jake",
+                        new Profile.ProfileId(2L),
+                        new Email("jake@jake.jake"),
                         "Jakob",
                         null,
                         null

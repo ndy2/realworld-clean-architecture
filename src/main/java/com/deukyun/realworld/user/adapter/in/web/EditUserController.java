@@ -8,6 +8,8 @@ import com.deukyun.realworld.profile.application.port.in.EditProfileUseCase;
 import com.deukyun.realworld.user.application.port.in.EditUserCommand;
 import com.deukyun.realworld.user.application.port.in.EditUserResult;
 import com.deukyun.realworld.user.application.port.in.EditUserUseCase;
+import com.deukyun.realworld.user.domain.Email;
+import com.deukyun.realworld.user.domain.Password;
 import com.deukyun.realworld.user.domain.User.UserId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -28,9 +30,8 @@ public class EditUserController {
             @RequestBody EditUserRequest editUserRequest
     ) {
         UserId userId = securityUser.getUserId();
-
-        String email = editUserRequest.getEmail();
-        String password = editUserRequest.getPassword();
+        Email email = editUserRequest.getEmail();
+        Password password = editUserRequest.getPassword();
 
         EditUserResult editUserResult = editUserUseCase.editUser(new EditUserCommand(userId, email, password));
 

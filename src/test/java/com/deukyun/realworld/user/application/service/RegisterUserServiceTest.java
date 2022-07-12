@@ -8,6 +8,7 @@ import com.deukyun.realworld.user.application.port.out.InsertUserCommand;
 import com.deukyun.realworld.user.application.port.out.InsertUserPort;
 import com.deukyun.realworld.user.domain.Email;
 import com.deukyun.realworld.user.domain.Password;
+import com.deukyun.realworld.user.domain.User.UserId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -46,7 +47,7 @@ class RegisterUserServiceTest {
         registerUserService.registerUser(command);
 
         //then
-        long userId = verify(insertUserPort).insertUser(
+        UserId userId = verify(insertUserPort).insertUser(
                 new InsertUserCommand(
                         new Email("jake@jake.jake"),
                         encodedPassword

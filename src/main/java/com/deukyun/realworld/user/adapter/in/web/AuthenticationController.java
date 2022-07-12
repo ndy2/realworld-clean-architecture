@@ -25,11 +25,11 @@ public class AuthenticationController {
     public AuthenticationResponse authenticate(
             @RequestBody AuthenticationRequest authenticationRequest
     ) {
-        String email = authenticationRequest.getEmail();
-        String password = authenticationRequest.getPassword();
+        Email email = authenticationRequest.getEmail();
+        Password password = authenticationRequest.getPassword();
 
         //토큰 생성
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(new Email(email), new Password(password));
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
         UsernamePasswordAuthenticationToken resultToken = (UsernamePasswordAuthenticationToken) authenticationManager.authenticate(authenticationToken);
         //컨텍스트 홀더에 저장
         SecurityContextHolder.getContext().setAuthentication(resultToken);

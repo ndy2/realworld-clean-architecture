@@ -1,5 +1,6 @@
 package com.deukyun.realworld.follow.adapter.out.persistence;
 
+import com.deukyun.realworld.profile.domain.Profile.ProfileId;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -20,11 +21,11 @@ class FollowPersistenceAdapterTest {
     @Test
     void 팔로우_체크_테스트() {
         //given
-        followPersistenceAdapter.insertFollow(1, 2);
+        followPersistenceAdapter.insertFollow(new ProfileId(1L), new ProfileId(2L));
 
         //when
-        boolean isFollow1 = followPersistenceAdapter.checkFollow(1, 2).isPresent();
-        boolean isFollow2 = followPersistenceAdapter.checkFollow(1, 3).isPresent();
+        boolean isFollow1 = followPersistenceAdapter.checkFollow(new ProfileId(1L), new ProfileId(2L)).isPresent();
+        boolean isFollow2 = followPersistenceAdapter.checkFollow(new ProfileId(1L), new ProfileId(3L)).isPresent();
 
         //then
         assertThat(isFollow1).isTrue();
@@ -34,13 +35,17 @@ class FollowPersistenceAdapterTest {
     @Test
     void 팔로우_체크_목록_테스트() {
         //given
-        followPersistenceAdapter.insertFollow(1, 2);
-        followPersistenceAdapter.insertFollow(1, 3);
-        followPersistenceAdapter.insertFollow(2, 1);
-        followPersistenceAdapter.insertFollow(2, 4);
+        followPersistenceAdapter.insertFollow(new ProfileId(1L), new ProfileId(2L));
+        followPersistenceAdapter.insertFollow(new ProfileId(1L), new ProfileId(3L));
+        followPersistenceAdapter.insertFollow(new ProfileId(2L), new ProfileId(1L));
+        followPersistenceAdapter.insertFollow(new ProfileId(2L), new ProfileId(4L));
 
         //when
-        List<Boolean> flags = followPersistenceAdapter.checkFollows(1, List.of(2L, 3L, 4L));
+        List<Boolean> flags
+                = followPersistenceAdapter.checkFollows(
+                new ProfileId(1L),
+                List.of(new ProfileId(2L), new ProfileId(3L), new ProfileId(4L))
+        );
 
         //then
         assertThat(flags).hasSize(3);

@@ -19,14 +19,14 @@ public class RegisterUserController {
     public RegisterUserResponse registerUser(
             @RequestBody RegisterUserRequest registerUserRequest
     ) {
-        String email = registerUserRequest.getEmail();
-        String password = registerUserRequest.getPassword();
+        Email email = registerUserRequest.getEmail();
+        Password password = registerUserRequest.getPassword();
         String username = registerUserRequest.getUsername();
 
         registerUserUseCase.registerUser(
                 new RegisterUserCommand(
-                        new Email(email),
-                        new Password(password),
+                        email,
+                        password,
                         username
                 )
         );

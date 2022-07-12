@@ -4,6 +4,7 @@ import com.deukyun.realworld.common.component.PersistenceAdapter;
 import com.deukyun.realworld.follow.application.port.out.CheckFollowPort;
 import com.deukyun.realworld.follow.application.port.out.DeleteFollowPort;
 import com.deukyun.realworld.follow.application.port.out.InsertFollowPort;
+import com.deukyun.realworld.profile.domain.Profile.ProfileId;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -21,28 +22,30 @@ public class FollowPersistenceAdapter implements
     private final FollowRepository followRepository;
 
     @Override
-    public Optional<Long> checkFollow(long followerId, long followeeId) {
-        return followRepository.findByFollowerIdEqualsAndFolloweeIdEquals(followerId, followeeId)
-                .map(FollowJpaEntity::getId);
+    public Optional<ProfileId> checkFollow(ProfileId followerId, ProfileId followeeId) {
+        return followRepository.findByFollowerIdEqualsAndFolloweeIdEquals(followerId.getValue(), followeeId.getValue())
+                .map(FollowJpaEntity::getId)
+                .map(ProfileId::new);
     }
 
     @Override
-    public List<Boolean> checkFollows(long followerId, List<Long> followeeIds) {
+    public List<Boolean> checkFollows(ProfileId followerId, List<ProfileId> followeeIds) {
 
-        List<Long> foundFolloweeIds = followRepository.findFolloweeIdsByFollowerId(followerId);
+        List<Long> foundFolloweeIds = followRepository.findFolloweeIdsByFollowerId(followerId.getValue());
 
         return followeeIds.stream()
+                .map(ProfileId::getValue)
                 .map(id -> foundFolloweeIds.stream().anyMatch(id::equals)).collect(toList());
     }
 
     @Override
-    public void insertFollow(long followerId, long followeeId) {
-        followRepository.save(new FollowJpaEntity(followerId, followeeId));
+    public void insertFollow(ProfileId followerId, ProfileId followeeId) {
+        followRepository.save(new FollowJpaEntity(followerId.getValue(), followeeId.getValue()));
     }
 
     @Override
-    public void deleteById(long id) {
-        FollowJpaEntity deleteTarget = followRepository.findById(id).orElseThrow(IllegalStateException::new);
+    public void deleteById(ProfileId id) {
+        FollowJpaEntity deleteTarget = followRepository.findById(id.getValue()).orElseThrow(IllegalStateException::new);
         followRepository.delete(deleteTarget);
     }
 }

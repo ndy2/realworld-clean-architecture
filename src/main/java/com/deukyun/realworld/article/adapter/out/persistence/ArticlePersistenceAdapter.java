@@ -6,6 +6,7 @@ import com.deukyun.realworld.article.adapter.out.persistence.repository.ArticleS
 import com.deukyun.realworld.article.adapter.out.persistence.repository.TagRepository;
 import com.deukyun.realworld.article.application.port.out.*;
 import com.deukyun.realworld.common.component.PersistenceAdapter;
+import com.deukyun.realworld.profile.domain.Profile.ProfileId;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -45,7 +46,7 @@ class ArticlePersistenceAdapter implements
                 insertArticleCommand.getTitle(),
                 insertArticleCommand.getBody(),
                 insertArticleCommand.getDescription(),
-                insertArticleCommand.getAuthorProfileId()
+                insertArticleCommand.getAuthorProfileId().getValue()
         );
         alreadyExistingTags.forEach(tag -> article.addArticleTag(new ArticleTagJpaEntity(tag)));
         newTags.forEach(tag -> article.addArticleTag(new ArticleTagJpaEntity(tag)));
@@ -109,7 +110,7 @@ class ArticlePersistenceAdapter implements
                 article.getCreatedAt(),
                 article.getUpdatedAt(),
                 new FindAuthorResult(
-                        article.getAuthorProfileId(),
+                        new ProfileId(article.getAuthorProfileId()),
                         article.getAuthorUsername(),
                         article.getAuthorBio(),
                         article.getAuthorImage()

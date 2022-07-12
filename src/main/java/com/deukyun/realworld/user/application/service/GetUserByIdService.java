@@ -18,8 +18,6 @@ public class GetUserByIdService implements GetUserByIdQuery {
     public GetUserByIdResult getUserById(UserId id) {
         FindUserByIdResult findUserByIdResult = findUserByIdPort.findUserById(id);
 
-        return new GetUserByIdResult(
-                findUserByIdResult.getEmail()
-        );
+        return new GetUserByIdResult(findUserByIdResult.getEmail());
     }
 }

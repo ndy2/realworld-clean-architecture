@@ -3,6 +3,8 @@ package com.deukyun.realworld.profile.adapter.out.persistence;
 import com.deukyun.realworld.common.component.PersistenceAdapter;
 import com.deukyun.realworld.common.exception.RealworldRuntimeException;
 import com.deukyun.realworld.profile.application.port.out.*;
+import com.deukyun.realworld.profile.domain.Profile.ProfileId;
+import com.deukyun.realworld.user.domain.Email;
 import com.deukyun.realworld.user.domain.User.UserId;
 import lombok.RequiredArgsConstructor;
 
@@ -23,8 +25,8 @@ class ProfilePersistenceAdapter implements
                 = profileRepository.findByUserIdProjection(userId.getValue()).orElseThrow(RealworldRuntimeException::new);
 
         return new FindProfileByUserIdResult(
-                profileJpaEntity.getId(),
-                profileJpaEntity.getUserEmail(),
+                new ProfileId(profileJpaEntity.getId()),
+                new Email(profileJpaEntity.getUserEmail()),
                 profileJpaEntity.getUsername(),
                 profileJpaEntity.getBio(),
                 profileJpaEntity.getImage()
@@ -32,8 +34,8 @@ class ProfilePersistenceAdapter implements
     }
 
     @Override
-    public long findProfileIdByUserId(UserId userId) {
-        return profileRepository.findIdByUserId(userId.getValue()).orElseThrow(RealworldRuntimeException::new);
+    public ProfileId findProfileIdByUserId(UserId userId) {
+        return new ProfileId(profileRepository.findIdByUserId(userId.getValue()).orElseThrow(RealworldRuntimeException::new));
     }
 
     @Override
@@ -41,7 +43,7 @@ class ProfilePersistenceAdapter implements
         profileRepository.save(
                 new ProfileJpaEntity(
                         insertProfileCommand.getUsername(),
-                        insertProfileCommand.getUserId()
+                        insertProfileCommand.getUserId().getValue()
                 )
         );
     }

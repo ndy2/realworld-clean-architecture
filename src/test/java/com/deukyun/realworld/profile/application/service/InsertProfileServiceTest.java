@@ -3,6 +3,7 @@ package com.deukyun.realworld.profile.application.service;
 import com.deukyun.realworld.profile.application.port.in.RegisterProfileCommand;
 import com.deukyun.realworld.profile.application.port.out.InsertProfileCommand;
 import com.deukyun.realworld.profile.application.port.out.InsertProfilePort;
+import com.deukyun.realworld.user.domain.User.UserId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -27,13 +28,13 @@ class InsertProfileServiceTest {
     @Test
     void 프로필_삽입() {
         //given
-        RegisterProfileCommand registerProfileCommand = new RegisterProfileCommand(1L, "Jakob");
+        RegisterProfileCommand registerProfileCommand = new RegisterProfileCommand(new UserId(1L), "Jakob");
 
         //when
         insertProfileService.registerProfile(registerProfileCommand);
 
         //then
         verify(insertProfilePort)
-                .insertProfile(new InsertProfileCommand(1L, "Jakob"));
+                .insertProfile(new InsertProfileCommand(new UserId(1L), "Jakob"));
     }
 }

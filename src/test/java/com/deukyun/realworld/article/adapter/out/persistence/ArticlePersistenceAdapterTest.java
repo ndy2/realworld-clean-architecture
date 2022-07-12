@@ -6,6 +6,7 @@ import com.deukyun.realworld.article.application.port.out.InsertArticleCommand;
 import com.deukyun.realworld.article.application.port.out.InsertArticleResult;
 import com.deukyun.realworld.common.P6spyLogMessageFormatConfiguration;
 import com.deukyun.realworld.profile.adapter.out.persistence.ProfileJpaEntity;
+import com.deukyun.realworld.profile.domain.Profile.ProfileId;
 import com.deukyun.realworld.user.adapter.out.persistence.UserJpaEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -61,7 +62,7 @@ class ArticlePersistenceAdapterTest {
                 "Ever wonder how?",
                 "You have to believe",
                 Collections.emptyList(),
-                profile.getId()
+                new ProfileId(profile.getId())
         );
 
         //when
@@ -100,7 +101,7 @@ class ArticlePersistenceAdapterTest {
                 "Ever wonder how?",
                 "You have to believe",
                 List.of("reactjs", "angularjs", "dragons"),
-                profile.getId()
+                new ProfileId(profile.getId())
         );
 
         //when
@@ -139,7 +140,7 @@ class ArticlePersistenceAdapterTest {
                 "Ever wonder how?",
                 "You have to believe",
                 List.of("reactjs", "angularjs", "dragons"),
-                profile.getId()
+                new ProfileId(profile.getId())
         );
         InsertArticleCommand insertArticleCommand2 = new InsertArticleCommand(
                 "how-to-train-your-dragon",
@@ -147,7 +148,7 @@ class ArticlePersistenceAdapterTest {
                 "Ever wonder how?",
                 "You have to believe",
                 List.of("reactjs", "angularjs", "dragons", "new-tag"),
-                profile.getId()
+                new ProfileId(profile.getId())
         );
 
         //when
@@ -216,7 +217,7 @@ class ArticlePersistenceAdapterTest {
                         FindAuthorResult::getBio,
                         FindAuthorResult::getImage
                 ).containsExactly(
-                        profile.getId(),
+                        new ProfileId(profile.getId()),
                         "Jakob",
                         "I love skateboard",
                         "haha.png"

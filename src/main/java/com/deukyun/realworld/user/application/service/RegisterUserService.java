@@ -10,6 +10,7 @@ import com.deukyun.realworld.user.application.port.out.InsertUserCommand;
 import com.deukyun.realworld.user.application.port.out.InsertUserPort;
 import com.deukyun.realworld.user.domain.Email;
 import com.deukyun.realworld.user.domain.Password;
+import com.deukyun.realworld.user.domain.User.UserId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,13 +29,15 @@ class RegisterUserService implements RegisterUserUseCase {
         Email email = registerUserCommand.getEmail();
         Password password = registerUserCommand.getPassword();
 
-        long userId = insertUserPort.insertUser(
+        // 사용자 삽입
+        UserId userId = insertUserPort.insertUser(
                 new InsertUserCommand(
                         email,
                         passwordEncoder.encode(password)
                 )
         );
 
+        // 프로필 삽입
         insertProfileInPort.registerProfile(
                 new RegisterProfileCommand(
                         userId,

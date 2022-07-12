@@ -1,5 +1,6 @@
 package com.deukyun.realworld.user.adapter.in.web;
 
+import com.deukyun.realworld.user.domain.Email;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
@@ -8,8 +9,14 @@ final class AuthenticationResponse {
     @JsonProperty("user")
     private final Response response;
 
-    public AuthenticationResponse(String email, String token, String username, String bio, String image) {
-        this.response = new Response(email, token, username, bio, image);
+    public AuthenticationResponse(Email email, String token, String username, String bio, String image) {
+        this.response = new Response(
+                email.getValue(),
+                token,
+                username,
+                bio,
+                image
+        );
     }
 
     @Getter

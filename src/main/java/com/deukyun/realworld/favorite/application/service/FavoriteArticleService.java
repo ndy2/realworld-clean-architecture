@@ -14,6 +14,7 @@ import com.deukyun.realworld.favorite.application.port.out.DeleteFavoritePort;
 import com.deukyun.realworld.favorite.application.port.out.InsertFavoritePort;
 import com.deukyun.realworld.follow.application.port.out.CheckFollowPort;
 import com.deukyun.realworld.profile.application.port.out.FindProfileIdByUserIdPort;
+import com.deukyun.realworld.profile.domain.Profile.ProfileId;
 import com.deukyun.realworld.user.domain.User.UserId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,7 +50,7 @@ class FavoriteArticleService implements
         insertFavoritePort.insertFavorite(userId, articleId);
 
         // 3. 팔로우 여부를 확인 하기 위해 자신의 프로필 아이디 조회
-        long userProfileId = findProfileIdByUserIdPort.findProfileIdByUserId(userId);
+        ProfileId userProfileId = findProfileIdByUserIdPort.findProfileIdByUserId(userId);
 
         // 4. 팔로우 여부 확인
         FindAuthorResult author = article.getAuthor();
@@ -96,7 +97,7 @@ class FavoriteArticleService implements
         deleteFavoritePort.deleteById(favoriteId);
 
         // 3. 팔로우 여부를 확인 하기 위해 자신의 프로필 아이디 조회
-        long userProfileId = findProfileIdByUserIdPort.findProfileIdByUserId(userId);
+        ProfileId userProfileId = findProfileIdByUserIdPort.findProfileIdByUserId(userId);
 
         // 4. 팔로우 여부 확인
         FindAuthorResult author = article.getAuthor();

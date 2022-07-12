@@ -1,5 +1,7 @@
 package com.deukyun.realworld.user.adapter.in.web;
 
+import com.deukyun.realworld.user.domain.Email;
+import com.deukyun.realworld.user.domain.Password;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
@@ -8,12 +10,12 @@ final class EditUserRequest {
     @JsonProperty("user")
     private Request request;
 
-    public String getEmail() {
-        return request.email;
+    public Email getEmail() {
+        return new Email(request.email);
     }
 
-    public String getPassword() {
-        return request.password;
+    public Password getPassword() {
+        return new Password(request.password);
     }
 
     public String getUsername() {

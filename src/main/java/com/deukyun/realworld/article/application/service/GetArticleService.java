@@ -7,6 +7,7 @@ import com.deukyun.realworld.favorite.application.port.out.CheckFavoritePort;
 import com.deukyun.realworld.favorite.application.port.out.CountFavoritesPort;
 import com.deukyun.realworld.follow.application.port.out.CheckFollowPort;
 import com.deukyun.realworld.profile.application.port.out.FindProfileIdByUserIdPort;
+import com.deukyun.realworld.profile.domain.Profile.ProfileId;
 import com.deukyun.realworld.user.domain.User.UserId;
 import lombok.RequiredArgsConstructor;
 
@@ -71,7 +72,7 @@ class GetArticleService implements
             return toArticleResult(article, false, false);
         }
 
-        long userProfileId = findProfileIdByUserIdPort.findProfileIdByUserId(userId);
+        ProfileId userProfileId = findProfileIdByUserIdPort.findProfileIdByUserId(userId);
 
         boolean isFollow = checkFollowPort.checkFollow(userProfileId, article.getAuthor().getId()).isPresent();
         boolean isFavorited = checkFavoritePort.checkFavorite(userId, article.getId()).isPresent();
@@ -94,14 +95,14 @@ class GetArticleService implements
             return articles.stream().map(article -> toArticleResult(article, false, false)).collect(toList());
         }
 
-        long userProfileId = findProfileIdByUserIdPort.findProfileIdByUserId(userId);
+        ProfileId userProfileId = findProfileIdByUserIdPort.findProfileIdByUserId(userId);
 
         // db 조회 아티클의 아이디, 작가 프로필 아이디 목록
         List<Long> articleIds
                 = articles.stream()
                 .map(FindArticleResult::getId)
                 .collect(toList());
-        List<Long> authorProfileIds
+        List<ProfileId> authorProfileIds
                 = articles.stream()
                 .map(FindArticleResult::getAuthor)
                 .map(FindAuthorResult::getId)

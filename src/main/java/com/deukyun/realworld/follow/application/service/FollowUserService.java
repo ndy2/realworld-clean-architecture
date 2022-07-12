@@ -11,6 +11,7 @@ import com.deukyun.realworld.profile.application.port.out.FindProfileByUserIdPor
 import com.deukyun.realworld.profile.application.port.out.FindProfileByUserIdResult;
 import com.deukyun.realworld.profile.application.port.out.FindProfileByUsernamePort;
 import com.deukyun.realworld.profile.application.port.out.FindProfileByUsernameResult;
+import com.deukyun.realworld.profile.domain.Profile.ProfileId;
 import com.deukyun.realworld.user.domain.User.UserId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,8 +42,8 @@ class FollowUserService implements
         FindProfileByUserIdResult followerProfile = findProfileByUserIdPort.findByUserId(userId);
         FindProfileByUsernameResult followeeProfile = findProfileByUsernamePort.findProfileByUsername(username);
 
-        long followerProfileId = followerProfile.getId();
-        long followeeProfileId = followeeProfile.getId();
+        ProfileId followerProfileId = followerProfile.getId();
+        ProfileId followeeProfileId = followeeProfile.getId();
 
         checkFollowable(followerProfileId, followeeProfileId);
         insertFollowPort.insertFollow(followerProfileId, followeeProfileId);
@@ -55,7 +56,7 @@ class FollowUserService implements
         );
     }
 
-    private void checkFollowable(long followerProfileId, long followeeProfileId) {
+    private void checkFollowable(ProfileId followerProfileId, ProfileId followeeProfileId) {
         boolean isAlreadyFollow = checkFollowPort.checkFollow(
                 followerProfileId,
                 followeeProfileId
@@ -75,10 +76,10 @@ class FollowUserService implements
         FindProfileByUserIdResult followerProfile = findProfileByUserIdPort.findByUserId(userId);
         FindProfileByUsernameResult followeeProfile = findProfileByUsernamePort.findProfileByUsername(username);
 
-        long followerProfileId = followerProfile.getId();
-        long followeeProfileId = followeeProfile.getId();
+        ProfileId followerProfileId = followerProfile.getId();
+        ProfileId followeeProfileId = followeeProfile.getId();
 
-        long deleteTargetId = checkUnfollowable(followerProfileId, followeeProfileId);
+        ProfileId deleteTargetId = checkUnfollowable(followerProfileId, followeeProfileId);
         deleteFollowPort.deleteById(deleteTargetId);
 
         return new FollowUserResult(
@@ -89,8 +90,12 @@ class FollowUserService implements
         );
     }
 
-    private long checkUnfollowable(long followerProfileId, long followeeProfileId) {
-        Optional<Long> idIfUnfollowable = checkFollowPort.checkFollow(
+    /**
+     * 언팔로우 할 수 있다면 대상 프로필 아이디를 반환
+     * 할 수 없다면 예외 발생
+     */
+    private ProfileId checkUnfollowable(ProfileId followerProfileId, ProfileId followeeProfileId) {
+        Optional<ProfileId> idIfUnfollowable = checkFollowPort.checkFollow(
                 followerProfileId,
                 followeeProfileId
         );

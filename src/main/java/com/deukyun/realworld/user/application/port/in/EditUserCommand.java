@@ -12,10 +12,10 @@ public class EditUserCommand {
     Email email;
     Password password;
 
-    public EditUserCommand(UserId userId, String email, String password) {
+    public EditUserCommand(UserId userId, Email email, Password password) {
 
         this.userId = userId;
-        this.email = email == null ? null : new Email(email);
-        this.password = password == null ? null : new Password(password);
+        this.email = email;
+        this.password = password;
     }
 }

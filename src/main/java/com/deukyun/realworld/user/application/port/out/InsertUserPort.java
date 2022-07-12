@@ -1,6 +1,8 @@
 package com.deukyun.realworld.user.application.port.out;
 
+import com.deukyun.realworld.user.domain.User.UserId;
+
 public interface InsertUserPort {
 
-    long insertUser(InsertUserCommand insertUserCommand);
+    UserId insertUser(InsertUserCommand insertUserCommand);
 }

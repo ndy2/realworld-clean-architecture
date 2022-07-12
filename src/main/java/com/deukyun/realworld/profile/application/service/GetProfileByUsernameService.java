@@ -7,6 +7,7 @@ import com.deukyun.realworld.profile.application.port.in.GetProfileByUsernameRes
 import com.deukyun.realworld.profile.application.port.out.FindProfileByUsernamePort;
 import com.deukyun.realworld.profile.application.port.out.FindProfileByUsernameResult;
 import com.deukyun.realworld.profile.application.port.out.FindProfileIdByUserIdPort;
+import com.deukyun.realworld.profile.domain.Profile.ProfileId;
 import com.deukyun.realworld.user.domain.User.UserId;
 import lombok.RequiredArgsConstructor;
 
@@ -20,7 +21,7 @@ class GetProfileByUsernameService implements GetProfileByUsernameQuery {
 
     @Override
     public GetProfileByUsernameResult getProfileByUsername(UserId userId, String username) {
-        long userProfileId = findProfileIdByUserIdPort.findProfileIdByUserId(userId);
+        ProfileId userProfileId = findProfileIdByUserIdPort.findProfileIdByUserId(userId);
         FindProfileByUsernameResult findResult = findProfileByUsernamePort.findProfileByUsername(username);
 
         boolean isFollow = false;

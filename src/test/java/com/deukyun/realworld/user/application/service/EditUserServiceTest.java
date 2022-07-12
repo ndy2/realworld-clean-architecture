@@ -28,7 +28,11 @@ class EditUserServiceTest {
     @Test
     void 사용자_업데이트() {
         //given
-        EditUserCommand editUserCommand = new EditUserCommand(new UserId(1L), "edit@edit.edit", "editedit");
+        EditUserCommand editUserCommand = new EditUserCommand(
+                new UserId(1L),
+                new Email("edit@edit.edit"),
+                new Password("editedit")
+        );
         when(updateUserPort.updateUser(new UpdateUserCommand(
                         new UserId(1L),
                         new Email("edit@edit.edit"),
