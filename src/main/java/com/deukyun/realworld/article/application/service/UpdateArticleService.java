@@ -15,6 +15,7 @@ import com.deukyun.realworld.favorite.application.port.out.CountFavoritesPort;
 import com.deukyun.realworld.follow.application.port.out.CheckFollowPort;
 import com.deukyun.realworld.profile.application.port.out.FindProfileIdByUserIdPort;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @UseCase
@@ -26,16 +27,20 @@ public class UpdateArticleService implements UpdateArticleUseCase {
     private final CheckFollowPort checkFollowPort;
     private final FindProfileIdByUserIdPort findProfileIdByUserIdPort;
 
+    @Transactional
     @Override
     public UpdateArticleResult updateArticle(UpdateArticleCommand command) {
         long userId = command.getUserId();
         long profileId = findProfileIdByUserIdPort.findProfileIdByUserId(userId);
 
+        String origSlug = command.getSlug();
+        String updateSlug = createSlug(command);
         UpdateArticleStateResult article = updateArticlePort.updateArticle(
                 new UpdateArticleStateCommand(
                         userId,
                         command.getTitle(),
-                        command.getSlug(),
+                        origSlug,
+                        updateSlug,
                         command.getDescription(),
                         command.getBody()
                 )
@@ -64,5 +69,15 @@ public class UpdateArticleService implements UpdateArticleUseCase {
                         isFollowing
                 )
         );
+    }
+
+    /**
+     * 타이틀을 이요해 Slug 를 만듬
+     */
+    private String createSlug(UpdateArticleCommand updateArticleCommand) {
+
+        String title = updateArticleCommand.getTitle();
+
+        return String.join("-", title.toLowerCase().split(" "));
     }
 }

@@ -13,6 +13,7 @@ import java.util.Optional;
 import static java.time.LocalDateTime.now;
 import static java.util.stream.Collectors.toList;
 import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.CascadeType.REMOVE;
 import static javax.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PROTECTED;
 
@@ -35,7 +36,7 @@ public class ArticleJpaEntity {
     @ManyToOne(fetch = LAZY)
     private ProfileJpaEntity authorProfile;
 
-    @OneToMany(cascade = PERSIST, mappedBy = "article")
+    @OneToMany(cascade = {PERSIST, REMOVE}, mappedBy = "article")
     private List<ArticleTagJpaEntity> articleTags = new ArrayList<>();
 
     public ArticleJpaEntity(String slug, String title, String body, String description, long authorProfileId) {
@@ -82,6 +83,7 @@ public class ArticleJpaEntity {
         Optional.ofNullable(title).ifPresent(wrapper -> this.title = wrapper);
         Optional.ofNullable(slug).ifPresent(wrapper -> this.slug = wrapper);
         Optional.ofNullable(body).ifPresent(wrapper -> this.body = wrapper);
+        updatedAt = now();
     }
 
     @Table(name = "article_tag")
