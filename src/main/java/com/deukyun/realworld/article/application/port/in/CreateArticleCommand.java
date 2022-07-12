@@ -1,6 +1,7 @@
 package com.deukyun.realworld.article.application.port.in;
 
 import com.deukyun.realworld.article.domain.Tags;
+import com.deukyun.realworld.user.domain.User.UserId;
 import lombok.Value;
 
 import java.util.Collections;
@@ -16,9 +17,9 @@ public class CreateArticleCommand {
     String description;
     String body;
     Tags tags;
-    long authorUserId;
+    UserId authorUserId;
 
-    public CreateArticleCommand(String title, String description, String body, List<String> tagList, long authorUserId) {
+    public CreateArticleCommand(String title, String description, String body, List<String> tagList, UserId authorUserId) {
         checkArgument(hasText(title), "title is not provided");
         checkArgument(hasText(description), "description is not provided");
         checkArgument(hasText(body), "body is not provided");
@@ -46,7 +47,7 @@ public class CreateArticleCommand {
         return tags.getTagList();
     }
 
-    public long getAuthorUserId() {
+    public UserId getAuthorUserId() {
         return authorUserId;
     }
 }

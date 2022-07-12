@@ -5,6 +5,7 @@ import com.deukyun.realworld.article.application.port.in.CreateArticleCommand;
 import com.deukyun.realworld.article.application.port.in.CreateArticleResult;
 import com.deukyun.realworld.article.application.port.in.CreateArticleUseCase;
 import com.deukyun.realworld.common.SecurityUser;
+import com.deukyun.realworld.user.domain.User.UserId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,7 +34,7 @@ public class CreateArticleController {
         long userId = securityUser.getUserId();
 
         CreateArticleResult articleResult
-                = createArticleUseCase.createArticle(new CreateArticleCommand(title, description, body, tagList, userId));
+                = createArticleUseCase.createArticle(new CreateArticleCommand(title, description, body, tagList, new UserId(userId)));
 
         String slug = articleResult.getSlug();
         LocalDateTime createdAt = articleResult.getCreatedAt();

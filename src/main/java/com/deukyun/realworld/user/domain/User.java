@@ -34,6 +34,12 @@ public class User {
 
     @Value
     public static class UserId {
+
+        // nullable - 미 인증 사용자의 경우 null
         Long value;
+
+        public boolean isUnAuthenticated() {
+            return value == null;
+        }
     }
 }

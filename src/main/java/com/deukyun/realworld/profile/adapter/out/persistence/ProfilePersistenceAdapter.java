@@ -3,6 +3,7 @@ package com.deukyun.realworld.profile.adapter.out.persistence;
 import com.deukyun.realworld.common.component.PersistenceAdapter;
 import com.deukyun.realworld.common.exception.RealworldRuntimeException;
 import com.deukyun.realworld.profile.application.port.out.*;
+import com.deukyun.realworld.user.domain.User.UserId;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -17,9 +18,9 @@ class ProfilePersistenceAdapter implements
     private final ProfileRepository profileRepository;
 
     @Override
-    public FindProfileByUserIdResult findByUserId(long userId) {
+    public FindProfileByUserIdResult findByUserId(UserId userId) {
         ProfileJpaEntity profileJpaEntity
-                = profileRepository.findByUserIdProjection(userId).orElseThrow(RealworldRuntimeException::new);
+                = profileRepository.findByUserIdProjection(userId.getValue()).orElseThrow(RealworldRuntimeException::new);
 
         return new FindProfileByUserIdResult(
                 profileJpaEntity.getId(),
@@ -31,8 +32,8 @@ class ProfilePersistenceAdapter implements
     }
 
     @Override
-    public long findProfileIdByUserId(long userId) {
-        return profileRepository.findIdByUserId(userId).orElseThrow(RealworldRuntimeException::new);
+    public long findProfileIdByUserId(UserId userId) {
+        return profileRepository.findIdByUserId(userId.getValue()).orElseThrow(RealworldRuntimeException::new);
     }
 
     @Override

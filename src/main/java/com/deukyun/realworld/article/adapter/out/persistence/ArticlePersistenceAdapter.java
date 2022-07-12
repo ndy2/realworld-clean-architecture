@@ -66,11 +66,15 @@ class ArticlePersistenceAdapter implements
     }
 
     @Override
-    public List<FindArticleResult> findArticlesByFields(FindArticlesByFieldsQuery command) {
+    public List<FindArticleResult> findArticlesByFields(FindArticlesByFieldsQuery query) {
 
         List<ArticleJpaEntity> articles = articleRepository.searchArticle(
-                new ArticleSearchCond(command.getTag(), command.getAuthor(), command.getFavorited()),
-                command.getOffset(), command.getLimit()
+                new ArticleSearchCond(
+                        query.getTag(),
+                        query.getAuthor(),
+                        query.getFavorited()),
+                query.getOffset(),
+                query.getLimit()
         );
 
         return articles.stream().map(this::toResult).collect(toList());
@@ -83,12 +87,12 @@ class ArticlePersistenceAdapter implements
     }
 
     @Override
-    public List<FindArticleResult> findFeedArticles(FindFeedArticleQuery command) {
+    public List<FindArticleResult> findFeedArticles(FindFeedArticleQuery query) {
         //팔로우중인 사용자의 아티클 조회
         List<ArticleJpaEntity> articles = articleRepository.feedArticles(
-                command.getUserId(),
-                command.getOffset(),
-                command.getLimit()
+                query.getUserId().getValue(),
+                query.getOffset(),
+                query.getLimit()
         );
 
         return articles.stream().map(this::toResult).collect(toList());

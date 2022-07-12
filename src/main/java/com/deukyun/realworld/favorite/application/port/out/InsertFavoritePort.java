@@ -1,6 +1,8 @@
 package com.deukyun.realworld.favorite.application.port.out;
 
+import com.deukyun.realworld.user.domain.User.UserId;
+
 public interface InsertFavoritePort {
 
-    void insertFavorite(long userId, long articleId);
+    void insertFavorite(UserId userId, long articleId);
 }

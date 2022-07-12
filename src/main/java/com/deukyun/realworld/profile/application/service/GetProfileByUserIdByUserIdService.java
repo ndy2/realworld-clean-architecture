@@ -5,6 +5,7 @@ import com.deukyun.realworld.profile.application.port.in.GetProfileByUserIdQuery
 import com.deukyun.realworld.profile.application.port.in.GetProfileByUserIdResult;
 import com.deukyun.realworld.profile.application.port.out.FindProfileByUserIdPort;
 import com.deukyun.realworld.profile.application.port.out.FindProfileByUserIdResult;
+import com.deukyun.realworld.user.domain.User.UserId;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -14,7 +15,7 @@ class GetProfileByUserIdByUserIdService implements GetProfileByUserIdQuery {
     private final FindProfileByUserIdPort findProfileByUserIdPort;
 
     @Override
-    public GetProfileByUserIdResult getProfileByUserId(Long id) {
+    public GetProfileByUserIdResult getProfileByUserId(UserId id) {
 
         FindProfileByUserIdResult findProfileByUserIdResult = findProfileByUserIdPort.findByUserId(id);
 

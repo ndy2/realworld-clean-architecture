@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 import java.util.Optional;
 
+import static com.deukyun.realworld.user.domain.User.UserId;
 import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
@@ -23,22 +24,22 @@ class FavoritePersistenceAdapter implements
     private final FavoriteRepository favoriteRepository;
 
     @Override
-    public Optional<Long> checkFavorite(long userId, long article) {
-        return favoriteRepository.findByUserIdEqualsAndArticleIdEquals(userId, article)
+    public Optional<Long> checkFavorite(UserId userId , long article) {
+        return favoriteRepository.findByUserIdEqualsAndArticleIdEquals(userId.getValue(), article)
                 .map(FavoriteJpaEntity::getId);
     }
 
     @Override
-    public List<Boolean> checkFavorites(Long userId, List<Long> articleIds) {
-        List<Long> favoriteArticleIds = favoriteRepository.findFavoriteArticleIdsByUserId(userId);
+    public List<Boolean> checkFavorites(UserId userId, List<Long> articleIds) {
+        List<Long> favoriteArticleIds = favoriteRepository.findFavoriteArticleIdsByUserId(userId.getValue());
 
         return articleIds.stream()
                 .map(id -> favoriteArticleIds.stream().anyMatch(id::equals)).collect(toList());
     }
 
     @Override
-    public void insertFavorite(long userId, long articleId) {
-        favoriteRepository.save(new FavoriteJpaEntity(userId, articleId));
+    public void insertFavorite(UserId userId, long articleId) {
+        favoriteRepository.save(new FavoriteJpaEntity(userId.getValue(), articleId));
     }
 
     @Override

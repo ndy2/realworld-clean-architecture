@@ -8,8 +8,8 @@ import com.deukyun.realworld.article.application.port.out.InsertArticleCommand;
 import com.deukyun.realworld.article.application.port.out.InsertArticlePort;
 import com.deukyun.realworld.article.application.port.out.InsertArticleResult;
 import com.deukyun.realworld.common.component.UseCase;
-import com.deukyun.realworld.profile.application.port.in.GetProfileByUserIdQuery;
-import com.deukyun.realworld.profile.application.port.in.GetProfileByUserIdResult;
+import com.deukyun.realworld.profile.application.port.out.FindProfileByUserIdPort;
+import com.deukyun.realworld.profile.application.port.out.FindProfileByUserIdResult;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -17,15 +17,15 @@ import lombok.RequiredArgsConstructor;
 class CreateArticleService implements CreateArticleUseCase {
 
     private final InsertArticlePort insertArticlePort;
-    private final GetProfileByUserIdQuery getProfileByUserIdQuery;
+    private final FindProfileByUserIdPort findProfileByUserIdPort;
 
     @Override
     public CreateArticleResult createArticle(CreateArticleCommand createArticleCommand) {
 
         String slug = createSlug(createArticleCommand);
 
-        GetProfileByUserIdResult authorProfile
-                = getProfileByUserIdQuery.getProfileByUserId(createArticleCommand.getAuthorUserId());
+        FindProfileByUserIdResult authorProfile
+                = findProfileByUserIdPort.findByUserId(createArticleCommand.getAuthorUserId());
 
         InsertArticleResult articleResult = insertArticlePort.insertArticle(
                 new InsertArticleCommand(

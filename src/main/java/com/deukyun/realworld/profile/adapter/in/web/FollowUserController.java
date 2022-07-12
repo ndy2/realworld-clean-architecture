@@ -4,6 +4,7 @@ import com.deukyun.realworld.common.SecurityUser;
 import com.deukyun.realworld.follow.application.port.in.FollowUserResult;
 import com.deukyun.realworld.follow.application.port.in.FollowUserUseCase;
 import com.deukyun.realworld.follow.application.port.in.UnfollowUserUseCase;
+import com.deukyun.realworld.user.domain.User.UserId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,7 +24,7 @@ public class FollowUserController {
             @AuthenticationPrincipal SecurityUser securityUser,
             @PathVariable String username
     ) {
-        long userId = securityUser.getUserId();
+        UserId userId = new UserId(securityUser.getUserId());
 
         FollowUserResult followUserResult = followUserUseCase.userIdFollowsUsername(userId, username);
 
@@ -40,7 +41,7 @@ public class FollowUserController {
             @AuthenticationPrincipal SecurityUser securityUser,
             @PathVariable String username
     ) {
-        long userId = securityUser.getUserId();
+        UserId userId = new UserId(securityUser.getUserId());
 
         FollowUserResult unfollowUserResult = unfollowUserUseCase.userIdUnfollowsUsername(userId, username);
 

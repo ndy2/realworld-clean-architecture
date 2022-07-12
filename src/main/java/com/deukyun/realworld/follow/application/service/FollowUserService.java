@@ -11,6 +11,7 @@ import com.deukyun.realworld.profile.application.port.out.FindProfileByUserIdPor
 import com.deukyun.realworld.profile.application.port.out.FindProfileByUserIdResult;
 import com.deukyun.realworld.profile.application.port.out.FindProfileByUsernamePort;
 import com.deukyun.realworld.profile.application.port.out.FindProfileByUsernameResult;
+import com.deukyun.realworld.user.domain.User.UserId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,7 +37,7 @@ class FollowUserService implements
      */
     @Transactional
     @Override
-    public FollowUserResult userIdFollowsUsername(long userId, String username) {
+    public FollowUserResult userIdFollowsUsername(UserId userId, String username) {
         FindProfileByUserIdResult followerProfile = findProfileByUserIdPort.findByUserId(userId);
         FindProfileByUsernameResult followeeProfile = findProfileByUsernamePort.findProfileByUsername(username);
 
@@ -70,7 +71,7 @@ class FollowUserService implements
      */
     @Transactional
     @Override
-    public FollowUserResult userIdUnfollowsUsername(long userId, String username) {
+    public FollowUserResult userIdUnfollowsUsername(UserId userId, String username) {
         FindProfileByUserIdResult followerProfile = findProfileByUserIdPort.findByUserId(userId);
         FindProfileByUsernameResult followeeProfile = findProfileByUsernamePort.findProfileByUsername(username);
 

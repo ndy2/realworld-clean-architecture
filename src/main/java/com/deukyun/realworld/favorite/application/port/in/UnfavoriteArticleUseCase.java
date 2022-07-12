@@ -1,6 +1,8 @@
 package com.deukyun.realworld.favorite.application.port.in;
 
+import com.deukyun.realworld.user.domain.User.UserId;
+
 public interface UnfavoriteArticleUseCase {
 
-    FavoriteArticleResult unfavorite(long userId, String slug);
+    FavoriteArticleResult unfavorite(UserId userId, String slug);
 }

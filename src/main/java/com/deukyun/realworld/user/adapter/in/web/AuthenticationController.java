@@ -3,6 +3,7 @@ package com.deukyun.realworld.user.adapter.in.web;
 import com.deukyun.realworld.common.SecurityUser;
 import com.deukyun.realworld.profile.application.port.in.GetProfileByUserIdQuery;
 import com.deukyun.realworld.profile.application.port.in.GetProfileByUserIdResult;
+import com.deukyun.realworld.user.domain.User.UserId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -34,7 +35,8 @@ public class AuthenticationController {
 
         //principal 에서 사용자 아이디와 토큰 조회
         SecurityUser principal = (SecurityUser) resultToken.getPrincipal();
-        GetProfileByUserIdResult profileResponse = getProfileByUserIdQuery.getProfileByUserId(principal.getUserId());
+        GetProfileByUserIdResult profileResponse
+                = getProfileByUserIdQuery.getProfileByUserId(new UserId(principal.getUserId()));
 
         return new AuthenticationResponse(
                 email,

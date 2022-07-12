@@ -6,6 +6,7 @@ import com.deukyun.realworld.common.SecurityUser;
 import com.deukyun.realworld.favorite.application.port.in.FavoriteArticleResult;
 import com.deukyun.realworld.favorite.application.port.in.FavoriteArticleUseCase;
 import com.deukyun.realworld.favorite.application.port.in.UnfavoriteArticleUseCase;
+import com.deukyun.realworld.user.domain.User.UserId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,7 +27,7 @@ public class FavoriteArticleController {
             @AuthenticationPrincipal SecurityUser securityUser,
             @PathVariable String slug
     ) {
-        long userId = securityUser.getUserId();
+        UserId userId = new UserId(securityUser.getUserId());
 
         FavoriteArticleResult articleResult = favoriteArticleUseCase.favorite(userId, slug);
 
@@ -38,7 +39,7 @@ public class FavoriteArticleController {
             @AuthenticationPrincipal SecurityUser securityUser,
             @PathVariable String slug
     ) {
-        long userId = securityUser.getUserId();
+        UserId userId = new UserId(securityUser.getUserId());
 
         FavoriteArticleResult articleResult = unfavoriteArticleUseCase.unfavorite(userId, slug);
 

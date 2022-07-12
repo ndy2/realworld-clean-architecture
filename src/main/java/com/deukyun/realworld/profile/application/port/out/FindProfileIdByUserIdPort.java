@@ -1,6 +1,8 @@
 package com.deukyun.realworld.profile.application.port.out;
 
+import com.deukyun.realworld.user.domain.User.UserId;
+
 public interface FindProfileIdByUserIdPort {
 
-    long findProfileIdByUserId(long userId);
+    long findProfileIdByUserId(UserId userId);
 }

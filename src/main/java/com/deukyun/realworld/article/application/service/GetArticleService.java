@@ -7,6 +7,7 @@ import com.deukyun.realworld.favorite.application.port.out.CheckFavoritePort;
 import com.deukyun.realworld.favorite.application.port.out.CountFavoritesPort;
 import com.deukyun.realworld.follow.application.port.out.CheckFollowPort;
 import com.deukyun.realworld.profile.application.port.out.FindProfileIdByUserIdPort;
+import com.deukyun.realworld.user.domain.User.UserId;
 import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ class GetArticleService implements
 
     @Override
     public List<ArticleResult> listArticles(ListArticlesQuery query) {
-        Long userId = query.getUserId();
+        UserId userId = query.getUserId();
 
         // 검색 조건에 따라 아티클 목록 조회
         List<FindArticleResult> articles = findArticlesByFieldsPort.findArticlesByFields(
@@ -62,11 +63,11 @@ class GetArticleService implements
     @Override
     public ArticleResult getArticleBySlug(GetArticleBySlugQuery query) {
         String slug = query.getSlug();
-        Long userId = query.getUserId();
+        UserId userId = query.getUserId();
 
         // 슬러그로 아티클 조회
         FindArticleResult article = findArticleBySlugPort.findArticleBySlug(slug);
-        if (userId == null) {
+        if (userId.isUnAuthenticated()) {
             return toArticleResult(article, false, false);
         }
 
@@ -86,10 +87,10 @@ class GetArticleService implements
      * @param userId   사용자 아이디
      * @return 서비스 반환 아티클 목록
      */
-    private List<ArticleResult> toArticleResults(List<FindArticleResult> articles, Long userId) {
+    private List<ArticleResult> toArticleResults(List<FindArticleResult> articles, UserId userId) {
         // 아이디가 없으면 (미인증 사용자)
         // 팔로우 여부와 페이보릿 여부를 모두 false 로 말아서 반환
-        if (userId == null) {
+        if (userId.isUnAuthenticated()) {
             return articles.stream().map(article -> toArticleResult(article, false, false)).collect(toList());
         }
 

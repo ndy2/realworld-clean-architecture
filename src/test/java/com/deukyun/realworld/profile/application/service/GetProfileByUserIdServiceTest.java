@@ -3,6 +3,7 @@ package com.deukyun.realworld.profile.application.service;
 import com.deukyun.realworld.profile.application.port.in.GetProfileByUserIdResult;
 import com.deukyun.realworld.profile.application.port.out.FindProfileByUserIdPort;
 import com.deukyun.realworld.profile.application.port.out.FindProfileByUserIdResult;
+import com.deukyun.realworld.user.domain.User.UserId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +18,7 @@ class GetProfileByUserIdServiceTest {
 
     @BeforeEach
     void setUp() {
-        when(findProfileByUserIdPort.findByUserId(1L))
+        when(findProfileByUserIdPort.findByUserId(new UserId(1L)))
                 .thenReturn(new FindProfileByUserIdResult(
                         2L,
                         "jake@jake.jake",
@@ -32,13 +33,13 @@ class GetProfileByUserIdServiceTest {
     @Test
     void 프로필_조회() {
         //given
-        long userId = 1L;
+        UserId userId = new UserId(1L);
 
         //when
         GetProfileByUserIdResult response = getProfileByUserIdService.getProfileByUserId(userId);
 
         //then
-        verify(findProfileByUserIdPort).findByUserId(1L);
+        verify(findProfileByUserIdPort).findByUserId(new UserId(1L));
 
         assertThat(response)
                 .extracting(

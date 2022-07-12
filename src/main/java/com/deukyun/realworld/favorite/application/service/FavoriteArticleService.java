@@ -14,6 +14,7 @@ import com.deukyun.realworld.favorite.application.port.out.DeleteFavoritePort;
 import com.deukyun.realworld.favorite.application.port.out.InsertFavoritePort;
 import com.deukyun.realworld.follow.application.port.out.CheckFollowPort;
 import com.deukyun.realworld.profile.application.port.out.FindProfileIdByUserIdPort;
+import com.deukyun.realworld.user.domain.User.UserId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,7 +38,7 @@ class FavoriteArticleService implements
 
     @Transactional
     @Override
-    public FavoriteArticleResult favorite(long userId, String slug) {
+    public FavoriteArticleResult favorite(UserId userId, String slug) {
 
         // 1. 슬러그로 아티클 조회
         FindArticleResult article = findArticleBySlugPort.findArticleBySlug(slug);
@@ -77,7 +78,7 @@ class FavoriteArticleService implements
         );
     }
 
-    private void checkFavoritable(long userId, long articleId) {
+    private void checkFavoritable(UserId userId, long articleId) {
         boolean isAlreadyFavorite = checkFavoritePort.checkFavorite(userId, articleId).isPresent();
 
         checkArgument(!isAlreadyFavorite, "이미 페이보릿 입니다");
@@ -85,7 +86,7 @@ class FavoriteArticleService implements
 
     @Transactional
     @Override
-    public FavoriteArticleResult unfavorite(long userId, String slug) {
+    public FavoriteArticleResult unfavorite(UserId userId, String slug) {
         // 1. 슬러그로 아티클 조회
         FindArticleResult article = findArticleBySlugPort.findArticleBySlug(slug);
         long articleId = article.getId();
@@ -124,7 +125,7 @@ class FavoriteArticleService implements
         );
     }
 
-    private long checkUnfFavoritable(long userId, long articleId) {
+    private long checkUnfFavoritable(UserId userId, long articleId) {
         Optional<Long> idIfPresent = checkFavoritePort.checkFavorite(userId, articleId);
 
         boolean isAlreadyFavorite = idIfPresent.isPresent();

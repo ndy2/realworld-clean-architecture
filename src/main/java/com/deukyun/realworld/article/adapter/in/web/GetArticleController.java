@@ -5,6 +5,7 @@ import com.deukyun.realworld.article.adapter.in.web.ArticleResponses.Response;
 import com.deukyun.realworld.article.adapter.in.web.ArticleResponses.SingleArticleResponse;
 import com.deukyun.realworld.article.application.port.in.*;
 import com.deukyun.realworld.common.SecurityUser;
+import com.deukyun.realworld.user.domain.User.UserId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +29,7 @@ public class GetArticleController {
             PagingQueryParam pagingQueryParam,
             String tag, String author, String favorited
     ) {
+
         List<ArticleResult> articleResults = articleQueries.listArticles(
                 new ListArticlesQuery(
                         tag,
@@ -35,7 +37,7 @@ public class GetArticleController {
                         favorited,
                         pagingQueryParam.limit,
                         pagingQueryParam.offset,
-                        securityUser == null ? null : securityUser.getUserId()
+                        securityUser == null ? new UserId(null) : new UserId(securityUser.getUserId())
                 )
         );
 
@@ -54,7 +56,7 @@ public class GetArticleController {
                 new FeedArticlesQuery(
                         pagingQueryParam.limit,
                         pagingQueryParam.offset,
-                        securityUser.getUserId()
+                        new UserId(securityUser.getUserId())
                 )
         );
 
@@ -72,7 +74,7 @@ public class GetArticleController {
         ArticleResult articleResult = articleQueries.getArticleBySlug(
                 new GetArticleBySlugQuery(
                         slug,
-                        securityUser == null ? null : securityUser.getUserId()
+                        securityUser == null ? new UserId(null) : new UserId(securityUser.getUserId())
                 )
         );
 

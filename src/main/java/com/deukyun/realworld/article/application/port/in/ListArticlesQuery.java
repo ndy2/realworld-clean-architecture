@@ -1,5 +1,6 @@
 package com.deukyun.realworld.article.application.port.in;
 
+import com.deukyun.realworld.user.domain.User.UserId;
 import lombok.Value;
 
 @Value
@@ -11,6 +12,5 @@ public class ListArticlesQuery {
     long limit;
     long offset;
 
-    // nullable - 미 인증 사용자의 경우 null
-    Long userId;
+    UserId userId;
 }
