@@ -3,9 +3,8 @@ package com.deukyun.realworld.article.adapter.in.web;
 import com.deukyun.realworld.article.adapter.in.dto.query.ArticleResponse;
 import com.deukyun.realworld.article.adapter.in.dto.query.SingleArticleResponse;
 import com.deukyun.realworld.common.SecurityUser;
-import com.deukyun.realworld.favorite.application.port.in.FavoriteArticleResult;
-import com.deukyun.realworld.favorite.application.port.in.FavoriteArticleUseCase;
-import com.deukyun.realworld.favorite.application.port.in.UnfavoriteArticleUseCase;
+import com.deukyun.realworld.favorite.application.port.in.FavoriteArticleUseCases;
+import com.deukyun.realworld.favorite.application.port.in.dto.command.FavoriteArticleResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,8 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class FavoriteArticleController {
 
-    private final FavoriteArticleUseCase favoriteArticleUseCase;
-    private final UnfavoriteArticleUseCase unfavoriteArticleUseCase;
+    private final FavoriteArticleUseCases favoriteArticleUseCases;
 
     @PostMapping("/api/articles/{slug}/favorite")
     public SingleArticleResponse favoriteArticle(
@@ -28,7 +26,7 @@ public class FavoriteArticleController {
     ) {
         long userId = securityUser.getUserId();
 
-        FavoriteArticleResult articleResult = favoriteArticleUseCase.favorite(userId, slug);
+        FavoriteArticleResult articleResult = favoriteArticleUseCases.favorite(userId, slug);
 
         return new SingleArticleResponse(ArticleResponse.of(articleResult));
     }
@@ -40,7 +38,7 @@ public class FavoriteArticleController {
     ) {
         long userId = securityUser.getUserId();
 
-        FavoriteArticleResult articleResult = unfavoriteArticleUseCase.unfavorite(userId, slug);
+        FavoriteArticleResult articleResult = favoriteArticleUseCases.unfavorite(userId, slug);
 
         return new SingleArticleResponse(ArticleResponse.of(articleResult));
     }

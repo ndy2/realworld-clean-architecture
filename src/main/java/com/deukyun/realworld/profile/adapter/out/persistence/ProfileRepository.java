@@ -1,6 +1,6 @@
 package com.deukyun.realworld.profile.adapter.out.persistence;
 
-import com.deukyun.realworld.profile.application.port.out.FindProfileByUsernameResult;
+import com.deukyun.realworld.profile.application.port.out.dto.query.FindProfileByUsernameResult;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -21,7 +21,7 @@ interface ProfileRepository extends JpaRepository<ProfileJpaEntity, Long> {
             "where p.user.id = :userId")
     Optional<Long> findIdByUserId(long userId);
 
-    @Query("select new com.deukyun.realworld.profile.application.port.out.FindProfileByUsernameResult(p.id, p.username, p.bio, p.image) " +
+    @Query("select new com.deukyun.realworld.profile.application.port.out.dto.query.FindProfileByUsernameResult(p.id, p.username, p.bio, p.image) " +
             "from ProfileJpaEntity p " +
             "where p.username = :username")
     Optional<FindProfileByUsernameResult> findByUsernameProjection(String username);

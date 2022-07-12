@@ -1,8 +1,8 @@
 package com.deukyun.realworld.profile.application.service;
 
-import com.deukyun.realworld.profile.application.port.in.RegisterProfileCommand;
-import com.deukyun.realworld.profile.application.port.out.InsertProfileCommand;
+import com.deukyun.realworld.profile.application.port.in.dto.command.RegisterProfileCommand;
 import com.deukyun.realworld.profile.application.port.out.InsertProfilePort;
+import com.deukyun.realworld.profile.application.port.out.dto.command.InsertProfileCommand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

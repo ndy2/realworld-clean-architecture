@@ -3,7 +3,7 @@ package com.deukyun.realworld.profile.adapter.in.web;
 import com.deukyun.realworld.common.SecurityUser;
 import com.deukyun.realworld.profile.adapter.in.dto.query.GetProfileResponse;
 import com.deukyun.realworld.profile.application.port.in.GetProfileByUsernameQuery;
-import com.deukyun.realworld.profile.application.port.in.GetProfileByUsernameResult;
+import com.deukyun.realworld.profile.application.port.in.dto.query.GetProfileByUsernameResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;

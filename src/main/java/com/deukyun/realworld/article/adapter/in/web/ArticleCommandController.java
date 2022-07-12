@@ -2,10 +2,10 @@ package com.deukyun.realworld.article.adapter.in.web;
 
 import com.deukyun.realworld.article.adapter.in.dto.command.CreateArticleRequest;
 import com.deukyun.realworld.article.adapter.in.dto.command.CreateArticleResponse;
-import com.deukyun.realworld.article.application.port.in.AuthorResult;
-import com.deukyun.realworld.article.application.port.in.CreateArticleCommand;
-import com.deukyun.realworld.article.application.port.in.CreateArticleResult;
 import com.deukyun.realworld.article.application.port.in.CreateArticleUseCase;
+import com.deukyun.realworld.article.application.port.in.dto.command.CreateArticleCommand;
+import com.deukyun.realworld.article.application.port.in.dto.command.CreateArticleResult;
+import com.deukyun.realworld.article.application.port.in.dto.query.AuthorResult;
 import com.deukyun.realworld.common.SecurityUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

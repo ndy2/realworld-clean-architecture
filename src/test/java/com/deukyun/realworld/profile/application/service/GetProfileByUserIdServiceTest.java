@@ -1,8 +1,8 @@
 package com.deukyun.realworld.profile.application.service;
 
-import com.deukyun.realworld.profile.application.port.in.GetProfileByUserIdResult;
+import com.deukyun.realworld.profile.application.port.in.dto.query.GetProfileByUserIdResult;
 import com.deukyun.realworld.profile.application.port.out.FindProfileByUserIdPort;
-import com.deukyun.realworld.profile.application.port.out.FindProfileByUserIdResult;
+import com.deukyun.realworld.profile.application.port.out.dto.query.FindProfileByUserIdResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

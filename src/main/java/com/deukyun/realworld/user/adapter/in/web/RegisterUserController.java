@@ -2,8 +2,8 @@ package com.deukyun.realworld.user.adapter.in.web;
 
 import com.deukyun.realworld.user.adapter.in.dto.command.RegisterUserRequest;
 import com.deukyun.realworld.user.adapter.in.dto.command.RegisterUserResponse;
-import com.deukyun.realworld.user.application.port.in.RegisterUserCommand;
 import com.deukyun.realworld.user.application.port.in.RegisterUserUseCase;
+import com.deukyun.realworld.user.application.port.in.dto.command.RegisterUserCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

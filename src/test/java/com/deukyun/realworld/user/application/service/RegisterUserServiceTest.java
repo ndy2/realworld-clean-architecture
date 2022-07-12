@@ -1,10 +1,10 @@
 package com.deukyun.realworld.user.application.service;
 
-import com.deukyun.realworld.profile.application.port.in.RegisterProfileCommand;
 import com.deukyun.realworld.profile.application.port.in.RegisterProfileUseCase;
-import com.deukyun.realworld.user.application.port.in.RegisterUserCommand;
-import com.deukyun.realworld.user.application.port.out.InsertUserCommand;
+import com.deukyun.realworld.profile.application.port.in.dto.command.RegisterProfileCommand;
+import com.deukyun.realworld.user.application.port.in.dto.command.RegisterUserCommand;
 import com.deukyun.realworld.user.application.port.out.InsertUserPort;
+import com.deukyun.realworld.user.application.port.out.dto.command.InsertUserCommand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.password.PasswordEncoder;

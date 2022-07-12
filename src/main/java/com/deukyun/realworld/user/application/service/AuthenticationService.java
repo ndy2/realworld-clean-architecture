@@ -3,7 +3,7 @@ package com.deukyun.realworld.user.application.service;
 import com.deukyun.realworld.common.component.Query;
 import com.deukyun.realworld.user.application.port.in.AuthenticationQuery;
 import com.deukyun.realworld.user.application.port.out.FindPasswordPort;
-import com.deukyun.realworld.user.application.port.out.FindPasswordResult;
+import com.deukyun.realworld.user.application.port.out.dto.query.FindPasswordResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 

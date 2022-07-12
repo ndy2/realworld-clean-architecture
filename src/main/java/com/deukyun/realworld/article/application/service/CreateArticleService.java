@@ -1,15 +1,15 @@
 package com.deukyun.realworld.article.application.service;
 
-import com.deukyun.realworld.article.application.port.in.AuthorResult;
-import com.deukyun.realworld.article.application.port.in.CreateArticleCommand;
-import com.deukyun.realworld.article.application.port.in.CreateArticleResult;
 import com.deukyun.realworld.article.application.port.in.CreateArticleUseCase;
-import com.deukyun.realworld.article.application.port.out.InsertArticleCommand;
+import com.deukyun.realworld.article.application.port.in.dto.command.CreateArticleCommand;
+import com.deukyun.realworld.article.application.port.in.dto.command.CreateArticleResult;
+import com.deukyun.realworld.article.application.port.in.dto.query.AuthorResult;
 import com.deukyun.realworld.article.application.port.out.InsertArticlePort;
-import com.deukyun.realworld.article.application.port.out.InsertArticleResult;
+import com.deukyun.realworld.article.application.port.out.dto.command.InsertArticleCommand;
+import com.deukyun.realworld.article.application.port.out.dto.command.InsertArticleResult;
 import com.deukyun.realworld.common.component.UseCase;
 import com.deukyun.realworld.profile.application.port.in.GetProfileByUserIdQuery;
-import com.deukyun.realworld.profile.application.port.in.GetProfileByUserIdResult;
+import com.deukyun.realworld.profile.application.port.in.dto.query.GetProfileByUserIdResult;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

@@ -2,9 +2,9 @@ package com.deukyun.realworld.user.application.service;
 
 import com.deukyun.realworld.common.component.Query;
 import com.deukyun.realworld.user.application.port.in.GetUserByIdQuery;
-import com.deukyun.realworld.user.application.port.in.GetUserByIdResult;
+import com.deukyun.realworld.user.application.port.in.dto.query.GetUserByIdResult;
 import com.deukyun.realworld.user.application.port.out.FindUserByIdPort;
-import com.deukyun.realworld.user.application.port.out.FindUserByIdResult;
+import com.deukyun.realworld.user.application.port.out.dto.query.FindUserByIdResult;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

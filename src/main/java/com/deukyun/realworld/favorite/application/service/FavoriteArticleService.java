@@ -1,13 +1,12 @@
 package com.deukyun.realworld.favorite.application.service;
 
 import com.deukyun.realworld.article.application.port.out.FindArticleBySlugPort;
-import com.deukyun.realworld.article.application.port.out.FindArticleResult;
-import com.deukyun.realworld.article.application.port.out.FindAuthorResult;
+import com.deukyun.realworld.article.application.port.out.dto.query.FindArticleResult;
+import com.deukyun.realworld.article.application.port.out.dto.query.FindAuthorResult;
 import com.deukyun.realworld.common.component.UseCase;
-import com.deukyun.realworld.favorite.application.port.in.FavoriteArticleResult;
-import com.deukyun.realworld.favorite.application.port.in.FavoriteArticleUseCase;
-import com.deukyun.realworld.favorite.application.port.in.FavoriteAuthorResult;
-import com.deukyun.realworld.favorite.application.port.in.UnfavoriteArticleUseCase;
+import com.deukyun.realworld.favorite.application.port.in.FavoriteArticleUseCases;
+import com.deukyun.realworld.favorite.application.port.in.dto.command.FavoriteArticleResult;
+import com.deukyun.realworld.favorite.application.port.in.dto.command.FavoriteAuthorResult;
 import com.deukyun.realworld.favorite.application.port.out.CheckFavoritePort;
 import com.deukyun.realworld.favorite.application.port.out.CountFavoritesPort;
 import com.deukyun.realworld.favorite.application.port.out.DeleteFavoritePort;
@@ -24,8 +23,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 @RequiredArgsConstructor
 @UseCase
 class FavoriteArticleService implements
-        FavoriteArticleUseCase,
-        UnfavoriteArticleUseCase {
+        FavoriteArticleUseCases {
 
     private final FindProfileIdByUserIdPort findProfileIdByUserIdPort;
     private final FindArticleBySlugPort findArticleBySlugPort;

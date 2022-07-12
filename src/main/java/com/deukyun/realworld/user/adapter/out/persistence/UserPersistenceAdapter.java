@@ -2,7 +2,15 @@ package com.deukyun.realworld.user.adapter.out.persistence;
 
 import com.deukyun.realworld.common.component.PersistenceAdapter;
 import com.deukyun.realworld.common.exception.RealworldRuntimeException;
-import com.deukyun.realworld.user.application.port.out.*;
+import com.deukyun.realworld.user.application.port.out.FindPasswordPort;
+import com.deukyun.realworld.user.application.port.out.FindUserByIdPort;
+import com.deukyun.realworld.user.application.port.out.InsertUserPort;
+import com.deukyun.realworld.user.application.port.out.UpdateUserPort;
+import com.deukyun.realworld.user.application.port.out.dto.command.InsertUserCommand;
+import com.deukyun.realworld.user.application.port.out.dto.command.UpdateUserCommand;
+import com.deukyun.realworld.user.application.port.out.dto.command.UpdateUserResult;
+import com.deukyun.realworld.user.application.port.out.dto.query.FindPasswordResult;
+import com.deukyun.realworld.user.application.port.out.dto.query.FindUserByIdResult;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;

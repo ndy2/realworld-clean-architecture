@@ -4,7 +4,16 @@ import com.deukyun.realworld.article.adapter.out.persistence.ArticleJpaEntity.Ar
 import com.deukyun.realworld.article.adapter.out.persistence.repository.ArticleRepository;
 import com.deukyun.realworld.article.adapter.out.persistence.repository.ArticleSearchCond;
 import com.deukyun.realworld.article.adapter.out.persistence.repository.TagRepository;
-import com.deukyun.realworld.article.application.port.out.*;
+import com.deukyun.realworld.article.application.port.out.FindArticleBySlugPort;
+import com.deukyun.realworld.article.application.port.out.FindArticlesByFieldsPort;
+import com.deukyun.realworld.article.application.port.out.FindFeedArticlesPort;
+import com.deukyun.realworld.article.application.port.out.InsertArticlePort;
+import com.deukyun.realworld.article.application.port.out.dto.command.InsertArticleCommand;
+import com.deukyun.realworld.article.application.port.out.dto.command.InsertArticleResult;
+import com.deukyun.realworld.article.application.port.out.dto.query.FindArticleResult;
+import com.deukyun.realworld.article.application.port.out.dto.query.FindArticlesByFieldsQuery;
+import com.deukyun.realworld.article.application.port.out.dto.query.FindAuthorResult;
+import com.deukyun.realworld.article.application.port.out.dto.query.FindFeedArticleQuery;
 import com.deukyun.realworld.common.component.PersistenceAdapter;
 import lombok.RequiredArgsConstructor;
 

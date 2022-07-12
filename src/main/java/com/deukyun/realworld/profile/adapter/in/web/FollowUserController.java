@@ -1,9 +1,8 @@
 package com.deukyun.realworld.profile.adapter.in.web;
 
 import com.deukyun.realworld.common.SecurityUser;
-import com.deukyun.realworld.follow.application.port.in.FollowUserResult;
-import com.deukyun.realworld.follow.application.port.in.FollowUserUseCase;
-import com.deukyun.realworld.follow.application.port.in.UnfollowUserUseCase;
+import com.deukyun.realworld.follow.application.port.in.FollowUserUseCases;
+import com.deukyun.realworld.follow.application.port.in.dto.query.FollowUserResult;
 import com.deukyun.realworld.profile.adapter.in.dto.command.FollowUserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,8 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class FollowUserController {
 
-    private final FollowUserUseCase followUserUseCase;
-    private final UnfollowUserUseCase unfollowUserUseCase;
+    private final FollowUserUseCases followUserUseCases;
 
     @PostMapping("/api/profiles/{username}/follow")
     public FollowUserResponse followUser(
@@ -26,7 +24,7 @@ public class FollowUserController {
     ) {
         long userId = securityUser.getUserId();
 
-        FollowUserResult followUserResult = followUserUseCase.userIdFollowsUsername(userId, username);
+        FollowUserResult followUserResult = followUserUseCases.userIdFollowsUsername(userId, username);
 
         return new FollowUserResponse(
                 followUserResult.getUsername(),
@@ -43,7 +41,7 @@ public class FollowUserController {
     ) {
         long userId = securityUser.getUserId();
 
-        FollowUserResult unfollowUserResult = unfollowUserUseCase.userIdUnfollowsUsername(userId, username);
+        FollowUserResult unfollowUserResult = followUserUseCases.userIdUnfollowsUsername(userId, username);
 
         return new FollowUserResponse(
                 unfollowUserResult.getUsername(),

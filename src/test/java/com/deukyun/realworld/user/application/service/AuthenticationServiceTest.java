@@ -1,7 +1,7 @@
 package com.deukyun.realworld.user.application.service;
 
 import com.deukyun.realworld.user.application.port.out.FindPasswordPort;
-import com.deukyun.realworld.user.application.port.out.FindPasswordResult;
+import com.deukyun.realworld.user.application.port.out.dto.query.FindPasswordResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.password.PasswordEncoder;

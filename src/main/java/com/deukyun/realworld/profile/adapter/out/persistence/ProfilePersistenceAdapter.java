@@ -3,6 +3,11 @@ package com.deukyun.realworld.profile.adapter.out.persistence;
 import com.deukyun.realworld.common.component.PersistenceAdapter;
 import com.deukyun.realworld.common.exception.RealworldRuntimeException;
 import com.deukyun.realworld.profile.application.port.out.*;
+import com.deukyun.realworld.profile.application.port.out.dto.command.InsertProfileCommand;
+import com.deukyun.realworld.profile.application.port.out.dto.command.UpdateProfileCommand;
+import com.deukyun.realworld.profile.application.port.out.dto.command.UpdateProfileResult;
+import com.deukyun.realworld.profile.application.port.out.dto.query.FindProfileByUserIdResult;
+import com.deukyun.realworld.profile.application.port.out.dto.query.FindProfileByUsernameResult;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

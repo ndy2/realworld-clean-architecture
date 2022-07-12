@@ -1,7 +1,14 @@
 package com.deukyun.realworld.article.application.service;
 
-import com.deukyun.realworld.article.application.port.in.*;
-import com.deukyun.realworld.article.application.port.out.*;
+import com.deukyun.realworld.article.application.port.in.ArticleQueries;
+import com.deukyun.realworld.article.application.port.in.dto.query.*;
+import com.deukyun.realworld.article.application.port.out.FindArticleBySlugPort;
+import com.deukyun.realworld.article.application.port.out.FindArticlesByFieldsPort;
+import com.deukyun.realworld.article.application.port.out.FindFeedArticlesPort;
+import com.deukyun.realworld.article.application.port.out.dto.query.FindArticleResult;
+import com.deukyun.realworld.article.application.port.out.dto.query.FindArticlesByFieldsQuery;
+import com.deukyun.realworld.article.application.port.out.dto.query.FindAuthorResult;
+import com.deukyun.realworld.article.application.port.out.dto.query.FindFeedArticleQuery;
 import com.deukyun.realworld.common.component.Query;
 import com.deukyun.realworld.favorite.application.port.out.CheckFavoritePort;
 import com.deukyun.realworld.favorite.application.port.out.CountFavoritesPort;

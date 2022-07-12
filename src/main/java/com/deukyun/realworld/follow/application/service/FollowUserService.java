@@ -1,16 +1,15 @@
 package com.deukyun.realworld.follow.application.service;
 
 import com.deukyun.realworld.common.component.UseCase;
-import com.deukyun.realworld.follow.application.port.in.FollowUserResult;
-import com.deukyun.realworld.follow.application.port.in.FollowUserUseCase;
-import com.deukyun.realworld.follow.application.port.in.UnfollowUserUseCase;
+import com.deukyun.realworld.follow.application.port.in.FollowUserUseCases;
+import com.deukyun.realworld.follow.application.port.in.dto.query.FollowUserResult;
 import com.deukyun.realworld.follow.application.port.out.CheckFollowPort;
 import com.deukyun.realworld.follow.application.port.out.DeleteFollowPort;
 import com.deukyun.realworld.follow.application.port.out.InsertFollowPort;
 import com.deukyun.realworld.profile.application.port.out.FindProfileByUserIdPort;
-import com.deukyun.realworld.profile.application.port.out.FindProfileByUserIdResult;
 import com.deukyun.realworld.profile.application.port.out.FindProfileByUsernamePort;
-import com.deukyun.realworld.profile.application.port.out.FindProfileByUsernameResult;
+import com.deukyun.realworld.profile.application.port.out.dto.query.FindProfileByUserIdResult;
+import com.deukyun.realworld.profile.application.port.out.dto.query.FindProfileByUsernameResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,8 +20,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 @RequiredArgsConstructor
 @UseCase
 class FollowUserService implements
-        FollowUserUseCase,
-        UnfollowUserUseCase {
+        FollowUserUseCases {
 
     private final FindProfileByUserIdPort findProfileByUserIdPort;
     private final FindProfileByUsernamePort findProfileByUsernamePort;

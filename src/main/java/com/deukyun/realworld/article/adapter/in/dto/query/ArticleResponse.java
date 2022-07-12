@@ -1,9 +1,9 @@
 package com.deukyun.realworld.article.adapter.in.dto.query;
 
-import com.deukyun.realworld.article.application.port.in.ArticleResult;
-import com.deukyun.realworld.article.application.port.in.AuthorResult;
-import com.deukyun.realworld.favorite.application.port.in.FavoriteArticleResult;
-import com.deukyun.realworld.favorite.application.port.in.FavoriteAuthorResult;
+import com.deukyun.realworld.article.application.port.in.dto.query.ArticleResult;
+import com.deukyun.realworld.article.application.port.in.dto.query.AuthorResult;
+import com.deukyun.realworld.favorite.application.port.in.dto.command.FavoriteArticleResult;
+import com.deukyun.realworld.favorite.application.port.in.dto.command.FavoriteAuthorResult;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

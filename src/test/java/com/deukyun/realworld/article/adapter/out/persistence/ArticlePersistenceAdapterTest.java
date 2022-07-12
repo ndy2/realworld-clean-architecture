@@ -1,9 +1,9 @@
 package com.deukyun.realworld.article.adapter.out.persistence;
 
-import com.deukyun.realworld.article.application.port.out.FindArticleResult;
-import com.deukyun.realworld.article.application.port.out.FindAuthorResult;
-import com.deukyun.realworld.article.application.port.out.InsertArticleCommand;
-import com.deukyun.realworld.article.application.port.out.InsertArticleResult;
+import com.deukyun.realworld.article.application.port.out.dto.command.InsertArticleCommand;
+import com.deukyun.realworld.article.application.port.out.dto.command.InsertArticleResult;
+import com.deukyun.realworld.article.application.port.out.dto.query.FindArticleResult;
+import com.deukyun.realworld.article.application.port.out.dto.query.FindAuthorResult;
 import com.deukyun.realworld.common.P6spyLogMessageFormatConfiguration;
 import com.deukyun.realworld.profile.adapter.out.persistence.ProfileJpaEntity;
 import com.deukyun.realworld.user.adapter.out.persistence.UserJpaEntity;
