@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static java.time.LocalDateTime.now;
 import static java.util.stream.Collectors.toList;
@@ -74,6 +75,13 @@ public class ArticleJpaEntity {
 
     public List<String> getTagList() {
         return articleTags.stream().map(ArticleTagJpaEntity::getTagName).collect(toList());
+    }
+
+    public void update(String title, String slug, String body) {
+
+        Optional.ofNullable(title).ifPresent(wrapper -> this.title = wrapper);
+        Optional.ofNullable(slug).ifPresent(wrapper -> this.slug = wrapper);
+        Optional.ofNullable(body).ifPresent(wrapper -> this.body = wrapper);
     }
 
     @Table(name = "article_tag")

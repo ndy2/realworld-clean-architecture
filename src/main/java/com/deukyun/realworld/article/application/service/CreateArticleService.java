@@ -1,9 +1,9 @@
 package com.deukyun.realworld.article.application.service;
 
 import com.deukyun.realworld.article.application.port.in.CreateArticleUseCase;
+import com.deukyun.realworld.article.application.port.in.dto.command.AuthorResult;
 import com.deukyun.realworld.article.application.port.in.dto.command.CreateArticleCommand;
 import com.deukyun.realworld.article.application.port.in.dto.command.CreateArticleResult;
-import com.deukyun.realworld.article.application.port.in.dto.query.AuthorResult;
 import com.deukyun.realworld.article.application.port.out.InsertArticlePort;
 import com.deukyun.realworld.article.application.port.out.dto.command.InsertArticleCommand;
 import com.deukyun.realworld.article.application.port.out.dto.command.InsertArticleResult;

@@ -3,9 +3,11 @@ package com.deukyun.realworld.article.adapter.in.web;
 import com.deukyun.realworld.article.adapter.in.dto.command.CreateArticleRequest;
 import com.deukyun.realworld.article.adapter.in.dto.command.CreateArticleResponse;
 import com.deukyun.realworld.article.application.port.in.CreateArticleUseCase;
+import com.deukyun.realworld.article.application.port.in.DeleteArticleUseCase;
+import com.deukyun.realworld.article.application.port.in.UpdateArticleUseCase;
+import com.deukyun.realworld.article.application.port.in.dto.command.AuthorResult;
 import com.deukyun.realworld.article.application.port.in.dto.command.CreateArticleCommand;
 import com.deukyun.realworld.article.application.port.in.dto.command.CreateArticleResult;
-import com.deukyun.realworld.article.application.port.in.dto.query.AuthorResult;
 import com.deukyun.realworld.common.SecurityUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,6 +24,8 @@ import java.util.List;
 public class ArticleCommandController {
 
     private final CreateArticleUseCase createArticleUseCase;
+    private final UpdateArticleUseCase updateArticleUseCase;
+    private final DeleteArticleUseCase deleteArticleUseCase;
 
     @PostMapping("/api/articles")
     public CreateArticleResponse createArticle(

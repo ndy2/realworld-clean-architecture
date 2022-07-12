@@ -4,17 +4,14 @@ import com.deukyun.realworld.article.adapter.out.persistence.ArticleJpaEntity.Ar
 import com.deukyun.realworld.article.adapter.out.persistence.repository.ArticleRepository;
 import com.deukyun.realworld.article.adapter.out.persistence.repository.ArticleSearchCond;
 import com.deukyun.realworld.article.adapter.out.persistence.repository.TagRepository;
-import com.deukyun.realworld.article.application.port.out.FindArticleBySlugPort;
-import com.deukyun.realworld.article.application.port.out.FindArticlesByFieldsPort;
-import com.deukyun.realworld.article.application.port.out.FindFeedArticlesPort;
-import com.deukyun.realworld.article.application.port.out.InsertArticlePort;
-import com.deukyun.realworld.article.application.port.out.dto.command.InsertArticleCommand;
-import com.deukyun.realworld.article.application.port.out.dto.command.InsertArticleResult;
+import com.deukyun.realworld.article.application.port.out.*;
+import com.deukyun.realworld.article.application.port.out.dto.command.*;
 import com.deukyun.realworld.article.application.port.out.dto.query.FindArticleResult;
 import com.deukyun.realworld.article.application.port.out.dto.query.FindArticlesByFieldsQuery;
 import com.deukyun.realworld.article.application.port.out.dto.query.FindAuthorResult;
 import com.deukyun.realworld.article.application.port.out.dto.query.FindFeedArticleQuery;
 import com.deukyun.realworld.common.component.PersistenceAdapter;
+import com.deukyun.realworld.common.exception.RealworldRuntimeException;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -28,7 +25,9 @@ class ArticlePersistenceAdapter implements
         InsertArticlePort,
         FindArticlesByFieldsPort,
         FindArticleBySlugPort,
-        FindFeedArticlesPort {
+        FindFeedArticlesPort,
+        UpdateArticlePort,
+        DeleteArticlePort {
 
     private final ArticleRepository articleRepository;
     private final TagRepository tagRepository;
@@ -103,6 +102,33 @@ class ArticlePersistenceAdapter implements
         return articles.stream().map(this::toResult).collect(toList());
     }
 
+    @Override
+    public UpdateArticleStateResult updateArticle(UpdateArticleStateCommand command) {
+        long userId = command.getUserId();
+        String origSlug = command.getOrigSlug();
+
+        // userId 조인으로 다른 사람에 대한 요청 필터링
+        articleRepository.findByUserIdAndSlug(userId, origSlug).orElseThrow(RealworldRuntimeException::new);
+
+        // 깁게 조인 해옴
+        ArticleJpaEntity article = articleRepository.findBySlug(origSlug).orElseThrow(IllegalStateException::new);
+
+        article.update(
+                command.getTitle(),
+                command.getUpdateSlug(),
+                command.getBody()
+        );
+
+        return toUpdateResult(article);
+    }
+
+    @Override
+    public void deleteArticle(long userId, String slug) {
+        ArticleJpaEntity article = articleRepository.findByUserIdAndSlug(userId, slug).orElseThrow(RealworldRuntimeException::new);
+
+        articleRepository.delete(article);
+    }
+
     private FindArticleResult toResult(ArticleJpaEntity article) {
         return new FindArticleResult(
                 article.getId(),
@@ -114,6 +140,25 @@ class ArticlePersistenceAdapter implements
                 article.getCreatedAt(),
                 article.getUpdatedAt(),
                 new FindAuthorResult(
+                        article.getAuthorProfileId(),
+                        article.getAuthorUsername(),
+                        article.getAuthorBio(),
+                        article.getAuthorImage()
+                )
+        );
+    }
+
+    private UpdateArticleStateResult toUpdateResult(ArticleJpaEntity article) {
+        return new UpdateArticleStateResult(
+                article.getId(),
+                article.getSlug(),
+                article.getTitle(),
+                article.getDescription(),
+                article.getBody(),
+                article.getTagList(),
+                article.getCreatedAt(),
+                article.getUpdatedAt(),
+                new CommandAuthorResult(
                         article.getAuthorProfileId(),
                         article.getAuthorUsername(),
                         article.getAuthorBio(),
