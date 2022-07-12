@@ -6,7 +6,10 @@ import com.deukyun.realworld.follow.application.port.out.DeleteFollowPort;
 import com.deukyun.realworld.follow.application.port.out.InsertFollowPort;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
 import java.util.Optional;
+
+import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
 @PersistenceAdapter
@@ -21,6 +24,15 @@ public class FollowPersistenceAdapter implements
     public Optional<Long> checkFollow(long followerId, long followeeId) {
         return followRepository.findByFollowerIdEqualsAndFolloweeIdEquals(followerId, followeeId)
                 .map(FollowJpaEntity::getId);
+    }
+
+    @Override
+    public List<Boolean> checkFollows(long followerId, List<Long> followeeIds) {
+
+        List<Long> foundFolloweeIds = followRepository.findFolloweeIdsByFollowerId(followerId);
+
+        return followeeIds.stream()
+                .map(id -> foundFolloweeIds.stream().anyMatch(id::equals)).collect(toList());
     }
 
     @Override

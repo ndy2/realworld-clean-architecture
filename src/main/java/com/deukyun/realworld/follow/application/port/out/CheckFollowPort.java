@@ -1,5 +1,6 @@
 package com.deukyun.realworld.follow.application.port.out;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface CheckFollowPort {
@@ -10,4 +11,10 @@ public interface CheckFollowPort {
      * 존재한다면 id 리턴, 존재하지 않으면 null 리턴
      */
     Optional<Long> checkFollow(long followerId, long followeeId);
+
+    /**
+     * follower 가 followeeId 목록에 대하여
+     * 팔로우 여부를 리스트로 반환
+     */
+    List<Boolean> checkFollows(long followerId, List<Long> followeeIds);
 }

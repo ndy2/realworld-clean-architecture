@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Import(FollowPersistenceAdapter.class)
@@ -27,5 +29,21 @@ class FollowPersistenceAdapterTest {
         //then
         assertThat(isFollow1).isTrue();
         assertThat(isFollow2).isFalse();
+    }
+
+    @Test
+    void 팔로우_체크_목록_테스트() {
+        //given
+        followPersistenceAdapter.insertFollow(1, 2);
+        followPersistenceAdapter.insertFollow(1, 3);
+        followPersistenceAdapter.insertFollow(2, 1);
+        followPersistenceAdapter.insertFollow(2, 4);
+
+        //when
+        List<Boolean> flags = followPersistenceAdapter.checkFollows(1, List.of(2L, 3L, 4L));
+
+        //then
+        assertThat(flags).hasSize(3);
+        assertThat(flags).containsExactly(true, true, false);
     }
 }

@@ -1,3 +1,10 @@
+-- delete from favorite;
+-- delete from article_tag;
+-- delete from tag;
+-- delete from article;
+-- delete from profile;
+-- delete from users;
+
 -- 사용자 1 -> 프로필 4 -> 아티클 7
 -- 사용자 2 -> 프로필 5 -> 아티클 8
 -- 사용자 3 -> 프로필 6 -> 아티클 9
@@ -85,9 +92,3 @@ insert into follow (ID, FOLLOWEE_ID, FOLLOWER_ID)
 VALUES (27, 4, 5);
 
 
--- delete from favorite;
--- delete from article_tag;
--- delete from tag;
--- delete from article;
--- delete from profile;
--- delete from users;
