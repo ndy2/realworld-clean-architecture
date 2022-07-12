@@ -12,6 +12,7 @@ import java.util.List;
 
 final class ArticleResponses {
 
+    @Getter
     public static class ListArticlesResponse {
 
         private final List<Response> articles;

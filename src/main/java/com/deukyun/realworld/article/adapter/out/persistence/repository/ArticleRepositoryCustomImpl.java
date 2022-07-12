@@ -5,6 +5,7 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -30,6 +31,7 @@ class ArticleRepositoryCustomImpl implements ArticleRepositoryCustom {
         this.query = new JPAQueryFactory(em);
     }
 
+    @Transactional
     @Override
     public List<ArticleJpaEntity> searchArticle(ArticleSearchCond cond, long offset, long limit) {
 
@@ -58,6 +60,7 @@ class ArticleRepositoryCustomImpl implements ArticleRepositoryCustom {
         return articles;
     }
 
+    @Transactional
     @Override
     public List<ArticleJpaEntity> feedArticles(long userId, long offset, long limit) {
         List<ArticleJpaEntity> articles = query

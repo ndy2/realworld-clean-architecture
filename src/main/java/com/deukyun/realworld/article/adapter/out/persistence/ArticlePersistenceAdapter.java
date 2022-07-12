@@ -82,6 +82,18 @@ class ArticlePersistenceAdapter implements
         return toResult(articleRepository.findBySlug(slug).orElseThrow(IllegalArgumentException::new));
     }
 
+    @Override
+    public List<FindArticleResult> findFeedArticles(FindFeedArticleCommand command) {
+        //팔로우중인 사용자의 아티클 조회
+        List<ArticleJpaEntity> articles = articleRepository.feedArticles(
+                command.getUserId(),
+                command.getOffset(),
+                command.getLimit()
+        );
+
+        return articles.stream().map(this::toResult).collect(toList());
+    }
+
     private FindArticleResult toResult(ArticleJpaEntity article) {
         return new FindArticleResult(
                 article.getId(),
@@ -99,10 +111,5 @@ class ArticlePersistenceAdapter implements
                         article.getAuthorImage()
                 )
         );
-    }
-
-    @Override
-    public List<FindArticleResult> findFeedArticles(FindFeedArticleCommand command) {
-        return null;
     }
 }

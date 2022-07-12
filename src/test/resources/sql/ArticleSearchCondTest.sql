@@ -10,11 +10,11 @@
 -- 사용자 3 -> 프로필 6 -> 아티클 9
 
 insert into users (email, password, id)
-values ('user1@user1.user1', 'user1', 1);
+values ('user1@user1.user1', '$2a$12$0JDq29w1BH2RoimkYU/M9emCNpUZfzja5dLVR7bT8Hz4YNyQFmx0.', 1);
 insert into users (email, password, id)
-values ('user2@user2.user2', 'user2', 2);
+values ('user2@user2.user2', '$2a$12$0JDq29w1BH2RoimkYU/M9emCNpUZfzja5dLVR7bT8Hz4YNyQFmx0.', 2);
 insert into users (email, password, id)
-values ('user3@user3.user3', 'user3', 3);
+values ('user3@user3.user3', '$2a$12$0JDq29w1BH2RoimkYU/M9emCNpUZfzja5dLVR7bT8Hz4YNyQFmx0.', 3);
 
 insert into profile (bio, image, user_id, username, id)
 values ('user1bio', 'user1image', 1, 'user1', 4);
@@ -82,8 +82,9 @@ values (9, 2, 14);
 insert into favorite (article_id, user_id, id)
 values (9, 3, 15);
 
-// user2 -> 팔로우 user1 -> 아티클 7
-// user3 -> 팔로우 user2,user1 -> 아티클 7,8
+-- user2 -> 팔로우 user1 -> 아티클 7
+-- user3 -> 팔로우 user2,user1 -> 아티클 7,8
+
 insert into follow (ID, FOLLOWEE_ID, FOLLOWER_ID)
 VALUES (25, 4, 6);
 insert into follow (ID, FOLLOWEE_ID, FOLLOWER_ID)

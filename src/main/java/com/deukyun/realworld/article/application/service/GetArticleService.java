@@ -70,13 +70,10 @@ class GetArticleService implements
             return toArticleResult(article, false, false);
         }
 
-        long articleId = article.getId();
-        FindAuthorResult author = article.getAuthor();
-
         long userProfileId = findProfileIdByUserIdPort.findProfileIdByUserId(userId);
 
-        boolean isFollow = checkFollowPort.checkFollow(userProfileId, author.getId()).isPresent();
-        boolean isFavorited = checkFavoritePort.checkFavorite(userId, articleId).isPresent();
+        boolean isFollow = checkFollowPort.checkFollow(userProfileId, article.getAuthor().getId()).isPresent();
+        boolean isFavorited = checkFavoritePort.checkFavorite(userId, article.getId()).isPresent();
 
         return toArticleResult(article, isFollow, isFavorited);
     }

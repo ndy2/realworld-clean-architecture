@@ -10,7 +10,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.jdbc.Sql;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,9 +26,6 @@ class ArticleRepositoryCustomImplTest {
      */
     @Autowired
     ArticleRepositoryCustomImpl repository;
-
-    @Autowired
-    EntityManager em;
 
     @Test
     void 조건없이() {

@@ -3,6 +3,7 @@ package com.deukyun.realworld.article.adapter.in.web;
 import com.deukyun.realworld.common.BaseControllerTest;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class GetArticleControllerTest {
 
     @Nested
-    class 아티클_단건조회_테스트 extends BaseControllerTest {
+    class 아티클_슬러그로_단건조회_테스트 extends BaseControllerTest {
 
         String path = "/api/articles/{slug}";
 
@@ -184,5 +185,191 @@ class GetArticleControllerTest {
                     );
         }
 
+    }
+
+
+    @Nested
+    @Sql("classpath:sql/ArticleSearchCondTest.sql")
+    class 아티클_목록조회_테스트 extends BaseControllerTest {
+
+        String path = "/api/articles";
+
+        //쿼리파라미터 없이
+        @Test
+        void 전체_조회() throws Exception {
+            //setup
+            인증("user3@user3.user3", "password");
+
+            //when
+            mockMvc.perform(get(path)
+                            .header(AUTHORIZATION, token)
+                            .contentType(APPLICATION_JSON))
+                    //then
+                    .andExpect(status().isOk())
+                    .andExpectAll(
+                            jsonPath("articles", hasSize(3)),
+                            jsonPath("articleCount").value(3),
+
+                            jsonPath("articles[0].title").value("article7title"),
+                            jsonPath("articles[0].tagList", hasSize(1)),
+                            jsonPath("articles[0].favorited").value(false),
+                            jsonPath("articles[0].author.following").value(true),
+                            jsonPath("articles[0].author.username").value("user1"),
+
+                            jsonPath("articles[1].title").value("article8title"),
+                            jsonPath("articles[1].tagList", hasSize(2)),
+                            jsonPath("articles[1].favorited").value(false),
+                            jsonPath("articles[1].author.following").value(true),
+                            jsonPath("articles[1].author.username").value("user2"),
+
+                            jsonPath("articles[2].title").value("article9title"),
+                            jsonPath("articles[2].tagList", hasSize(3)),
+                            jsonPath("articles[2].favorited").value(true),
+                            jsonPath("articles[2].author.following").value(false),
+                            jsonPath("articles[2].author.username").value("user3")
+                    );
+        }
+
+        @Test
+        void 태그로_필터링() throws Exception {
+            인증("user3@user3.user3", "password");
+
+            //when
+            mockMvc.perform(get(path + "?tag=tag17")
+                            .header(AUTHORIZATION, token)
+                            .contentType(APPLICATION_JSON))
+                    //then
+                    .andExpect(status().isOk())
+                    .andExpectAll(
+                            jsonPath("articles", hasSize(2)),
+                            jsonPath("articleCount").value(2),
+
+                            jsonPath("articles[0].title").value("article8title"),
+                            jsonPath("articles[0].tagList", hasSize(2)),
+                            jsonPath("articles[0].favorited").value(false),
+                            jsonPath("articles[0].author.following").value(true),
+                            jsonPath("articles[0].author.username").value("user2"),
+
+                            jsonPath("articles[1].title").value("article9title"),
+                            jsonPath("articles[1].tagList", hasSize(3)),
+                            jsonPath("articles[1].favorited").value(true),
+                            jsonPath("articles[1].author.following").value(false),
+                            jsonPath("articles[1].author.username").value("user3")
+                    );
+        }
+
+        @Test
+        void 작가로_필터링() throws Exception {
+            인증("user3@user3.user3", "password");
+
+            //when
+            mockMvc.perform(get(path + "?author=user1")
+                            .header(AUTHORIZATION, token)
+                            .contentType(APPLICATION_JSON))
+                    //then
+                    .andExpect(status().isOk())
+                    .andExpectAll(
+                            jsonPath("articles", hasSize(1)),
+                            jsonPath("articleCount").value(1),
+
+                            jsonPath("articles[0].title").value("article7title"),
+                            jsonPath("articles[0].tagList", hasSize(1)),
+                            jsonPath("articles[0].favorited").value(false),
+                            jsonPath("articles[0].author.following").value(true),
+                            jsonPath("articles[0].author.username").value("user1")
+                    );
+        }
+
+        @Test
+        void 페이보릿으로_필터링() throws Exception {
+            인증("user3@user3.user3", "password");
+
+            //when
+            mockMvc.perform(get(path + "?favorited=user2")
+                            .header(AUTHORIZATION, token)
+                            .contentType(APPLICATION_JSON))
+                    //then
+                    .andExpect(status().isOk())
+                    .andExpectAll(
+                            jsonPath("articles", hasSize(2)),
+                            jsonPath("articleCount").value(2),
+
+                            jsonPath("articles[0].title").value("article8title"),
+                            jsonPath("articles[0].tagList", hasSize(2)),
+                            jsonPath("articles[0].favorited").value(false),
+                            jsonPath("articles[0].author.following").value(true),
+                            jsonPath("articles[0].author.username").value("user2"),
+
+                            jsonPath("articles[1].title").value("article9title"),
+                            jsonPath("articles[1].tagList", hasSize(3)),
+                            jsonPath("articles[1].favorited").value(true),
+                            jsonPath("articles[1].author.following").value(false),
+                            jsonPath("articles[1].author.username").value("user3")
+                    );
+        }
+
+
+        @Test
+        void 페이보릿과_태그로_필터링() throws Exception {
+            인증("user3@user3.user3", "password");
+
+            //when
+            mockMvc.perform(get(path + "?favorited=user2&tag=tag18")
+                            .header(AUTHORIZATION, token)
+                            .contentType(APPLICATION_JSON))
+                    //then
+                    .andExpect(status().isOk())
+                    .andExpectAll(
+                            jsonPath("articles", hasSize(1)),
+                            jsonPath("articleCount").value(1),
+
+                            jsonPath("articles[0].title").value("article9title"),
+                            jsonPath("articles[0].tagList", hasSize(3)),
+                            jsonPath("articles[0].favorited").value(true),
+                            jsonPath("articles[0].author.following").value(false),
+                            jsonPath("articles[0].author.username").value("user3")
+                    );
+        }
+    }
+
+    @Sql("classpath:sql/ArticleSearchCondTest.sql")
+    @Test
+    void 팔로우중인_유저의_게시글_목록조회_테스트() {
+
+
+    }
+
+    @Nested
+    @Sql("classpath:sql/ArticleSearchCondTest.sql")
+    class 팔로우중인_유저의_게시글_목록조회_테스트 extends BaseControllerTest {
+
+        @Test
+        void 유저3_아티클7과8() throws Exception {
+
+            인증("user3@user3.user3", "password");
+
+            //when
+            mockMvc.perform(get("/api/articles/feed")
+                            .header(AUTHORIZATION, token)
+                            .contentType(APPLICATION_JSON))
+                    //then
+                    .andExpect(status().isOk())
+                    .andExpectAll(
+                            jsonPath("articles", hasSize(2)),
+                            jsonPath("articleCount").value(2),
+
+                            jsonPath("articles[0].title").value("article7title"),
+                            jsonPath("articles[0].tagList", hasSize(1)),
+                            jsonPath("articles[0].favorited").value(false),
+                            jsonPath("articles[0].author.following").value(true),
+                            jsonPath("articles[0].author.username").value("user1"),
+
+                            jsonPath("articles[1].title").value("article8title"),
+                            jsonPath("articles[1].tagList", hasSize(2)),
+                            jsonPath("articles[1].favorited").value(false),
+                            jsonPath("articles[1].author.following").value(true),
+                            jsonPath("articles[1].author.username").value("user2")
+                    );
+        }
     }
 }
