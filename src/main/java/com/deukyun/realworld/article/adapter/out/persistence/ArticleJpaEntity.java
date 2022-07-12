@@ -19,7 +19,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Table(name = "article")
 @Entity
 @NoArgsConstructor(access = PROTECTED)
-class ArticleJpaEntity {
+public class ArticleJpaEntity {
 
     @Id
     @GeneratedValue

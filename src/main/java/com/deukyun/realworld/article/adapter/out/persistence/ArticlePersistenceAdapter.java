@@ -1,6 +1,9 @@
 package com.deukyun.realworld.article.adapter.out.persistence;
 
 import com.deukyun.realworld.article.adapter.out.persistence.ArticleJpaEntity.ArticleTagJpaEntity;
+import com.deukyun.realworld.article.adapter.out.persistence.repository.ArticleRepository;
+import com.deukyun.realworld.article.adapter.out.persistence.repository.ArticleSearchCond;
+import com.deukyun.realworld.article.adapter.out.persistence.repository.TagRepository;
 import com.deukyun.realworld.article.application.port.out.*;
 import com.deukyun.realworld.common.component.PersistenceAdapter;
 import lombok.RequiredArgsConstructor;

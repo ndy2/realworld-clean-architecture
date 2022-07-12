@@ -1,5 +1,6 @@
-package com.deukyun.realworld.article.adapter.out.persistence;
+package com.deukyun.realworld.article.adapter.out.persistence.repository;
 
+import com.deukyun.realworld.article.adapter.out.persistence.ArticleJpaEntity;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -21,7 +22,7 @@ import static com.querydsl.jpa.JPAExpressions.select;
 import static com.querydsl.jpa.JPAExpressions.selectFrom;
 
 @Repository
-public class ArticleRepositoryCustomImpl implements ArticleRepositoryCustom {
+class ArticleRepositoryCustomImpl implements ArticleRepositoryCustom {
 
     private final JPAQueryFactory query;
 

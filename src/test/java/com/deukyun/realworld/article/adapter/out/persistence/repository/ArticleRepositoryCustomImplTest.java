@@ -1,5 +1,6 @@
-package com.deukyun.realworld.article.adapter.out.persistence;
+package com.deukyun.realworld.article.adapter.out.persistence.repository;
 
+import com.deukyun.realworld.article.adapter.out.persistence.ArticleJpaEntity;
 import com.deukyun.realworld.common.P6spyLogMessageFormatConfiguration;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

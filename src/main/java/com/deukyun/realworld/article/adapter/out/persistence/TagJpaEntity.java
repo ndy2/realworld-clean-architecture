@@ -9,7 +9,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Table(name = "tag")
 @Entity
 @NoArgsConstructor(access = PROTECTED)
-class TagJpaEntity {
+public class TagJpaEntity {
 
     @Id
     @GeneratedValue

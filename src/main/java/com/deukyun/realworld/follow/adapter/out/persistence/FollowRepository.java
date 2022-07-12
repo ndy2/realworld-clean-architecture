@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface FollowJpaRepository extends JpaRepository<FollowJpaEntity, Long> {
+public interface FollowRepository extends JpaRepository<FollowJpaEntity, Long> {
 
     Optional<FollowJpaEntity> findByFollowerIdEqualsAndFolloweeIdEquals(long followeeId, long followerId);
 }

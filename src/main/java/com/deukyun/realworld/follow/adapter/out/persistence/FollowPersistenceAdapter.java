@@ -15,22 +15,22 @@ public class FollowPersistenceAdapter implements
         InsertFollowPort,
         DeleteFollowPort {
 
-    private final FollowJpaRepository followJpaRepository;
+    private final FollowRepository followRepository;
 
     @Override
     public Optional<Long> checkFollow(long followerId, long followeeId) {
-        return followJpaRepository.findByFollowerIdEqualsAndFolloweeIdEquals(followerId, followeeId)
+        return followRepository.findByFollowerIdEqualsAndFolloweeIdEquals(followerId, followeeId)
                 .map(FollowJpaEntity::getId);
     }
 
     @Override
     public void insertFollow(long followerId, long followeeId) {
-        followJpaRepository.save(new FollowJpaEntity(followerId, followeeId));
+        followRepository.save(new FollowJpaEntity(followerId, followeeId));
     }
 
     @Override
     public void deleteById(long id) {
-        FollowJpaEntity deleteTarget = followJpaRepository.findById(id).orElseThrow(IllegalStateException::new);
-        followJpaRepository.delete(deleteTarget);
+        FollowJpaEntity deleteTarget = followRepository.findById(id).orElseThrow(IllegalStateException::new);
+        followRepository.delete(deleteTarget);
     }
 }
