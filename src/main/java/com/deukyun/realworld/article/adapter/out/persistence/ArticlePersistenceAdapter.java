@@ -15,17 +15,18 @@ import static java.util.stream.Collectors.toList;
 class ArticlePersistenceAdapter implements
         InsertArticlePort,
         FindArticlesByFieldsPort,
-        FindArticleBySlugPort {
+        FindArticleBySlugPort,
+        FindFeedArticlesPort {
 
     private final ArticleRepository articleRepository;
     private final TagRepository tagRepository;
 
     @Override
     public InsertArticleResult insertArticle(InsertArticleCommand insertArticleCommand) {
-        /**
-         * 태그 처리
-         * 이미 있던 태그를 필터링 하고
-         * 새롭게 추가된 태그에 대해서만 태그 삽입
+        /*
+          태그 처리
+          이미 있던 태그를 필터링 하고
+          새롭게 추가된 태그에 대해서만 태그 삽입
          */
         List<String> allTagNames = insertArticleCommand.getTags();
 
@@ -63,16 +64,22 @@ class ArticlePersistenceAdapter implements
 
     @Override
     public List<FindArticleResult> findArticlesByFields(FindArticlesByFieldsCommand command) {
-        //TODO - 동적 where 절 binding
 
+        List<ArticleJpaEntity> articles = articleRepository.searchArticle(
+                new ArticleSearchCond(command.getTag(), command.getAuthor(), command.getFavorited()),
+                command.getOffset(), command.getLimit()
+        );
 
-        return null;
+        return articles.stream().map(this::toResult).collect(toList());
     }
 
     @Override
     public FindArticleResult findArticleBySlug(String slug) {
-        ArticleJpaEntity article = articleRepository.findBySlug(slug).orElseThrow(IllegalArgumentException::new);
 
+        return toResult(articleRepository.findBySlug(slug).orElseThrow(IllegalArgumentException::new));
+    }
+
+    private FindArticleResult toResult(ArticleJpaEntity article) {
         return new FindArticleResult(
                 article.getId(),
                 article.getSlug(),
@@ -89,5 +96,10 @@ class ArticlePersistenceAdapter implements
                         article.getAuthorImage()
                 )
         );
+    }
+
+    @Override
+    public List<FindArticleResult> findFeedArticles(FindFeedArticleCommand command) {
+        return null;
     }
 }

@@ -7,12 +7,14 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import static com.deukyun.realworld.article.adapter.out.persistence.QArticleJpaEntity.articleJpaEntity;
 import static com.deukyun.realworld.article.adapter.out.persistence.QArticleJpaEntity_ArticleTagJpaEntity.articleTagJpaEntity;
 import static com.deukyun.realworld.article.adapter.out.persistence.QTagJpaEntity.tagJpaEntity;
 import static com.deukyun.realworld.favorite.adapter.out.persistence.QFavoriteJpaEntity.favoriteJpaEntity;
+import static com.deukyun.realworld.follow.adapter.out.persistence.QFollowJpaEntity.followJpaEntity;
 import static com.deukyun.realworld.profile.adapter.out.persistence.QProfileJpaEntity.profileJpaEntity;
 import static com.deukyun.realworld.user.adapter.out.persistence.QUserJpaEntity.userJpaEntity;
 import static com.querydsl.jpa.JPAExpressions.select;
@@ -53,6 +55,49 @@ public class ArticleRepositoryCustomImpl implements ArticleRepositoryCustom {
         }
 
         return articles;
+    }
+
+    @Override
+    public List<ArticleJpaEntity> feedArticles(long userId, long offset, long limit) {
+        List<ArticleJpaEntity> articles = query
+                .selectFrom(articleJpaEntity)
+                .distinct()
+                .join(articleJpaEntity.authorProfile, profileJpaEntity).fetchJoin()
+                .where(isFeedByUser())
+                .offset(offset)
+                .limit(limit)
+                .fetch();
+
+        //Lazy Loading : article -> article tag -> tag
+        for (ArticleJpaEntity article : articles) {
+            article.getTagList();
+        }
+
+        return articles;
+    }
+
+    @Override
+    public Optional<ArticleJpaEntity> findBySlug(String slug) {
+        return Optional.ofNullable(
+                query
+                        .select(articleJpaEntity)
+                        .from(articleJpaEntity)
+                        .join(articleJpaEntity.authorProfile, profileJpaEntity).fetchJoin()
+                        .join(articleJpaEntity.articleTags, articleTagJpaEntity).fetchJoin()
+                        .join(articleTagJpaEntity.tag, tagJpaEntity).fetchJoin()
+                        .where(articleJpaEntity.slug.eq(slug))
+                        .fetchOne()
+        );
+    }
+
+    private BooleanBuilder isFeedByUser() {
+
+        return nullSafeBuilder(() -> articleJpaEntity.authorProfile.id.in(
+                select(followJpaEntity.followeeId)
+                        .from(profileJpaEntity)
+                        .join(followJpaEntity)
+                        .on(profileJpaEntity.id.eq(followJpaEntity.followerId))
+        ));
     }
 
     private BooleanBuilder containsTag(String tag) {

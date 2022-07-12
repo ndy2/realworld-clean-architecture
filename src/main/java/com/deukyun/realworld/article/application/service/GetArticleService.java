@@ -11,12 +11,15 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 @RequiredArgsConstructor
 @Query
 class GetArticleService implements
         ArticleQueries {
 
-    private final FindArticlesByFieldsPort findArticles;
+    private final FindArticlesByFieldsPort findArticlesByFieldsPort;
+    private final FindFeedArticlesPort findFeedArticlesPort;
     private final FindArticleBySlugPort findArticleBySlugPort;
     private final FindProfileIdByUserIdPort findProfileIdByUserIdPort;
     private final CheckFollowPort checkFollowPort;
@@ -24,22 +27,35 @@ class GetArticleService implements
     private final CountFavoritesPort countFavoritesPort;
 
     @Override
-    public List<ArticleResult> listArticles(ListArticlesCommand listArticlesCommand) {
-        List<FindArticleResult> articleResults = findArticles.findArticlesByFields(
-                new FindArticlesByFieldsCommand(
-                        listArticlesCommand.getTag(),
-                        listArticlesCommand.getAuthor(),
-                        listArticlesCommand.getFavorited(),
-                        listArticlesCommand.getLimit(),
-                        listArticlesCommand.getOffset()
-                )
-        );
+    public List<ArticleResult> listArticles(ListArticlesCommand command) {
+        Long userId = command.getUserId();
 
-        return null;
+        // 검색 조건에 따라 아티클 목록 조회
+        return findArticlesByFieldsPort.findArticlesByFields(
+                        new FindArticlesByFieldsCommand(
+                                command.getTag(),
+                                command.getAuthor(),
+                                command.getFavorited(),
+                                command.getLimit(),
+                                command.getOffset()
+                        )
+                ).stream()
+                .map(a -> toArticleResult(userId, a))
+                .collect(toList());
     }
 
     @Override
-    public List<ArticleResult> feedArticles(FeedArticlesCommand listArticlesCommand) {
+    public List<ArticleResult> feedArticles(FeedArticlesCommand command) {
+        Long userId = command.getUserId();
+
+        findFeedArticlesPort.findFeedArticles(
+                new FindFeedArticleCommand(
+                        command.getLimit(),
+                        command.getOffset(),
+                        command.getUserId()
+                )
+        );
+
         return null;
     }
 
@@ -48,25 +64,22 @@ class GetArticleService implements
         String slug = command.getSlug();
         Long userId = command.getUserId();
 
-        // 1. 슬러그로 아티클 조회
+        // 슬러그로 아티클 조회
         FindArticleResult article = findArticleBySlugPort.findArticleBySlug(slug);
-        long articleId = article.getId();
 
+        return toArticleResult(userId, article);
+    }
+
+    private ArticleResult toArticleResult(Long userId, FindArticleResult article) {
+        long articleId = article.getId();
         FindAuthorResult author = article.getAuthor();
 
-        boolean isFollow = false;
-        boolean isFavorited = false;
+        // 사용자 flag 조회
+        List<Boolean> flags = userRelatedFlags(userId, author, articleId);
+        boolean isFollow = flags.get(0);
+        boolean isFavorited = flags.get(1);
 
-        if (userId != null) {
-            // 2. 팔로우 여부를 확인 하기 위해 자신의 프로필 아이디 조회
-            long userProfileId = findProfileIdByUserIdPort.findProfileIdByUserId(userId);
-
-            // 3. 팔로우, 페이보릿 여부 확인
-            isFollow = checkFollowPort.checkFollow(userProfileId, author.getId()).isPresent();
-            isFavorited = checkFavoritePort.checkFavorite(userId, articleId).isPresent();
-        }
-
-        // 4. 페이보릿 카운트 확인
+        // 페이보릿 카운트 확인
         long favoritesCount = countFavoritesPort.countFavorite(articleId);
 
         return new ArticleResult(
@@ -86,5 +99,24 @@ class GetArticleService implements
                         isFollow
                 )
         );
+    }
+
+    /**
+     * 사용자와 관련된 기사의 flag 값들 반환
+     * list[0] -> 팔로우 여부
+     * list[1] -> 페이보릿 여부
+     */
+    private List<Boolean> userRelatedFlags(Long userId, FindAuthorResult author, long articleId) {
+
+        boolean isFollow = false;
+        boolean isFavorited = false;
+
+        if (userId != null) {
+            long userProfileId = findProfileIdByUserIdPort.findProfileIdByUserId(userId);
+
+            isFollow = checkFollowPort.checkFollow(userProfileId, author.getId()).isPresent();
+            isFavorited = checkFavoritePort.checkFavorite(userId, articleId).isPresent();
+        }
+        return List.of(isFollow, isFavorited);
     }
 }

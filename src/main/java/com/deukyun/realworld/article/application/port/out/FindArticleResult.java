@@ -17,4 +17,5 @@ public class FindArticleResult {
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
     FindAuthorResult author;
+
 }

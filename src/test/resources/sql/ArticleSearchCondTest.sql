@@ -75,6 +75,14 @@ values (9, 2, 14);
 insert into favorite (article_id, user_id, id)
 values (9, 3, 15);
 
+// user2 -> 팔로우 user1 -> 아티클 7
+// user3 -> 팔로우 user2,user1 -> 아티클 7,8
+insert into follow (ID, FOLLOWEE_ID, FOLLOWER_ID)
+VALUES (25, 4, 6);
+insert into follow (ID, FOLLOWEE_ID, FOLLOWER_ID)
+VALUES (26, 5, 6);
+insert into follow (ID, FOLLOWEE_ID, FOLLOWER_ID)
+VALUES (27, 4, 5);
 
 
 -- delete from favorite;

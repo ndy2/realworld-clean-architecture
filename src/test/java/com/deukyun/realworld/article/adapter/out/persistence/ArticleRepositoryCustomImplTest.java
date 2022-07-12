@@ -83,6 +83,15 @@ class ArticleRepositoryCustomImplTest {
         }
     }
 
+    // user3 -> 팔로우 user2,user1 -> 아티클 7,8
+    @Test
+    void 피드중인_사용자의_아티클_조회() {
+        List<ArticleJpaEntity> articles = repository.feedArticles(3, 0, 20);
+
+        assertArticle(articles.get(0), 7, 1, List.of("tag16"));
+        assertArticle(articles.get(1), 8, 2, List.of("tag16", "tag17"));
+    }
+
     private void assertArticle(ArticleJpaEntity article, int id, int userId, List<String> tags) {
         assertThat(article)
                 .extracting(
