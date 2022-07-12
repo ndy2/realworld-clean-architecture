@@ -1,6 +1,6 @@
-package com.deukyun.realworld.article.adapter.in.web;
+package com.deukyun.realworld.article.adapter.in.dto.command;
 
-import com.deukyun.realworld.article.adapter.in.web.CreateArticleResponse.Response.AuthorResponse;
+import com.deukyun.realworld.article.adapter.in.dto.command.CreateArticleResponse.Response.AuthorResponse;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.List;
 
-final class CreateArticleResponse {
+public final class CreateArticleResponse {
 
     @JsonProperty("article")
     private final Response response;

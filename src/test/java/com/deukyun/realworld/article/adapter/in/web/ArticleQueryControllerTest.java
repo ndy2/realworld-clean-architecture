@@ -14,7 +14,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class GetArticleControllerTest {
+class ArticleQueryControllerTest {
 
     @Nested
     class 아티클_슬러그로_단건조회_테스트 extends BaseControllerTest {

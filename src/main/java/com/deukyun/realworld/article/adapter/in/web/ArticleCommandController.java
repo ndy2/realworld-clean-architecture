@@ -1,5 +1,7 @@
 package com.deukyun.realworld.article.adapter.in.web;
 
+import com.deukyun.realworld.article.adapter.in.dto.command.CreateArticleRequest;
+import com.deukyun.realworld.article.adapter.in.dto.command.CreateArticleResponse;
 import com.deukyun.realworld.article.application.port.in.AuthorResult;
 import com.deukyun.realworld.article.application.port.in.CreateArticleCommand;
 import com.deukyun.realworld.article.application.port.in.CreateArticleResult;
@@ -17,7 +19,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-public class CreateArticleController {
+public class ArticleCommandController {
 
     private final CreateArticleUseCase createArticleUseCase;
 
@@ -47,5 +49,6 @@ public class CreateArticleController {
         );
         return response;
     }
+
 
 }

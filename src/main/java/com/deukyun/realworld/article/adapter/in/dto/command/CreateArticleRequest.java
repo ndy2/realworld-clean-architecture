@@ -1,11 +1,11 @@
-package com.deukyun.realworld.article.adapter.in.web;
+package com.deukyun.realworld.article.adapter.in.dto.command;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
 import java.util.List;
 
-final class CreateArticleRequest {
+public final class CreateArticleRequest {
 
     @JsonProperty("article")
     private Request request;

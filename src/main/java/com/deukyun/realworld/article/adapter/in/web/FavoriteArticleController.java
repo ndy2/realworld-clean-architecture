@@ -1,7 +1,7 @@
 package com.deukyun.realworld.article.adapter.in.web;
 
-import com.deukyun.realworld.article.adapter.in.web.ArticleResponses.Response;
-import com.deukyun.realworld.article.adapter.in.web.ArticleResponses.SingleArticleResponse;
+import com.deukyun.realworld.article.adapter.in.dto.query.ArticleResponse;
+import com.deukyun.realworld.article.adapter.in.dto.query.SingleArticleResponse;
 import com.deukyun.realworld.common.SecurityUser;
 import com.deukyun.realworld.favorite.application.port.in.FavoriteArticleResult;
 import com.deukyun.realworld.favorite.application.port.in.FavoriteArticleUseCase;
@@ -30,7 +30,7 @@ public class FavoriteArticleController {
 
         FavoriteArticleResult articleResult = favoriteArticleUseCase.favorite(userId, slug);
 
-        return new SingleArticleResponse(Response.of(articleResult));
+        return new SingleArticleResponse(ArticleResponse.of(articleResult));
     }
 
     @DeleteMapping("/api/articles/{slug}/unfavorite")
@@ -42,7 +42,7 @@ public class FavoriteArticleController {
 
         FavoriteArticleResult articleResult = unfavoriteArticleUseCase.unfavorite(userId, slug);
 
-        return new SingleArticleResponse(Response.of(articleResult));
+        return new SingleArticleResponse(ArticleResponse.of(articleResult));
     }
 
 }

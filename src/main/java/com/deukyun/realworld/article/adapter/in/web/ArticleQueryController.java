@@ -1,8 +1,8 @@
 package com.deukyun.realworld.article.adapter.in.web;
 
-import com.deukyun.realworld.article.adapter.in.web.ArticleResponses.ListArticlesResponse;
-import com.deukyun.realworld.article.adapter.in.web.ArticleResponses.Response;
-import com.deukyun.realworld.article.adapter.in.web.ArticleResponses.SingleArticleResponse;
+import com.deukyun.realworld.article.adapter.in.dto.query.ArticleResponse;
+import com.deukyun.realworld.article.adapter.in.dto.query.ListArticlesResponse;
+import com.deukyun.realworld.article.adapter.in.dto.query.SingleArticleResponse;
 import com.deukyun.realworld.article.application.port.in.*;
 import com.deukyun.realworld.common.SecurityUser;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
 @RestController
-public class GetArticleController {
+public class ArticleQueryController {
 
     private final ArticleQueries articleQueries;
 
@@ -39,9 +39,7 @@ public class GetArticleController {
                 )
         );
 
-        return new ListArticlesResponse(
-                articleResults.stream().map(Response::of).collect(toList())
-        );
+        return new ListArticlesResponse(articleResults.stream().map(ArticleResponse::of).collect(toList()));
     }
 
     /* 팔로우 중인 유저의 아티클 목록 조회 */
@@ -58,9 +56,7 @@ public class GetArticleController {
                 )
         );
 
-        return new ListArticlesResponse(
-                articleResults.stream().map(Response::of).collect(toList())
-        );
+        return new ListArticlesResponse(articleResults.stream().map(ArticleResponse::of).collect(toList()));
     }
 
     /* 아티클 단건 조회 */
@@ -76,6 +72,6 @@ public class GetArticleController {
                 )
         );
 
-        return new SingleArticleResponse(Response.of(articleResult));
+        return new SingleArticleResponse(ArticleResponse.of(articleResult));
     }
 }

@@ -11,7 +11,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class CreateArticleControllerTest extends BaseControllerTest {
+class ArticleCommandControllerTest extends BaseControllerTest {
 
     @Test
     void 아티클_등록_테스트() throws Exception {
