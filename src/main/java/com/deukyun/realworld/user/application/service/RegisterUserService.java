@@ -26,6 +26,7 @@ class RegisterUserService implements RegisterUserUseCase {
         String password = registerUserCommand.getPassword();
         String encodedPassword = passwordEncoder.encode(password);
 
+
         long userId = insertUserPort.insertUser(
                 new InsertUserCommand(
                         registerUserCommand.getEmail(),
